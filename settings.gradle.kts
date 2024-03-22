@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Bitwin"
 include(":app")
 include(":core")
+include(":data")
