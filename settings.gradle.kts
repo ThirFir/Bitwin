@@ -23,3 +23,4 @@ rootProject.name = "Bitwin"
 include(":app")
 include(":core")
 include(":data")
+include(":presentation")
