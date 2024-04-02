@@ -1,7 +1,9 @@
 package com.strone.data.response.websocket.orderbook
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class OrderbookResponse(
     @Json(name = "type") val type: String?, // 타입, orderbook : 호가
     @Json(name = "code") val code: String?, // 마켓 코드 ex) KRW-BTC

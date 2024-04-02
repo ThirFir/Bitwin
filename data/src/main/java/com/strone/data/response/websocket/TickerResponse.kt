@@ -1,7 +1,9 @@
 package com.strone.data.response.websocket
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class TickerResponse(
     @Json(name = "type") val type: String?,   // 타입, ticker : 현재가
     @Json(name = "code") var code: String?,   // 마켓 코드 ex) KRW-BTC   웹소켓 전용

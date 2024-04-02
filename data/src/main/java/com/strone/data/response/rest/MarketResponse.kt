@@ -1,7 +1,9 @@
 package com.strone.data.response.rest
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class MarketResponse(
     @Json(name = "market") val market: String?, // 업비트에서 제공중인 시장 정보
     @Json(name = "korean_name") val koreanName: String?, // 거래 대상 디지털 자산 한글명

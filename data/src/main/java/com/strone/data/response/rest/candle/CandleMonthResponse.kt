@@ -1,7 +1,9 @@
 package com.strone.data.response.rest.candle
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class CandleMonthResponse(
     @Json(name = "market") val market: String?, // 마켓명
     @Json(name = "candle_date_time_utc") val candleDateTimeUtc: String?, // 캔들 기준 시각(UTC 기준) - yyyy-MM-dd'T'HH:mm:ss
