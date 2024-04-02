@@ -4,8 +4,8 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class WebSocketUrl
+annotation class WebSocket
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ApiUrl
+annotation class RestApi

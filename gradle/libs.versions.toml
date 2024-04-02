@@ -17,6 +17,7 @@ lottieVersion = "6.4.0"
 retrofit = "2.9.0"
 retrofitConverterMoshi = "2.9.0"
 moshiKotlin = "1.12.0"
+logging-interceptor = "4.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,7 @@ lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", versio
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitConverterMoshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
