@@ -1,4 +1,4 @@
-package com.strone.data.response
+package com.strone.data.response.websocket
 
 import com.squareup.moshi.Json
 
