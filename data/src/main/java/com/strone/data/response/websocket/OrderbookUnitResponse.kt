@@ -1,4 +1,4 @@
-package com.strone.data.response.websocket.orderbook
+package com.strone.data.response.websocket
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

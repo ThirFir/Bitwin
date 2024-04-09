@@ -18,4 +18,4 @@ data class TradeResponse(
     @Json(name = "trade_timestamp") val tradeTimestamp: Long?, // 체결 타임스탬프
     @Json(name = "timestamp") val timestamp: Long?, // 타임스탬프
     @Json(name = "sequential_id") val sequentialId: Long?, // 체결 번호(Unique)
-)
+) : UpbitWebSocketResponse()

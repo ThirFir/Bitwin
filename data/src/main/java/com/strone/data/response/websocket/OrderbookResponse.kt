@@ -1,4 +1,4 @@
-package com.strone.data.response.websocket.orderbook
+package com.strone.data.response.websocket
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -11,4 +11,4 @@ data class OrderbookResponse(
     @Json(name = "total_bid_size") val totalBidSize: Double?, // 호가 매수 총 잔량
     @Json(name = "orderbook_units") val orderbookUnits: List<OrderbookUnitResponse>?, // 호가 정보
     @Json(name = "timestamp") val timestamp: Long?, // 타임스탬프
-)
+) : UpbitWebSocketResponse()
