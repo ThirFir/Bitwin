@@ -5,7 +5,9 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.strone.bitwin.BuildConfig
 import com.strone.bitwin.constant.Constant
 import com.strone.core.qualifier.RestApi
+import com.strone.core.qualifier.Ticker
 import com.strone.core.qualifier.WebSocket
+import com.strone.data.api.websocket.TickerWebSocketListener
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +24,27 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Ticker
+    @Provides
+    @Singleton
+    fun provideTickerWebSocket(
+        @WebSocket okHttpClient: OkHttpClient,
+        request: Request,
+        tickerWebSocketListener: TickerWebSocketListener
+    ) : okhttp3.WebSocket {
+        return okHttpClient.newWebSocket(request, tickerWebSocketListener).also {
+            okHttpClient.dispatcher.executorService.shutdown()
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideTickerWebSocketListener(
+        moshi: Moshi
+    ) : TickerWebSocketListener {
+        return TickerWebSocketListener(moshi)
+    }
 
     @Provides
     @Singleton
