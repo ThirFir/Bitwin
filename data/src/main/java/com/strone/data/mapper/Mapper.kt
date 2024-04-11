@@ -6,7 +6,7 @@ import com.strone.domain.model.Ticker
 fun TickerResponse.toTicker() = Ticker(
     type = this.type ?: "",
     code = this.code ?: "",
-    market = this.market ?: "",
+    market = this.market ?: this.code ?: "",
     openingPrice = this.openingPrice ?: 0.0,
     highPrice = this.highPrice ?: 0.0,
     lowPrice = this.lowPrice ?: 0.0,
