@@ -3,11 +3,15 @@ package com.strone.bitwin.di
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.strone.bitwin.BuildConfig
-import com.strone.bitwin.constant.Constant
 import com.strone.core.qualifier.RestApi
-import com.strone.core.qualifier.Ticker
 import com.strone.core.qualifier.WebSocket
+import com.strone.data.api.rest.MarketApi
 import com.strone.data.api.websocket.TickerWebSocketListener
+import com.strone.data.constant.URLConstant
+import com.strone.data.datasource.remote.MarketRemoteDataSource
+import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.repository.TickerRepositoryImpl
+import com.strone.domain.repository.TickerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,17 +29,31 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Ticker
     @Provides
     @Singleton
-    fun provideTickerWebSocket(
-        @WebSocket okHttpClient: OkHttpClient,
+    fun provideTickerRepository(
+        marketRemoteDataSource: MarketRemoteDataSource,
+        tickerRemoteDataSource: TickerRemoteDataSource
+    ) : TickerRepository {
+        return TickerRepositoryImpl(marketRemoteDataSource, tickerRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMarketApi(
+        retrofit: Retrofit
+    ) : MarketApi {
+        return retrofit.create(MarketApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTickerRemoteDataSource(
+        @WebSocket client: OkHttpClient,
         request: Request,
         tickerWebSocketListener: TickerWebSocketListener
-    ) : okhttp3.WebSocket {
-        return okHttpClient.newWebSocket(request, tickerWebSocketListener).also {
-            okHttpClient.dispatcher.executorService.shutdown()
-        }
+    ) : TickerRemoteDataSource {
+        return TickerRemoteDataSource(client, request, tickerWebSocketListener)
     }
 
     @Provides
@@ -118,14 +136,14 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideWebSocketUrl(): String {
-        return Constant.SOCKET_BASE_URL
+        return URLConstant.SOCKET_BASE_URL_V1
     }
 
     @RestApi
     @Provides
     @Singleton
     fun provideApiUrl(): String {
-        return Constant.BASE_URL
+        return URLConstant.BASE_URL
     }
 
     @Provides
