@@ -41,7 +41,7 @@ fun TickerResponse.toTicker() = Ticker(
 )
 
 fun MarketResponse.toMarket() = Market(
-    market = this.market ?: "",
+    code = this.code ?: "",
     koreanName = this.koreanName ?: "",
     englishName = this.englishName ?: "",
     marketWarning = this.marketWarning ?: "NONE"

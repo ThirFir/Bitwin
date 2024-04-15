@@ -1,7 +1,7 @@
 package com.strone.domain.model
 
 data class Market(
-    val market: String,
+    val code: String,
     val koreanName: String,
     val englishName: String,
     val marketWarning: String
