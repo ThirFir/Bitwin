@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strone.domain.model.Ticker
+import com.strone.domain.usecase.GetMarketUseCase
 import com.strone.domain.usecase.GetTickerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TickerViewModel @Inject constructor(
+    private val getMarketUseCase: GetMarketUseCase,
     private val getTickerUseCase: GetTickerUseCase
 ) : ViewModel() {
 
@@ -21,9 +23,13 @@ class TickerViewModel @Inject constructor(
 
     fun getTicker() {
         viewModelScope.launch {
-            getTickerUseCase().onSuccess {
-                it.collect { ticker ->
-                    _tickers.value[ticker.code] = ticker
+            getMarketUseCase().onSuccess { market ->
+                getTickerUseCase(market).onSuccess {
+                    it.collect { ticker ->
+                        _tickers.value[ticker.code] = ticker
+                    }
+                }.onFailure {
+
                 }
             }.onFailure {
 

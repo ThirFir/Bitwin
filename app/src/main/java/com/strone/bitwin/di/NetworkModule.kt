@@ -10,7 +10,9 @@ import com.strone.data.api.websocket.TickerWebSocketListener
 import com.strone.data.constant.URLConstant
 import com.strone.data.datasource.remote.MarketRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.repository.MarketRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl
+import com.strone.domain.repository.MarketRepository
 import com.strone.domain.repository.TickerRepository
 import dagger.Module
 import dagger.Provides
@@ -31,11 +33,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMarketRepository(
+        marketRemoteDataSource: MarketRemoteDataSource
+    ) : MarketRepository {
+        return MarketRepositoryImpl(marketRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideTickerRepository(
-        marketRemoteDataSource: MarketRemoteDataSource,
         tickerRemoteDataSource: TickerRemoteDataSource
     ) : TickerRepository {
-        return TickerRepositoryImpl(marketRemoteDataSource, tickerRemoteDataSource)
+        return TickerRepositoryImpl(tickerRemoteDataSource)
     }
 
     @Provides

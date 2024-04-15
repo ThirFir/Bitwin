@@ -1,14 +1,9 @@
 package com.strone.data.api.websocket
 
 import com.squareup.moshi.Moshi
-import com.strone.data.response.websocket.TickerResponse
-import com.strone.data.response.websocket.TradeResponse
 import com.strone.data.response.websocket.UpbitWebSocketResponse
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.consumeAsFlow
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -51,5 +46,5 @@ abstract class UpbitWebSocketListener<T : UpbitWebSocketResponse>(
         channel.trySend(response)
     }
 
-    fun getResponse() : Flow<T> = channel.consumeAsFlow()
+    fun getResponse(): Flow<T> = channel.consumeAsFlow()
 }

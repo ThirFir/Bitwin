@@ -1,6 +1,5 @@
 package com.strone.data.repository
 
-import com.strone.data.datasource.remote.MarketRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
 import com.strone.data.mapper.toTicker
 import com.strone.data.response.websocket.TickerResponse
@@ -12,14 +11,10 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TickerRepositoryImpl @Inject constructor(
-    private val marketRemoteDataSource: MarketRemoteDataSource,
     private val tickerRemoteDataSource: TickerRemoteDataSource
 ) : TickerRepository {
 
-    override suspend fun getTickerResponse(): Flow<Ticker> {
-        val codes = marketRemoteDataSource.getAllMarkets().map {
-            it.market
-        }
+    override suspend fun getTickerResponse(codes: List<String>): Flow<Ticker> {
         val json = codes.getSendJson()
         return tickerRemoteDataSource.getTickerResponse(json).map(TickerResponse::toTicker)
     }
