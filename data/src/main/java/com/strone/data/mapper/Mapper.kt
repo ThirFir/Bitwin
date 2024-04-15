@@ -1,6 +1,8 @@
 package com.strone.data.mapper
 
+import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.websocket.TickerResponse
+import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
 
 fun TickerResponse.toTicker() = Ticker(
@@ -36,4 +38,11 @@ fun TickerResponse.toTicker() = Ticker(
     marketWarning = this.marketWarning ?: "NONE",
     delistingDate = this.delistingDate ?: "0000-00-00",
     isTradingSuspended = this.isTradingSuspended ?: false
+)
+
+fun MarketResponse.toMarket() = Market(
+    market = this.market ?: "",
+    koreanName = this.koreanName ?: "",
+    englishName = this.englishName ?: "",
+    marketWarning = this.marketWarning ?: "NONE"
 )
