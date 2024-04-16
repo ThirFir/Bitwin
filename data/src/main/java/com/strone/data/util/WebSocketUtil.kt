@@ -13,7 +13,7 @@ import java.util.UUID
 /**
  * For Upbit WebSocket
  */
-fun List<String?>.getSendJson(): String {
+internal fun List<String?>.getSendJson(): String {
     val uuid = UUID.randomUUID().toString()
 
     val buffer = Buffer()

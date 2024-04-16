@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CandleMinuteResponse(
-    @Json(name = "market") val market: String?, // 마켓명
+    @Json(name = "market") val code: String?, // 마켓명
     @Json(name = "candle_date_time_utc") val candleDateTimeUtc: String?, // 캔들 기준 시각(UTC 기준) - yyyy-MM-dd'T'HH:mm:ss
     @Json(name = "candle_date_time_kst") val candleDateTimeKst: String?, // 캔들 기준 시각(KST 기준) - yyyy-MM-dd'T'HH:mm:ss
     @Json(name = "opening_price") val openingPrice: Double?, // 시가
