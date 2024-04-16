@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.GetMarketUseCase
 import com.strone.domain.usecase.GetTickerUseCase
+import com.strone.domain.util.TickerMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +20,7 @@ class TickerViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _tickers = MutableStateFlow<MutableMap<String, Ticker>>(mutableMapOf())
-    val tickers: StateFlow<Map<String, Ticker>> get() = _tickers
+    val tickers: StateFlow<TickerMap> get() = _tickers
 
     fun getTicker() {
         viewModelScope.launch {
