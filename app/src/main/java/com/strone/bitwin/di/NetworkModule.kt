@@ -33,44 +33,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMarketRepository(
-        marketRemoteDataSource: MarketRemoteDataSource
-    ) : MarketRepository {
-        return MarketRepositoryImpl(marketRemoteDataSource)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTickerRepository(
-        tickerRemoteDataSource: TickerRemoteDataSource
-    ) : TickerRepository {
-        return TickerRepositoryImpl(tickerRemoteDataSource)
-    }
-
-    @Provides
-    @Singleton
     fun provideMarketApi(
         retrofit: Retrofit
     ) : MarketApi {
         return retrofit.create(MarketApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTickerRemoteDataSource(
-        @WebSocket client: OkHttpClient,
-        request: Request,
-        tickerWebSocketListener: TickerWebSocketListener
-    ) : TickerRemoteDataSource {
-        return TickerRemoteDataSource(client, request, tickerWebSocketListener)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTickerWebSocketListener(
-        moshi: Moshi
-    ) : TickerWebSocketListener {
-        return TickerWebSocketListener(moshi)
     }
 
     @Provides
