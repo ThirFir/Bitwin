@@ -71,6 +71,9 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    implementation(libs.hilt.compose)
 
     implementation(libs.lottie.compose)
+    implementation(libs.compose.viewmodel)
+    implementation(libs.compose.viewmodel.lifecycle)
 }
