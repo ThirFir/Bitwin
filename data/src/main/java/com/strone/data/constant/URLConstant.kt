@@ -12,6 +12,10 @@ object URLConstant {
             const val ALL = "${MARKET}all/"
         }
 
+        object Ticker {
+            const val TICKER = "${V1}ticker/"
+        }
+
         object Candle {
             private const val CANDLES = "${V1}candles/"
             const val MINUTES = "${CANDLES}minutes/"

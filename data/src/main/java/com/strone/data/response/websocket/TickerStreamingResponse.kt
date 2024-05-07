@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class TickerResponse(
+data class TickerStreamingResponse(
     @Json(name = "type") val type: String?,   // 타입, ticker : 현재가
     @Json(name = "code") var code: String?,   // 마켓 코드 ex) KRW-BTC   웹소켓 전용
     @Json(name = "market") val market: String?, // code와 같음, REST API 전용

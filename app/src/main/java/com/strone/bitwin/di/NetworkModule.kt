@@ -6,14 +6,8 @@ import com.strone.bitwin.BuildConfig
 import com.strone.core.qualifier.RestApi
 import com.strone.core.qualifier.WebSocket
 import com.strone.data.api.rest.MarketApi
-import com.strone.data.api.websocket.TickerWebSocketListener
+import com.strone.data.api.rest.TickerApi
 import com.strone.data.constant.URLConstant
-import com.strone.data.datasource.remote.MarketRemoteDataSource
-import com.strone.data.datasource.remote.TickerRemoteDataSource
-import com.strone.data.repository.MarketRepositoryImpl
-import com.strone.data.repository.TickerRepositoryImpl
-import com.strone.domain.repository.MarketRepository
-import com.strone.domain.repository.TickerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +24,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideTickerApi(
+        retrofit: Retrofit
+    ) : TickerApi {
+        return retrofit.create(TickerApi::class.java)
+    }
 
     @Provides
     @Singleton

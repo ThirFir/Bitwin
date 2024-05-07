@@ -2,9 +2,9 @@ package com.strone.data.api.websocket
 
 import com.squareup.moshi.Moshi
 import com.strone.data.response.websocket.UpbitWebSocketResponse
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
@@ -14,7 +14,11 @@ abstract class UpbitWebSocketListener<T : UpbitWebSocketResponse>(
     protected val moshi: Moshi,
 ) : WebSocketListener() {
 
-    private val channel: Channel<T> = Channel(Channel.UNLIMITED)
+    private val incomingData = MutableSharedFlow<T>(
+        replay = 1,
+        extraBufferCapacity = 0,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
@@ -43,8 +47,8 @@ abstract class UpbitWebSocketListener<T : UpbitWebSocketResponse>(
     protected abstract fun parseResponse(bytes: ByteString): T?
 
     private fun onReceiveResponse(response: T) {
-        channel.trySend(response)
+        incomingData.tryEmit(response)
     }
 
-    fun getResponse(): Flow<T> = channel.consumeAsFlow()
+    fun fetchResponse(): Flow<T> = incomingData
 }

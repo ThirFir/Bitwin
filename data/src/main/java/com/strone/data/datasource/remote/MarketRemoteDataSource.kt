@@ -7,7 +7,7 @@ import javax.inject.Inject
 class MarketRemoteDataSource @Inject constructor(
     private val marketApi: MarketApi
 ) {
-    suspend fun getAllMarkets() : List<MarketResponse> {
-        return marketApi.getAllMarkets()
+    suspend fun fetchAllMarkets() : List<MarketResponse> {
+        return marketApi.fetchAllMarkets()
     }
 }
