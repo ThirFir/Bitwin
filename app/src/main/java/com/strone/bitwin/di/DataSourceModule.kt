@@ -1,6 +1,7 @@
 package com.strone.bitwin.di
 
 import com.strone.core.qualifier.WebSocket
+import com.strone.data.api.rest.TickerApi
 import com.strone.data.api.websocket.TickerWebSocketListener
 import com.strone.data.datasource.remote.TickerRemoteDataSource
 import dagger.Module
@@ -20,8 +21,9 @@ object DataSourceModule {
     fun provideTickerRemoteDataSource(
         @WebSocket client: OkHttpClient,
         request: Request,
-        tickerWebSocketListener: TickerWebSocketListener
+        tickerWebSocketListener: TickerWebSocketListener,
+        tickerApi: TickerApi
     ) : TickerRemoteDataSource {
-        return TickerRemoteDataSource(client, request, tickerWebSocketListener)
+        return TickerRemoteDataSource(client, request, tickerWebSocketListener, tickerApi)
     }
 }

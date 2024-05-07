@@ -4,5 +4,5 @@ import com.strone.domain.model.Market
 
 interface MarketRepository {
 
-    suspend fun getAllMarkets() : List<Market>
+    suspend fun fetchAllMarkets() : List<Market>
 }

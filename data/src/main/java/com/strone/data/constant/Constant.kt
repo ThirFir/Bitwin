@@ -7,4 +7,5 @@ object Constant {
     const val TICKER = "ticker"
     const val FORMAT = "format"
     const val DEFAULT = "DEFAULT"
+    const val MARKETS = "markets"
 }
