@@ -2,6 +2,7 @@ package com.strone.domain.model
 
 data class Ticker(
     val code: String,   // 마켓 코드 ex) KRW-BTC   웹소켓 전용
+    val type: MarketType, // 마켓 구분 코드 KRW(원화), BTC(비트코인), USDT(테더)
     val openingPrice: Double,  // 시가
     val highPrice: Double,        // 고가
     val lowPrice: Double,      // 저가
