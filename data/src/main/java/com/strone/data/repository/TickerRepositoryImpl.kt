@@ -10,24 +10,34 @@ import com.strone.domain.repository.TickerRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import javax.inject.Inject
 
 class TickerRepositoryImpl @Inject constructor(
     private val tickerRemoteDataSource: TickerRemoteDataSource
 ) : TickerRepository {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun fetchTickerResponse(codes: List<String>): Flow<Ticker> {
         val query = codes.joinToString(",")
-        return tickerRemoteDataSource.fetchTickerSnapshotResponse(query)
+
+        val initialDataFlow = tickerRemoteDataSource.fetchTickerSnapshotResponse(query)
             .asFlow()
             .map(TickerSnapshotResponse::toTicker)
-            .flatMapConcat {
-                val json = codes.getSendJson()
-                tickerRemoteDataSource.fetchTickerStreamingResponse(json)
-                    .map(TickerStreamingResponse::toTicker)
-            }
+
+        val streamingDataFlow = flow {
+            val json = codes.getSendJson()
+            tickerRemoteDataSource.fetchTickerStreamingResponse(json)
+                .collect { response ->
+                    emit(response.toTicker())
+                }
+        }
+
+        return initialDataFlow.onCompletion {
+            emitAll(streamingDataFlow)
+        }
     }
 }
