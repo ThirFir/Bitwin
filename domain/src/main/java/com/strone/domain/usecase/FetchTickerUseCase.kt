@@ -12,7 +12,7 @@ class FetchTickerUseCase @Inject constructor(
 
     suspend operator fun invoke(markets: List<Market>) : Result<Flow<Ticker>> {
         return try {
-            Result.success(tickerRepository.fetchTickerResponse(markets.map { it.code }))
+            Result.success(tickerRepository.fetchTickerResponse(markets.map(Market::code)))
         } catch (e: Exception) {
             Result.failure(e)
         }

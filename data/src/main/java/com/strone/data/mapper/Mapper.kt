@@ -3,11 +3,16 @@ package com.strone.data.mapper
 import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
+import com.strone.domain.constants.CryptoConstants.BTC
+import com.strone.domain.constants.CryptoConstants.KRW
+import com.strone.domain.constants.CryptoConstants.USDT
 import com.strone.domain.model.Market
+import com.strone.domain.model.MarketType
 import com.strone.domain.model.Ticker
 
 fun TickerStreamingResponse.toTicker() = Ticker(
     code = this.code ?: "",
+    type = this.code?.toMarketType() ?: MarketType.UNKNOWN,
     openingPrice = this.openingPrice ?: 0.0,
     highPrice = this.highPrice ?: 0.0,
     lowPrice = this.lowPrice ?: 0.0,
@@ -35,6 +40,7 @@ fun TickerStreamingResponse.toTicker() = Ticker(
 
 fun TickerSnapshotResponse.toTicker() = Ticker(
     code = this.code ?: "",
+    type = this.code?.toMarketType() ?: MarketType.UNKNOWN,
     openingPrice = this.openingPrice ?: 0.0,
     highPrice = this.highPrice ?: 0.0,
     lowPrice = this.lowPrice ?: 0.0,
@@ -66,3 +72,10 @@ fun MarketResponse.toMarket() = Market(
     englishName = this.englishName ?: "",
     marketWarning = this.marketWarning ?: "NONE"
 )
+
+fun String.toMarketType() : MarketType {
+    if (startsWith(KRW)) return MarketType.KRW
+    if (startsWith(BTC)) return MarketType.BTC
+    if (startsWith(USDT)) return MarketType.USDT
+    return MarketType.UNKNOWN
+}
