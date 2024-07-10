@@ -3,4 +3,11 @@
     <!-- Descriptions -->
     <string name="kakao_button">Kakao Login Button</string>
     <string name="intro_bitwin">Bitwin에서 투자 실력을\n키우고 승리를 쟁취하세요!</string>
+
+    <!-- Titles -->
+    <string name="title_home">홈</string>
+    <string name="title_crypto_list">거래소</string>
+    <string name="title_ranking">랭킹</string>
+    <string name="title_portfolio">포트폴리오</string>
+
 </resources>
