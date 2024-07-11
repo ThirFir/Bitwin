@@ -25,7 +25,7 @@ fun CryptoList(
             key = { it.code }
         ) {
             CryptoListItem(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
                 ticker = it
             )
         }

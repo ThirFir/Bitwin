@@ -66,5 +66,21 @@ val Typography = Typography(
         fontSize = 20.sp,
         lineHeight = 26.sp,
         letterSpacing = 0.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = spoqaHanSansNeo,
+        fontWeight = FontWeight.Medium,
+        fontSize = 13.sp,
+        lineHeight = 22.sp,
+        letterSpacing = 0.35.sp,
+        color = ColorTextGray
+    ),
+    labelSmall = TextStyle(
+        fontFamily = spoqaHanSansNeo,
+        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp,
+        color = ColorTextGray
     )
 )

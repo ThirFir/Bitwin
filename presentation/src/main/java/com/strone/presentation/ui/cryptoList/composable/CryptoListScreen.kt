@@ -23,7 +23,7 @@ fun CryptoListScreen(
         CryptoList(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 24.dp),
             tickers = tickers
         )
     }

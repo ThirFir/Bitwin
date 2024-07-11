@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.strone.presentation.R
 import com.strone.presentation.ui.theme.ColorBackgroundGray
+import com.strone.presentation.ui.theme.Typography
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -90,7 +91,7 @@ fun FilledTextField(
                 Spacer(modifier = Modifier.width(8.dp))
                 Box {
                     if (state.text.isEmpty()) {
-                        Text(text = label, style = TextStyle.Default.copy(color = Color.Gray))
+                        Text(text = label, style = Typography.labelMedium)
                     }
                     innerTextField()
                 }

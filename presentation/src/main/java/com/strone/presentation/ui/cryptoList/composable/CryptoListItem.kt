@@ -53,8 +53,7 @@ fun CryptoListItem(
             Text(
                 text = ticker.signature,
                 modifier = Modifier.padding(top = 4.dp),
-                style = Typography.bodyMedium,
-                color = ColorTextGray
+                style = Typography.labelMedium,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
