@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Descriptions -->
-    <string name="kakao_button">Kakao Login Button</string>
+    <!-- Display Descriptions -->
     <string name="intro_bitwin">Bitwin에서 투자 실력을\n키우고 승리를 쟁취하세요!</string>
+    <string name="label_input_crypto">코인 이름 또는 심볼을 검색해보세요.</string>
 
     <!-- Titles -->
     <string name="title_home">홈</string>

@@ -39,3 +39,5 @@ val ColorInversePrimary = Color(0xFF2A7EFA)
 val ColorBackground = Color(0xFFF3F4F6)
 val ColorOutlineVariant = Color(0xFFF3F4F6)
 val ColorOutline = Color(0xFFF3F4F6)
+
+val ColorBackgroundGray = Color(0xFFF5F5F5)
