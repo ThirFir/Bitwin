@@ -1,19 +1,33 @@
 package com.strone.presentation.ui.cryptoList.composable
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
+import com.strone.presentation.R
+import com.strone.presentation.ui.theme.ColorTextGray
+import com.strone.presentation.ui.theme.Typography
+import com.strone.presentation.ui.util.getChangeColor
+import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate
 import com.strone.presentation.util.toDisplayPrice
 import com.strone.presentation.util.toTradeVolume
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CryptoListItem(
     modifier: Modifier = Modifier,
@@ -23,12 +37,46 @@ fun CryptoListItem(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Text(text = CryptoMarkets.marketOf(ticker.code).koreanName)
-        Text(text = ticker.code)
-        Text(text = CryptoNamespace.markets[ticker.code]?.koreanName ?: "")
+        GlideImage(
+            modifier = Modifier.size(40.dp).padding(end = 12.dp),
+            model = CryptoNamespace.markets[ticker.code]?.imageUrl ?: "",
+            contentDescription = stringResource(id = R.string.crypto_image),
+        ) {
+            it.diskCacheStrategy(DiskCacheStrategy.ALL)
+        }
+        Column(
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            Text(
+                text = CryptoNamespace.markets[ticker.code]?.koreanName ?: "",
+                style = Typography.titleSmall)
+            Text(
+                text = ticker.signature,
+                modifier = Modifier.padding(top = 4.dp),
+                style = Typography.bodyMedium,
+                color = ColorTextGray
+            )
+        }
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = ticker.tradePrice.toDisplayPrice())
-        Text(text = ticker.signedChangeRate.toDisplayChangeRate(), modifier = Modifier.padding(start = 8.dp))
-        Text(text = ticker.accTradePrice24h.toTradeVolume(), modifier = Modifier.padding(start = 8.dp))
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(text = ticker.tradePrice.toDisplayPrice(), style = Typography.titleSmall)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = ticker.changeRate.toDisplayChangeRate(),
+                    modifier = Modifier.padding(start = 8.dp),
+                    color = ticker.change.getChangeColor(),
+                )
+                Text(
+                    text = ticker.change.getChangeMark(),
+                    modifier = Modifier.padding(start = 4.dp),
+                    style = Typography.bodySmall,
+                    color = ticker.change.getChangeColor()
+                )
+            }
+
+        }
+        // Text(text = ticker.accTradePrice24h.toTradeVolume(), modifier = Modifier.padding(start = 8.dp))
     }
 }

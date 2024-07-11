@@ -3,6 +3,8 @@ package com.strone.data.mapper
 import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
+import com.strone.data.util.getImageUrl
+import com.strone.data.util.toSignature
 import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.USDT
@@ -12,6 +14,7 @@ import com.strone.domain.model.Ticker
 
 fun TickerStreamingResponse.toTicker() = Ticker(
     code = this.code ?: "",
+    signature = this.code?.toSignature() ?: "",
     type = this.code?.toMarketType() ?: MarketType.UNKNOWN,
     openingPrice = this.openingPrice ?: 0.0,
     highPrice = this.highPrice ?: 0.0,
@@ -40,6 +43,7 @@ fun TickerStreamingResponse.toTicker() = Ticker(
 
 fun TickerSnapshotResponse.toTicker() = Ticker(
     code = this.code ?: "",
+    signature = this.code?.toSignature() ?: "",
     type = this.code?.toMarketType() ?: MarketType.UNKNOWN,
     openingPrice = this.openingPrice ?: 0.0,
     highPrice = this.highPrice ?: 0.0,
@@ -70,7 +74,8 @@ fun MarketResponse.toMarket() = Market(
     code = this.code ?: "",
     koreanName = this.koreanName ?: "",
     englishName = this.englishName ?: "",
-    marketWarning = this.marketWarning ?: "NONE"
+    marketWarning = this.marketWarning ?: "NONE",
+    imageUrl = code?.getImageUrl() ?: ""
 )
 
 fun String.toMarketType() : MarketType {

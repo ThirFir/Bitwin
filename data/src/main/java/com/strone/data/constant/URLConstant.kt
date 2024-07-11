@@ -5,6 +5,8 @@ object URLConstant {
     const val SOCKET_BASE_URL_V1 = "wss://api.upbit.com/websocket/v1/"
     const val BASE_URL = "https://api.upbit.com/"
 
+    const val IMAGE_BASE_URL = "https://static.upbit.com/logos/"
+
     object V1 {
         const val V1 = "v1/"
         object Market {

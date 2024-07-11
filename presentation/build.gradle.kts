@@ -76,4 +76,6 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.compose.viewmodel)
     implementation(libs.compose.viewmodel.lifecycle)
+
+    implementation(libs.compose.glide)
 }

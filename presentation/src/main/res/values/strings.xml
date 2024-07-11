@@ -11,9 +11,10 @@
     <string name="title_portfolio">포트폴리오</string>
 
     <!-- Non-Display Descriptions -->
-    <string name="kakao_button">Kakao Login Button</string>
-    <string name="navigation_icon">Navigation Icon</string>
-    <string name="action_notice_setting">Notice Setting</string>
-    <string name="action_profile">Profile</string>
+    <string name="kakao_button">카카오 로그인 버튼</string>
+    <string name="navigation_icon">네비게이션 버튼</string>
+    <string name="action_notice_setting">알림 설정</string>
+    <string name="action_profile">프로필</string>
+    <string name="crypto_image">코인 이미지</string>
 
 </resources>

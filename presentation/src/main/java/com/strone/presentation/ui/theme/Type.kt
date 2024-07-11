@@ -32,6 +32,13 @@ val Typography = Typography(
         lineHeight = 22.sp,
         letterSpacing = 0.35.sp
     ),
+    bodySmall = TextStyle(
+        fontFamily = spoqaHanSansNeo,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp
+    ),
     headlineLarge = TextStyle(
         fontFamily = spoqaHanSansNeo,
         fontWeight = FontWeight.Bold,
