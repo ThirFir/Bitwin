@@ -1,8 +1,10 @@
 package com.strone.presentation.ui.main.composable
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,12 +21,15 @@ import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.theme.ColorPrimary
 import com.strone.presentation.ui.topbar.CryptoListTopAppBar
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScaffold(
     modifier: Modifier,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     var currentRoute by remember { mutableStateOf(Routes.CRYPTO_LIST) }
+    val searchInputState = rememberTextFieldState()
+
     Scaffold(
         topBar = {
             when(currentRoute) {
@@ -33,7 +38,8 @@ fun MainScaffold(
                 }
                 Routes.CRYPTO_LIST -> {
                     CryptoListTopAppBar(
-                        modifier = Modifier
+                        modifier = Modifier,
+                        searchInputState = searchInputState
                     )
                 }
                 Routes.RANKING -> {
@@ -74,7 +80,8 @@ fun MainScaffold(
                 MainNavHost(
                     modifier = Modifier,
                     navController = navController,
-                    startDestination = Routes.CRYPTO_LIST
+                    startDestination = Routes.CRYPTO_LIST,
+                    searchInput = searchInputState.text.toString()
                 )
             }
         }

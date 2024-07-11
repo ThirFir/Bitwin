@@ -14,6 +14,7 @@ import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 @Composable
 fun CryptoListScreen(
     modifier: Modifier = Modifier,
+    searchInput: String = "",
     viewModel: TickerViewModel = hiltViewModel()
 ) {
     Column(
@@ -24,7 +25,8 @@ fun CryptoListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
-            tickers = tickers
+            tickers = tickers,
+            searchInput = searchInput
         )
     }
 }

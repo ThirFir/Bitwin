@@ -1,5 +1,6 @@
 package com.strone.presentation.ui.navigation.composable
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,7 +16,8 @@ import com.strone.presentation.ui.ranking.composable.RankingScreen
 fun MainNavHost(
     modifier: Modifier,
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    searchInput: String
 ) {
     NavHost(
         modifier = modifier,
@@ -26,7 +28,10 @@ fun MainNavHost(
             HomeScreen()
         }
         composable(Routes.CRYPTO_LIST) {
-            CryptoListScreen()
+            CryptoListScreen(
+                modifier = Modifier.fillMaxSize(),
+                searchInput = searchInput
+            )
         }
         composable(Routes.RANKING) {
             RankingScreen()
