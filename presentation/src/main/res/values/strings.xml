@@ -10,4 +10,10 @@
     <string name="title_ranking">랭킹</string>
     <string name="title_portfolio">포트폴리오</string>
 
+    <!-- Non-Display Descriptions -->
+    <string name="kakao_button">Kakao Login Button</string>
+    <string name="navigation_icon">Navigation Icon</string>
+    <string name="action_notice_setting">Notice Setting</string>
+    <string name="action_profile">Profile</string>
+
 </resources>
