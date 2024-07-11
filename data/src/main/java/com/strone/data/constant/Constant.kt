@@ -8,4 +8,8 @@ object Constant {
     const val FORMAT = "format"
     const val DEFAULT = "DEFAULT"
     const val MARKETS = "markets"
+
+    const val RISE = "RISE"
+    const val EVEN = "EVEN"
+    const val FALL = "FALL"
 }

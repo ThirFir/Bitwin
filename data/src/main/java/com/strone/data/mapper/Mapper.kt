@@ -4,6 +4,7 @@ import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
 import com.strone.data.util.getImageUrl
+import com.strone.data.util.toChangeType
 import com.strone.data.util.toSignature
 import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.KRW
@@ -21,7 +22,7 @@ fun TickerStreamingResponse.toTicker() = Ticker(
     lowPrice = this.lowPrice ?: 0.0,
     tradePrice = this.tradePrice ?: 0.0,
     prevClosingPrice = this.prevClosingPrice ?: 0.0,
-    change = this.change ?: "EVEN",
+    change = this.change.toChangeType(),
     changePrice = this.changePrice ?: 0.0,
     signedChangePrice = this.signedChangePrice ?: 0.0,
     changeRate = this.changeRate ?: 0.0,
@@ -50,7 +51,7 @@ fun TickerSnapshotResponse.toTicker() = Ticker(
     lowPrice = this.lowPrice ?: 0.0,
     tradePrice = this.tradePrice ?: 0.0,
     prevClosingPrice = this.prevClosingPrice ?: 0.0,
-    change = this.change ?: "EVEN",
+    change = this.change.toChangeType(),
     changePrice = this.changePrice ?: 0.0,
     signedChangePrice = this.signedChangePrice ?: 0.0,
     changeRate = this.changeRate ?: 0.0,

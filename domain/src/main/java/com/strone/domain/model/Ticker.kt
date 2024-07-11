@@ -5,11 +5,11 @@ data class Ticker(
     val signature: String, // 코인 시그니처 ex) BTC, ETH, XRP
     val type: MarketType, // 마켓 구분 코드 KRW(원화), BTC(비트코인), USDT(테더)
     val openingPrice: Double,  // 시가
-    val highPrice: Double,        // 고가
+    val highPrice: Double,     // 고가
     val lowPrice: Double,      // 저가
     val tradePrice: Double,  // 현재가
     val prevClosingPrice: Double, // 전일 종가
-    val change: String, // 전일 대비 RISE : 상승 EVEN : 보합 FALL : 하락
+    val change: ChangeType, // 전일 대비 RISE : 상승 EVEN : 보합 FALL : 하락
     val changePrice: Double, // 부호 없는 전일 대비 값
     val signedChangePrice: Double, // 전일 대비 값
     val changeRate: Double, // 부호 없는 전일 대비 등락율
