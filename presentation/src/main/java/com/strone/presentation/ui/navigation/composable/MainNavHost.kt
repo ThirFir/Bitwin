@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.strone.domain.model.Ticker
 import com.strone.presentation.ui.cryptoList.composable.CryptoListScreen
 import com.strone.presentation.ui.home.composable.HomeScreen
 import com.strone.presentation.ui.navigation.item.Routes
@@ -17,7 +18,8 @@ fun MainNavHost(
     modifier: Modifier,
     navController: NavHostController,
     startDestination: String,
-    searchInput: String
+    searchInput: String,
+    tickers: Map<String, Ticker>
 ) {
     NavHost(
         modifier = modifier,
@@ -30,7 +32,8 @@ fun MainNavHost(
         composable(Routes.CRYPTO_LIST) {
             CryptoListScreen(
                 modifier = Modifier.fillMaxSize(),
-                searchInput = searchInput
+                searchInput = searchInput,
+                tickers = tickers
             )
         }
         composable(Routes.RANKING) {

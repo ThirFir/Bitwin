@@ -1,5 +1,7 @@
 package com.strone.presentation.ui.login.composable
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,6 +30,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.strone.presentation.R
+import com.strone.presentation.ui.main.MainActivity
 
 @Composable
 fun LoginScreen(modifier: Modifier) {
@@ -80,12 +84,16 @@ fun LoginContent(modifier: Modifier) {
             },
         )
 
+        val context = LocalContext.current
         Spacer(modifier = Modifier.weight(1f))
         Image(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
                     // TODO("Add feature : Kakao login")
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                    (context as Activity).finish()
                 },
             contentScale = ContentScale.FillWidth,
             painter = painterResource(id = R.drawable.kakao_login_medium_wide),

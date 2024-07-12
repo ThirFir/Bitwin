@@ -2,7 +2,15 @@
 <resources>
     <!-- Display Descriptions -->
     <string name="intro_bitwin">Bitwin에서 투자 실력을\n키우고 승리를 쟁취하세요!</string>
-    <string name="label_input_crypto">코인 이름 또는 심볼을 검색해보세요.</string>
+    <string name="label_input_crypto">검색</string>
+    <string name="sort_by_name_descending">이름순 ㄱ부터</string>
+    <string name="sort_by_name_ascending">이름순 ㅎ부터</string>
+    <string name="sort_by_price_descending">가격 높은순</string>
+    <string name="sort_by_price_ascending">가격 낮은순</string>
+    <string name="sort_by_change_rate_descending">전일대비 높은순</string>
+    <string name="sort_by_change_rate_ascending">전일대비 낮은순</string>
+    <string name="sort_by_volume_descending">거래량 높은순</string>
+    <string name="sort_by_volume_ascending">거래량 낮은순</string>
 
     <!-- Titles -->
     <string name="title_home">홈</string>
@@ -16,5 +24,6 @@
     <string name="action_notice_setting">알림 설정</string>
     <string name="action_profile">프로필</string>
     <string name="crypto_image">코인 이미지</string>
+    <string name="sort_crypto">정렬</string>
 
 </resources>

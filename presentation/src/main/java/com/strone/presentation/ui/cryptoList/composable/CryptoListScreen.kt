@@ -9,18 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.strone.domain.model.Ticker
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 
 @Composable
 fun CryptoListScreen(
     modifier: Modifier = Modifier,
     searchInput: String = "",
-    viewModel: TickerViewModel = hiltViewModel()
+    tickers: Map<String, Ticker>
 ) {
     Column(
         modifier = modifier
     ) {
-        val tickers by viewModel.tickers.collectAsStateWithLifecycle(emptyMap())
         CryptoList(
             modifier = Modifier
                 .fillMaxSize()

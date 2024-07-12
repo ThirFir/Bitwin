@@ -63,8 +63,8 @@ val Typography = Typography(
     titleSmall = TextStyle(
         fontFamily = spoqaHanSansNeo,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-        lineHeight = 26.sp,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),
     labelMedium = TextStyle(

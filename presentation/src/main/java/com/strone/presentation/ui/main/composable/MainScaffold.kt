@@ -8,13 +8,18 @@ import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.strone.presentation.CryptoSortState
+import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
 import com.strone.presentation.ui.navigation.composable.MainNavHost
 import com.strone.presentation.ui.navigation.item.Routes
@@ -26,9 +31,14 @@ import com.strone.presentation.ui.topbar.CryptoListTopAppBar
 fun MainScaffold(
     modifier: Modifier,
     navController: NavHostController,
+    viewModel: TickerViewModel = hiltViewModel()
 ) {
+
+    val tickers by viewModel.tickers.collectAsStateWithLifecycle(emptyMap())
+
     var currentRoute by remember { mutableStateOf(Routes.CRYPTO_LIST) }
     val searchInputState = rememberTextFieldState()
+    var currentCryptoSortState by remember { mutableStateOf(CryptoSortState.CHANGE_RATE_DESCENDING) }
 
     Scaffold(
         topBar = {
@@ -39,7 +49,10 @@ fun MainScaffold(
                 Routes.CRYPTO_LIST -> {
                     CryptoListTopAppBar(
                         modifier = Modifier,
-                        searchInputState = searchInputState
+                        searchInputState = searchInputState,
+                        onSelectSortState = {
+                            currentCryptoSortState = it
+                        }
                     )
                 }
                 Routes.RANKING -> {
@@ -58,13 +71,6 @@ fun MainScaffold(
                 navController = navController,
                 onItemClick = {
                     currentRoute = it
-                    navController.navigate(it) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
                 }
             )
         }
@@ -81,9 +87,24 @@ fun MainScaffold(
                     modifier = Modifier,
                     navController = navController,
                     startDestination = Routes.CRYPTO_LIST,
-                    searchInput = searchInputState.text.toString()
+                    searchInput = searchInputState.text.toString(),
+                    tickers = tickers
                 )
             }
+        }
+    }
+
+    LaunchedEffect(currentCryptoSortState) {
+        viewModel.sortTickers(currentCryptoSortState)
+    }
+
+    LaunchedEffect(currentRoute) {
+        navController.navigate(currentRoute) {
+            navController.graph.startDestinationRoute?.let { route ->
+                popUpTo(route) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
         }
     }
 }
