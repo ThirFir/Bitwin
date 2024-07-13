@@ -1,6 +1,5 @@
 package com.strone.presentation.ui.cryptoList.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,13 +18,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
 import com.strone.presentation.R
-import com.strone.presentation.ui.theme.ColorTextGray
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.ui.util.getChangeColor
 import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate
 import com.strone.presentation.util.toDisplayPrice
-import com.strone.presentation.util.toTradeVolume
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

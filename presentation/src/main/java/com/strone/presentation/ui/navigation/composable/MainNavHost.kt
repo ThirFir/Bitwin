@@ -12,6 +12,7 @@ import com.strone.presentation.ui.home.composable.HomeScreen
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.portfolio.composable.PortfolioScreen
 import com.strone.presentation.ui.ranking.composable.RankingScreen
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MainNavHost(
@@ -19,7 +20,7 @@ fun MainNavHost(
     navController: NavHostController,
     startDestination: String,
     searchInput: String,
-    tickers: Map<String, Ticker>
+    tickers: Map<String, StateFlow<Ticker>>
 ) {
     NavHost(
         modifier = modifier,

@@ -12,9 +12,19 @@ class FetchTickerUseCase @Inject constructor(
     private val tickerRepository: TickerRepository
 ) {
 
-    suspend operator fun invoke(markets: List<Market>) : Result<Flow<Ticker>> {
+    suspend fun fetchTickerSnapshot(markets: List<Market>) : Result<List<Ticker>> {
         return try {
-            Result.success(tickerRepository.fetchTickerResponse(markets.map(Market::code)).filter {
+            Result.success(tickerRepository.fetchTickerSnapshotResponse(markets.map(Market::code)).filter {
+                it.type == MarketType.KRW
+            })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun fetchTickerStreaming(markets: List<Market>) : Result<Flow<Ticker>> {
+        return try {
+            Result.success(tickerRepository.fetchTickerStreamingResponse(markets.map(Market::code)).filter {
                 it.type == MarketType.KRW
             })
         } catch (e: Exception) {

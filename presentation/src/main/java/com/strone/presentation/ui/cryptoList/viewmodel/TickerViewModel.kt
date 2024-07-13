@@ -1,6 +1,5 @@
 package com.strone.presentation.ui.cryptoList.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.strone.core.CryptoNamespace
 import com.strone.core.viewmodel.CryptoBaseViewModel
@@ -19,8 +18,10 @@ class TickerViewModel @Inject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
 ) : CryptoBaseViewModel() {
 
-    private val _tickers: MutableStateFlow<Map<String, Ticker>> = MutableStateFlow(emptyMap())
-    val tickers: StateFlow<Map<String, Ticker>>
+    private val _tickers: MutableStateFlow<Map<String, MutableStateFlow<Ticker>>> = MutableStateFlow(
+        linkedMapOf()
+    )
+    val tickers: StateFlow<Map<String, StateFlow<Ticker>>>
         get() = _tickers
 
     init {
@@ -34,28 +35,45 @@ class TickerViewModel @Inject constructor(
     }
 
     private suspend fun fetchTicker(markets: List<Market>) {
-        fetchTickerUseCase(markets).onSuccess {
-            it.collect { ticker ->
-                val map = _tickers.value.toMutableMap()
-                map[ticker.code] = ticker
-                _tickers.emit(map)
+        fetchTickerUseCase.fetchTickerSnapshot(markets).onSuccess { tickers ->
+
+            val initialMap = linkedMapOf<String, MutableStateFlow<Ticker>>()
+            tickers.forEach { ticker ->
+                initialMap[ticker.code] = MutableStateFlow(ticker)
+            }
+            _tickers.emit(initialMap)
+
+            fetchTickerUseCase.fetchTickerStreaming(markets).onSuccess { streamingTickerFlow ->
+                streamingTickerFlow.collect { ticker ->
+                    _tickers.value[ticker.code]?.emit(ticker)
+                }
+            }.onFailure {
+                // TODO : Streaming 시세 Failure
             }
         }.onFailure {
-            // TODO : 실시간 시세를 가져오는데 실패했을 때 처리
+            // TODO : 초기 시세 Failure
         }
     }
 
-    suspend fun sortTickers(state: CryptoSortState) {
+    fun sortTickers(state: CryptoSortState) {
         val sortedTickers = when (state) {
-            CryptoSortState.NAME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.signature }
-            CryptoSortState.NAME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.signature }
-            CryptoSortState.PRICE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.tradePrice }
-            CryptoSortState.PRICE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.tradePrice }
-            CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.changeRate }
-            CryptoSortState.CHANGE_RATE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.changeRate }
-            CryptoSortState.VOLUME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.accTradeVolume24h }
-            CryptoSortState.VOLUME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.accTradeVolume24h }
+            CryptoSortState.NAME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.signature }
+            CryptoSortState.NAME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.signature }
+            CryptoSortState.PRICE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.tradePrice }
+            CryptoSortState.PRICE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.tradePrice }
+            CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.changeRate }
+            CryptoSortState.CHANGE_RATE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.changeRate }
+            CryptoSortState.VOLUME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.accTradePrice24h }
+            CryptoSortState.VOLUME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.accTradePrice24h }
         }
-        _tickers.emit(sortedTickers.toMap())
+
+        if(sortedTickers.isEmpty()) return
+
+        val sortedMap = mutableMapOf<String, MutableStateFlow<Ticker>>()
+        sortedTickers.forEach { (key, value) ->
+            sortedMap[key] = MutableStateFlow(value.value)
+        }
+
+        _tickers.value = sortedMap
     }
 }

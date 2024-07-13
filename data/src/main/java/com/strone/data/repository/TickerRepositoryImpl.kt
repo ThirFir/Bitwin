@@ -21,23 +21,15 @@ class TickerRepositoryImpl @Inject constructor(
     private val tickerRemoteDataSource: TickerRemoteDataSource
 ) : TickerRepository {
 
-    override suspend fun fetchTickerResponse(codes: List<String>): Flow<Ticker> {
+    override suspend fun fetchTickerSnapshotResponse(codes: List<String>): List<Ticker> {
         val query = codes.joinToString(",")
+        return tickerRemoteDataSource.fetchTickerSnapshotResponse(query).map(TickerSnapshotResponse::toTicker)
+    }
 
-        val initialDataFlow = tickerRemoteDataSource.fetchTickerSnapshotResponse(query)
-            .asFlow()
-            .map(TickerSnapshotResponse::toTicker)
+    override suspend fun fetchTickerStreamingResponse(codes: List<String>): Flow<Ticker> {
+        val json = codes.getSendJson()
 
-        val streamingDataFlow = flow {
-            val json = codes.getSendJson()
-            tickerRemoteDataSource.fetchTickerStreamingResponse(json)
-                .collect { response ->
-                    emit(response.toTicker())
-                }
-        }
-
-        return initialDataFlow.onCompletion {
-            emitAll(streamingDataFlow)
-        }
+        return tickerRemoteDataSource.fetchTickerStreamingResponse(json)
+            .map(TickerStreamingResponse::toTicker)
     }
 }

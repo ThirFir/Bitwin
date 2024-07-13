@@ -11,12 +11,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.strone.domain.model.Ticker
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun CryptoListScreen(
     modifier: Modifier = Modifier,
     searchInput: String = "",
-    tickers: Map<String, Ticker>
+    tickers:  Map<String, StateFlow<Ticker>>
 ) {
     Column(
         modifier = modifier
