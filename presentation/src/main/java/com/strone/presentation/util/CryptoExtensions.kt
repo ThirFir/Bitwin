@@ -1,5 +1,7 @@
 package com.strone.presentation.util
 
+import com.strone.core.CryptoNamespace
+import com.strone.domain.model.Ticker
 import java.text.NumberFormat
 
 fun Double.slicePriceDecimal(): String {
@@ -15,13 +17,15 @@ fun Double.slicePriceDecimal(): String {
 }
 
 fun Double.toDisplayPrice(): String {
-    val decimalFormattedPrice = this.slicePriceDecimal()
+    if(this < 1_000) {
+        return slicePriceDecimal()
+    }
     val formatter = NumberFormat.getNumberInstance()
-    return formatter.format(decimalFormattedPrice.toDouble())
+    return formatter.format(this)
 }
 
 fun Double.toDisplayChangeRate(): String {
-    val rate =  this * 100
+    val rate = this * 100
     return "%.2f%%".format(rate)
 }
 
@@ -30,4 +34,12 @@ fun Double.toTradeVolume(): String {
     val formatter = NumberFormat.getNumberInstance()
     val formattedValue = formatter.format(dividedValue)
     return "${formattedValue}백만"
+}
+
+fun List<Ticker>.searched(input: String): List<Ticker> {
+    return this.filter {
+        it.signature.contains(input, ignoreCase = true) ||
+                CryptoNamespace.markets[it.code]?.koreanName?.contains(input, ignoreCase = true) == true ||
+                CryptoNamespace.markets[it.code]?.englishName?.contains(input, ignoreCase = true) == true
+    }
 }

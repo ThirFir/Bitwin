@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
+import com.strone.presentation.util.searched
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -33,18 +34,14 @@ fun CryptoList(
         state = listState
     ) {
         items(
-            items = tickerList
+            items = tickerList.searched(searchInput)
         ) {
-            if (it.signature.contains(searchInput, ignoreCase = true) ||
-                CryptoNamespace.markets[it.code]?.koreanName?.contains(searchInput, ignoreCase = true) == true ||
-                CryptoNamespace.markets[it.code]?.englishName?.contains(searchInput, ignoreCase = true) == true
-                )
-                CryptoListItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    ticker = it
-                )
+            CryptoListItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                ticker = it
+            )
         }
     }
 }
