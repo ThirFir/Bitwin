@@ -57,8 +57,8 @@ class TickerViewModel @Inject constructor(
 
     fun sortTickers(state: CryptoSortState) {
         val sortedTickers = when (state) {
-            CryptoSortState.NAME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.signature }
-            CryptoSortState.NAME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.signature }
+            CryptoSortState.NAME_DESCENDING -> _tickers.value.toList().sortedByDescending { CryptoNamespace.markets[it.second.value.code]?.koreanName }
+            CryptoSortState.NAME_ASCENDING -> _tickers.value.toList().sortedBy { CryptoNamespace.markets[it.second.value.code]?.koreanName }
             CryptoSortState.PRICE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.tradePrice }
             CryptoSortState.PRICE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.tradePrice }
             CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.changeRate }

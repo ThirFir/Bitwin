@@ -5,8 +5,8 @@ import androidx.annotation.StringRes
 enum class CryptoSortState(
     @StringRes val sortDescription: Int
 ) {
-    NAME_DESCENDING(R.string.sort_by_name_descending),
     NAME_ASCENDING(R.string.sort_by_name_ascending),
+    NAME_DESCENDING(R.string.sort_by_name_descending),
     PRICE_DESCENDING(R.string.sort_by_price_descending),
     PRICE_ASCENDING(R.string.sort_by_price_ascending),
     CHANGE_RATE_DESCENDING(R.string.sort_by_change_rate_descending),
