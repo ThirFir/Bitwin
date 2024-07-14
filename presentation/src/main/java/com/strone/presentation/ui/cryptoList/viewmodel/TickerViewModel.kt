@@ -6,7 +6,7 @@ import com.strone.core.viewmodel.CryptoBaseViewModel
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.FetchTickerUseCase
-import com.strone.presentation.CryptoSortState
+import com.strone.presentation.state.CryptoSortState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

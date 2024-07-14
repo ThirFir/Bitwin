@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.strone.presentation.CryptoSortState
+import com.strone.presentation.state.CryptoSortState
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
 import com.strone.presentation.ui.navigation.composable.MainNavHost

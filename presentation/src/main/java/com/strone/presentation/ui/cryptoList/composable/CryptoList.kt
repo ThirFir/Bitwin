@@ -3,6 +3,7 @@ package com.strone.presentation.ui.cryptoList.composable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -18,16 +19,10 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun CryptoList(
     modifier: Modifier = Modifier,
-    tickers: Map<String, StateFlow<Ticker>>,
-    searchInput: String
+    tickerList: List<Ticker>,
+    searchInput: String,
+    listState: LazyListState = rememberLazyListState()
 ) {
-    val listState = rememberLazyListState()
-
-    val tickerList = mutableListOf<Ticker>()
-    tickers.values.forEach {
-        val ticker by it.collectAsStateWithLifecycle()
-        tickerList.add(ticker)
-    }
 
     LazyColumn(
         modifier = modifier,

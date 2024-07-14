@@ -1,6 +1,7 @@
-package com.strone.presentation
+package com.strone.presentation.state
 
 import androidx.annotation.StringRes
+import com.strone.presentation.R
 
 enum class CryptoSortState(
     @StringRes val sortDescription: Int
