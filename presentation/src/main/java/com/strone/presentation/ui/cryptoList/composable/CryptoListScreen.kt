@@ -13,25 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.strone.domain.model.Ticker
 import com.strone.presentation.state.CryptoTabState
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun CryptoListScreen(
     modifier: Modifier = Modifier,
     searchInput: String = "",
-    tickers: Map<String, StateFlow<Ticker>>
+    tickers: List<Ticker>
 ) {
     var selectedTab by remember {
         mutableStateOf(CryptoTabState.ALL)
-    }
-
-    val tickerList = mutableListOf<Ticker>()
-    tickers.values.forEach {
-        val ticker by it.collectAsStateWithLifecycle()
-        tickerList.add(ticker)
     }
 
     val listScrollStates = arrayListOf<LazyListState>().apply {
@@ -45,8 +37,7 @@ fun CryptoListScreen(
     ) {
         CryptoTab(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .fillMaxWidth(),
             currentTabState = selectedTab
         ) {
             selectedTab = it
@@ -56,9 +47,8 @@ fun CryptoListScreen(
             if (selectedTab == tab)
                 CryptoList(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp),
-                    tickerList = tickerList,
+                        .fillMaxSize(),
+                    tickers = tickers,
                     searchInput = searchInput,
                     listState = listScrollStates[i]
                 )

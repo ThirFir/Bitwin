@@ -31,6 +31,7 @@ val ColorSurface = Color(0xFFFFFFFF)
 val ColorSurfaceContainer = Color(0xFFFFFFFF)
 val ColorOnSurface = Color(0xFF191F26)
 val ColorOnSurfaceVariant = Color(0xFF323D4C)
+val ColorSurfaceVariant = ColorSurfaceContainer
 
 val ColorInverseSurface = Color(0xFF191F26)
 val ColorInverseOnSurface = Color(0xFFFFFFFF)
@@ -38,7 +39,7 @@ val ColorInversePrimary = Color(0xFF2A7EFA)
 
 val ColorBackground = Color(0xFFF3F4F6)
 val ColorOutlineVariant = Color(0xFFF3F4F6)
-val ColorOutline = Color(0xFFF3F4F6)
+val ColorOutline = Color(0xFFE1E1E1)
 
 val ColorBackgroundGray = Color(0xFFF5F5F5)
 val ColorTextGray = Color.Gray

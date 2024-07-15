@@ -11,8 +11,10 @@
     <string name="sort_by_change_rate_ascending">전일대비 낮은순</string>
     <string name="sort_by_volume_descending">거래량 높은순</string>
     <string name="sort_by_volume_ascending">거래량 낮은순</string>
+    <string name="top_acc_trade_price">거래량 TOP</string>
 
     <!-- Titles -->
+    <string name="app_name">Bitwin</string>
     <string name="title_home">홈</string>
     <string name="title_crypto_list">거래소</string>
     <string name="title_ranking">랭킹</string>

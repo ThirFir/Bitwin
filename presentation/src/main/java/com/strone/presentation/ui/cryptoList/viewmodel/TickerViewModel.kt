@@ -24,6 +24,10 @@ class TickerViewModel @Inject constructor(
     val tickers: StateFlow<Map<String, StateFlow<Ticker>>>
         get() = _tickers
 
+    private val _hotTickers: MutableStateFlow<List<Ticker>> = MutableStateFlow(listOf())
+    val hotTickers: StateFlow<List<Ticker>>
+        get() = _hotTickers
+
     init {
         viewModelScope.launch {
             CryptoNamespace.isFetched.collect { isFetched ->
@@ -36,16 +40,18 @@ class TickerViewModel @Inject constructor(
 
     private suspend fun fetchTicker(markets: List<Market>) {
         fetchTickerUseCase.fetchTickerSnapshot(markets).onSuccess { tickers ->
-
-            val initialMap = linkedMapOf<String, MutableStateFlow<Ticker>>()
-            tickers.forEach { ticker ->
-                initialMap[ticker.code] = MutableStateFlow(ticker)
-            }
-            _tickers.emit(initialMap)
+            emitTickers(tickers)
+            emitHotTickers(tickers)
 
             fetchTickerUseCase.fetchTickerStreaming(markets).onSuccess { streamingTickerFlow ->
                 streamingTickerFlow.collect { ticker ->
                     _tickers.value[ticker.code]?.emit(ticker)
+                    _hotTickers.emit(_hotTickers.value.map { original ->
+                        if (original.code == ticker.code)
+                            ticker
+                        else
+                            original
+                    })
                 }
             }.onFailure {
                 // TODO : Streaming 시세 Failure
@@ -75,5 +81,19 @@ class TickerViewModel @Inject constructor(
         }
 
         _tickers.value = sortedMap
+    }
+
+    private suspend fun emitHotTickers(tickers: List<Ticker>) {
+        _hotTickers.emit(
+            tickers.sortedByDescending { it.accTradePrice }.take(4)
+        )
+    }
+
+    private suspend fun emitTickers(tickers: List<Ticker>) {
+        val initialMap = linkedMapOf<String, MutableStateFlow<Ticker>>()
+        tickers.forEach { ticker ->
+            initialMap[ticker.code] = MutableStateFlow(ticker)
+        }
+        _tickers.emit(initialMap)
     }
 }

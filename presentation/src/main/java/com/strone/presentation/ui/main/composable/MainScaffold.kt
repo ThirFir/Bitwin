@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.strone.domain.model.Ticker
 import com.strone.presentation.state.CryptoSortState
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
@@ -25,6 +26,7 @@ import com.strone.presentation.ui.navigation.composable.MainNavHost
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.theme.ColorPrimary
 import com.strone.presentation.ui.topbar.CryptoListTopAppBar
+import com.strone.presentation.ui.topbar.HomeTopAppBar
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,8 +37,16 @@ fun MainScaffold(
 ) {
 
     val tickers by viewModel.tickers.collectAsStateWithLifecycle(emptyMap())
+    val tickerList = mutableListOf<Ticker>()
+    tickers.values.forEach {
+        val ticker by it.collectAsStateWithLifecycle()
+        tickerList.add(ticker)
+    }
 
-    var currentRoute by remember { mutableStateOf(Routes.CRYPTO_LIST) }
+    val hotTickers by viewModel.hotTickers.collectAsStateWithLifecycle(emptyList())
+
+    val startDestination = Routes.HOME
+    var currentRoute by remember { mutableStateOf(Routes.HOME) }
     val searchInputState = rememberTextFieldState()
     var currentCryptoSortState by remember { mutableStateOf(CryptoSortState.CHANGE_RATE_DESCENDING) }
 
@@ -44,7 +54,9 @@ fun MainScaffold(
         topBar = {
             when(currentRoute) {
                 Routes.HOME -> {
-
+                    HomeTopAppBar(
+                        modifier = Modifier
+                    )
                 }
                 Routes.CRYPTO_LIST -> {
                     CryptoListTopAppBar(
@@ -86,9 +98,10 @@ fun MainScaffold(
                 MainNavHost(
                     modifier = Modifier,
                     navController = navController,
-                    startDestination = Routes.CRYPTO_LIST,
+                    startDestination = startDestination,
                     searchInput = searchInputState.text.toString(),
-                    tickers = tickers
+                    tickers = tickerList,
+                    hotTickers = hotTickers
                 )
             }
         }

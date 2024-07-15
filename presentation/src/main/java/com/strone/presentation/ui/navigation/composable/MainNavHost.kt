@@ -1,8 +1,10 @@
 package com.strone.presentation.ui.navigation.composable
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,7 +14,6 @@ import com.strone.presentation.ui.home.composable.HomeScreen
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.portfolio.composable.PortfolioScreen
 import com.strone.presentation.ui.ranking.composable.RankingScreen
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MainNavHost(
@@ -20,7 +21,8 @@ fun MainNavHost(
     navController: NavHostController,
     startDestination: String,
     searchInput: String,
-    tickers: Map<String, StateFlow<Ticker>>
+    tickers: List<Ticker>,
+    hotTickers: List<Ticker>
 ) {
     NavHost(
         modifier = modifier,
@@ -28,11 +30,14 @@ fun MainNavHost(
         startDestination = startDestination
     ) {
         composable(Routes.HOME) {
-            HomeScreen()
+            HomeScreen(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp),
+                hotTickers = hotTickers,
+            )
         }
         composable(Routes.CRYPTO_LIST) {
             CryptoListScreen(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp),
                 searchInput = searchInput,
                 tickers = tickers
             )

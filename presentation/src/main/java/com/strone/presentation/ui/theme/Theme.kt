@@ -46,6 +46,7 @@ private val LightColorScheme = lightColorScheme(
     surfaceContainer = ColorSurfaceContainer,
     onSurface = ColorOnSurface,
     onSurfaceVariant = ColorOnSurfaceVariant,
+    surfaceVariant = ColorSurfaceVariant,
 
     inverseSurface = ColorInverseSurface,
     inverseOnSurface = ColorInverseOnSurface,

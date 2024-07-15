@@ -7,19 +7,15 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
 import com.strone.presentation.util.searched
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun CryptoList(
     modifier: Modifier = Modifier,
-    tickerList: List<Ticker>,
+    tickers: List<Ticker>,
     searchInput: String,
     listState: LazyListState = rememberLazyListState()
 ) {
@@ -29,7 +25,7 @@ fun CryptoList(
         state = listState
     ) {
         items(
-            items = tickerList.searched(searchInput)
+            items = tickers.searched(searchInput)
         ) {
             CryptoListItem(
                 modifier = Modifier
