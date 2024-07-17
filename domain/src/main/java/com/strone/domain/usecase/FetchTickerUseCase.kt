@@ -31,4 +31,8 @@ class FetchTickerUseCase @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun fetchTickerStreaming() : Result<Flow<Ticker>> {
+        return fetchTickerStreaming(emptyList())
+    }
 }

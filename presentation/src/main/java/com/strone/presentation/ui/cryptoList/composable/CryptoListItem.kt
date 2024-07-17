@@ -18,8 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
 import com.strone.presentation.R
+import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.Typography
-import com.strone.presentation.ui.util.getChangeColor
 import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate
 import com.strone.presentation.util.toDisplayPrice
@@ -35,7 +35,9 @@ fun CryptoListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         GlideImage(
-            modifier = Modifier.size(40.dp).padding(end = 12.dp),
+            modifier = Modifier
+                .size(40.dp)
+                .padding(end = 12.dp),
             model = CryptoNamespace.markets[ticker.code]?.imageUrl ?: "",
             contentDescription = stringResource(id = R.string.crypto_image),
         ) {
@@ -60,15 +62,16 @@ fun CryptoListItem(
         ) {
             Text(text = ticker.tradePrice.toDisplayPrice(), style = Typography.titleSmall)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = ticker.changeRate.toDisplayChangeRate(),
-                    modifier = Modifier.padding(start = 8.dp),
-                    color = ticker.change.getChangeColor(),
+                CryptoColoredText(
+                    text = ticker.changeRate.toDisplayChangeRate(),
+                    change = ticker.change,
+                    modifier = Modifier.padding(start = 8.dp)
                 )
-                Text(
+                CryptoColoredText(
                     text = ticker.change.getChangeMark(),
                     modifier = Modifier.padding(start = 4.dp),
                     style = Typography.bodySmall,
-                    color = ticker.change.getChangeColor()
+                    change = ticker.change
                 )
             }
 

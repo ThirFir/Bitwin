@@ -25,8 +25,9 @@ import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
 import com.strone.presentation.ui.navigation.composable.MainNavHost
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.theme.ColorPrimary
-import com.strone.presentation.ui.topbar.CryptoListTopAppBar
-import com.strone.presentation.ui.topbar.HomeTopAppBar
+import com.strone.presentation.ui.topbar.main.CryptoListTopAppBar
+import com.strone.presentation.ui.topbar.main.HomeTopAppBar
+import com.strone.presentation.util.navigateToOtherTab
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -112,12 +113,6 @@ fun MainScaffold(
     }
 
     LaunchedEffect(currentRoute) {
-        navController.navigate(currentRoute) {
-            navController.graph.startDestinationRoute?.let { route ->
-                popUpTo(route) { saveState = true }
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
+        navController.navigateToOtherTab(currentRoute)
     }
 }

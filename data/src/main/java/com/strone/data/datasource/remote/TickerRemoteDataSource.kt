@@ -21,6 +21,10 @@ class TickerRemoteDataSource @Inject constructor(
         return tickerWebSocketListener.fetchResponse()
     }
 
+    fun fetchTickerStreamingResponse() : Flow<TickerStreamingResponse> {
+        return tickerWebSocketListener.fetchResponse()
+    }
+
     suspend fun fetchTickerSnapshotResponse(query: String): List<TickerSnapshotResponse> {
         return tickerApi.fetchAllTickers(query)
     }

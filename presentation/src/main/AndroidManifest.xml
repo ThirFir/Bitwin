@@ -3,11 +3,15 @@
 
     <application>
         <activity
+            android:name=".ui.trade.TradeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Bitwin" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.Bitwin" />
         <activity
-            android:name="com.strone.presentation.ui.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Bitwin">
             <intent-filter>

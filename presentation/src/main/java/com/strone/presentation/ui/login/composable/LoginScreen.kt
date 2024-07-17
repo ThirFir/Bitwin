@@ -31,6 +31,7 @@ import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.strone.presentation.R
 import com.strone.presentation.ui.main.MainActivity
+import com.strone.presentation.util.findActivity
 
 @Composable
 fun LoginScreen(modifier: Modifier) {
@@ -93,7 +94,7 @@ fun LoginContent(modifier: Modifier) {
                     // TODO("Add feature : Kakao login")
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
-                    (context as Activity).finish()
+                    context.findActivity().finish()
                 },
             contentScale = ContentScale.FillWidth,
             painter = painterResource(id = R.drawable.kakao_login_medium_wide),

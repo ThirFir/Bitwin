@@ -18,6 +18,7 @@ import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
 import com.strone.presentation.R
 import com.strone.presentation.ui.component.BitwinOutlinedCard
+import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.ColorOutline
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.ui.util.getChangeColor
@@ -48,10 +49,10 @@ fun TopAccTradePriceItem(
                 )
             )
 
-            Text(
+            CryptoColoredText(
                 modifier = Modifier.padding(top = 20.dp),
                 text = hotTicker.changeRate.toDisplayChangeRate(),
-                color = hotTicker.change.getChangeColor(),
+                change = hotTicker.change,
                 style = Typography.titleMedium
             )
 

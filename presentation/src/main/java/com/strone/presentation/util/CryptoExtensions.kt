@@ -3,6 +3,7 @@ package com.strone.presentation.util
 import com.strone.core.CryptoNamespace
 import com.strone.domain.model.Ticker
 import java.text.NumberFormat
+import kotlin.math.absoluteValue
 
 fun Double.slicePriceDecimal(): String {
     return when {
@@ -17,7 +18,7 @@ fun Double.slicePriceDecimal(): String {
 }
 
 fun Double.toDisplayPrice(): String {
-    if(this < 1_000) {
+    if(this.absoluteValue < 1_000) {
         return slicePriceDecimal()
     }
     val formatter = NumberFormat.getNumberInstance()

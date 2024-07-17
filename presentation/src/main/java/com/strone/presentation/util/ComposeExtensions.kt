@@ -6,9 +6,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.semantics.Role
+import androidx.navigation.NavHostController
 
 
-inline fun Modifier.clickable(
+internal inline fun Modifier.clickable(
     showRipple: Boolean = true,
     enabled: Boolean = true,
     onClickLabel: String? = null,
@@ -21,5 +22,15 @@ inline fun Modifier.clickable(
         ) { onClick() }
     } else {
         this.clickable { onClick() }
+    }
+}
+
+internal fun NavHostController.navigateToOtherTab(route: String) {
+    navigate(route) {
+        graph.startDestinationRoute?.let { route ->
+            popUpTo(route) { saveState = true }
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }

@@ -1,4 +1,4 @@
-package com.strone.presentation.ui.topbar
+package com.strone.presentation.ui.topbar.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
