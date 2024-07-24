@@ -1,11 +1,11 @@
 package com.strone.data.request
 
-import com.strone.data.constant.Constant
+import com.strone.domain.constants.CryptoConstants
 
 enum class RequestType(
     val value: String
 ) {
-    TICKER(Constant.TICKER),
-    ORDERBOOK(Constant.ORDERBOOK),
-    TRADE(Constant.TRADE)
+    TICKER(CryptoConstants.TICKER),
+    ORDERBOOK(CryptoConstants.ORDERBOOK),
+    TRADE(CryptoConstants.TRADE)
 }

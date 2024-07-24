@@ -1,10 +1,9 @@
 package com.strone.data.util
 
-import com.strone.data.constant.Constant
-import com.strone.data.constant.Constant.EVEN
-import com.strone.data.constant.Constant.FALL
-import com.strone.data.constant.Constant.RISE
 import com.strone.data.constant.URLConstant.IMAGE_BASE_URL
+import com.strone.domain.constants.CryptoConstants.EVEN
+import com.strone.domain.constants.CryptoConstants.FALL
+import com.strone.domain.constants.CryptoConstants.RISE
 import com.strone.domain.model.ChangeType
 
 internal fun String.toSignature(): String {

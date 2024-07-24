@@ -1,12 +1,12 @@
 package com.strone.data.util
 
 import com.squareup.moshi.JsonWriter
-import com.strone.data.constant.Constant.CODES
-import com.strone.data.constant.Constant.DEFAULT
-import com.strone.data.constant.Constant.FORMAT
-import com.strone.data.constant.Constant.TICKET
-import com.strone.data.constant.Constant.TYPE
 import com.strone.data.request.RequestType
+import com.strone.domain.constants.CryptoConstants.CODES
+import com.strone.domain.constants.CryptoConstants.DEFAULT
+import com.strone.domain.constants.CryptoConstants.FORMAT
+import com.strone.domain.constants.CryptoConstants.TICKET
+import com.strone.domain.constants.CryptoConstants.TYPE
 import okio.Buffer
 import java.util.UUID
 

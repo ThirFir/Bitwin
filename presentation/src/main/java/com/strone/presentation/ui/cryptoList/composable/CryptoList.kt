@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.strone.domain.constants.CryptoConstants.TICKER
 import com.strone.domain.model.Ticker
-import com.strone.presentation.constant.Constants.TICKER
 import com.strone.presentation.ui.trade.TradeActivity
 import com.strone.presentation.util.clickable
 import com.strone.presentation.util.searched

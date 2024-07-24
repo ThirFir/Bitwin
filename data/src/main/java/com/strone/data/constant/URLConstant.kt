@@ -35,4 +35,8 @@ object URLConstant {
             const val ORDERBOOK = "${V1}orderbook/"
         }
     }
+
+    object Query {
+        const val MARKETS = "markets"
+    }
 }
