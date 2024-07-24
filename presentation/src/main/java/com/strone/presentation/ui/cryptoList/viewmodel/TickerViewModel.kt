@@ -29,7 +29,7 @@ class TickerViewModel @Inject constructor(
         get() = _hotTickers
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launchWithUiState {
             CryptoNamespace.isFetched.collect { isFetched ->
                 if (isFetched) {
                     fetchTicker(CryptoNamespace.markets.values.toList())
@@ -39,26 +39,28 @@ class TickerViewModel @Inject constructor(
     }
 
     private suspend fun fetchTicker(markets: List<Market>) {
-        fetchTickerUseCase.fetchTickerSnapshot(markets).onSuccess { tickers ->
-            emitTickers(tickers)
-            emitHotTickers(tickers)
+        fetchTickerUseCase.fetchTickerSnapshot(markets)
+            .emitUiState()
+            .onSuccess { tickers ->
+                emitTickers(tickers)
+                emitHotTickers(tickers)
 
-            fetchTickerUseCase.fetchTickerStreaming(markets).onSuccess { streamingTickerFlow ->
-                streamingTickerFlow.collect { ticker ->
-                    _tickers.value[ticker.code]?.emit(ticker)
-                    _hotTickers.emit(_hotTickers.value.map { original ->
-                        if (original.code == ticker.code)
-                            ticker
-                        else
-                            original
-                    })
+                fetchTickerUseCase.fetchTickerStreaming(markets).onSuccess { streamingTickerFlow ->
+                    streamingTickerFlow.collect { ticker ->
+                        _tickers.value[ticker.code]?.emit(ticker)
+                        _hotTickers.emit(_hotTickers.value.map { original ->
+                            if (original.code == ticker.code)
+                                ticker
+                            else
+                                original
+                        })
+                    }
+                }.onFailure {
+                    // TODO : Streaming 시세 Failure
                 }
             }.onFailure {
-                // TODO : Streaming 시세 Failure
+                // TODO : 초기 시세 Failure
             }
-        }.onFailure {
-            // TODO : 초기 시세 Failure
-        }
     }
 
     fun sortTickers(state: CryptoSortState) {

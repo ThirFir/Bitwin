@@ -18,9 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.strone.core.state.UiState
 import com.strone.domain.model.Ticker
 import com.strone.presentation.state.CryptoSortState
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
+import com.strone.presentation.ui.loading.LoadingScreen
 import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
 import com.strone.presentation.ui.navigation.composable.MainNavHost
 import com.strone.presentation.ui.navigation.item.Routes
@@ -37,6 +39,8 @@ fun MainScaffold(
     viewModel: TickerViewModel = hiltViewModel()
 ) {
 
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val tickers by viewModel.tickers.collectAsStateWithLifecycle(emptyMap())
     val tickerList = mutableListOf<Ticker>()
     tickers.values.forEach {
@@ -52,71 +56,78 @@ fun MainScaffold(
     val searchInputState = rememberTextFieldState()
     var currentCryptoSortState by remember { mutableStateOf(CryptoSortState.CHANGE_RATE_DESCENDING) }
 
-    Scaffold(
-        topBar = {
-            when(currentRoute) {
-                Routes.HOME -> {
-                    HomeTopAppBar(
-                        modifier = Modifier
-                    )
+    if (uiState is UiState.Loading) {
+        LoadingScreen()
+    } else {
+        Scaffold(
+            topBar = {
+                when (currentRoute) {
+                    Routes.HOME -> {
+                        HomeTopAppBar(
+                            modifier = Modifier
+                        )
+                    }
+
+                    Routes.CRYPTO_LIST -> {
+                        CryptoListTopAppBar(
+                            modifier = Modifier,
+                            searchInputState = searchInputState,
+                            onSelectSortState = {
+                                currentCryptoSortState = it
+                            }
+                        )
+                    }
+
+                    Routes.RANKING -> {
+                        // TopBar for CryptoDetails
+                    }
+
+                    Routes.PORTFOLIO -> {
+                        // TopBar for CryptoMarket
+                    }
                 }
-                Routes.CRYPTO_LIST -> {
-                    CryptoListTopAppBar(
-                        modifier = Modifier,
-                        searchInputState = searchInputState,
-                        onSelectSortState = {
-                            currentCryptoSortState = it
-                        }
-                    )
-                }
-                Routes.RANKING -> {
-                    // TopBar for CryptoDetails
-                }
-                Routes.PORTFOLIO -> {
-                    // TopBar for CryptoMarket
-                }
-            }
-        },
-        bottomBar = {
-            MainBottomNavigation(
-                modifier = Modifier,
-                containerColor = Color.Transparent,
-                contentColor = ColorPrimary,
-                navController = navController,
-                onItemClick = {
-                    destinationRoute = it
-                }
-            )
-        }
-    ) {
-        Surface(
-            modifier = modifier,
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-            ) {
-                MainNavHost(
+            },
+            bottomBar = {
+                MainBottomNavigation(
                     modifier = Modifier,
+                    containerColor = Color.Transparent,
+                    contentColor = ColorPrimary,
                     navController = navController,
-                    startDestination = startDestination,
-                    searchInput = searchInputState.text.toString(),
-                    tickers = tickerList,
-                    hotTickers = hotTickers
+                    onItemClick = {
+                        destinationRoute = it
+                    }
                 )
             }
+        ) {
+            Surface(
+                modifier = modifier,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                ) {
+                    MainNavHost(
+                        modifier = Modifier,
+                        navController = navController,
+                        startDestination = startDestination,
+                        searchInput = searchInputState.text.toString(),
+                        tickers = tickerList,
+                        hotTickers = hotTickers
+                    )
+                }
+            }
         }
-    }
 
-    LaunchedEffect(currentCryptoSortState) {
-        viewModel.sortTickers(currentCryptoSortState)
-    }
+        LaunchedEffect(currentCryptoSortState) {
+            viewModel.sortTickers(currentCryptoSortState)
+        }
 
-    LaunchedEffect(destinationRoute) {
-        if (currentRoute != destinationRoute) {
-            navController.navigateToOtherTab(destinationRoute)
-            currentRoute = destinationRoute
+        LaunchedEffect(destinationRoute) {
+            if (currentRoute != destinationRoute) {
+                navController.navigateToOtherTab(destinationRoute)
+                currentRoute = destinationRoute
+            }
         }
     }
 }
