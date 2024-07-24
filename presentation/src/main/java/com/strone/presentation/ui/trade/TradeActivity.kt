@@ -7,9 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.strone.presentation.constant.Constants.CODE
+import com.strone.domain.model.Ticker
+import com.strone.presentation.constant.Constants.TICKER
 import com.strone.presentation.ui.theme.BitwinTheme
 import com.strone.presentation.ui.trade.composable.TradeScaffold
+import com.strone.presentation.util.getSerializableExtraCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,14 +20,18 @@ class TradeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val tickerCode = intent.getStringExtra(CODE) ?: ""
+        val ticker = intent.getSerializableExtraCompat<Ticker>(TICKER)
+        if (ticker == null) {
+            finish()
+            return  // TODO : Error 처리
+        }
         setContent {
             BitwinTheme {
                 val navController = rememberNavController()
                 TradeScaffold(
                     modifier = Modifier.fillMaxSize(),
                     navController = navController,
-                    code = tickerCode
+                    tickerSnapshot = ticker
                 )
             }
         }

@@ -28,9 +28,12 @@ internal inline fun Modifier.clickable(
 internal fun NavHostController.navigateToOtherTab(route: String) {
     navigate(route) {
         graph.startDestinationRoute?.let { route ->
-            popUpTo(route) { saveState = true }
+            popUpTo(route) {
+                saveState = true
+                inclusive = true
+            }
         }
-        launchSingleTop = true
+//        launchSingleTop = true
         restoreState = true
     }
 }

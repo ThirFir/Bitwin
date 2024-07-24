@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.strone.domain.model.Ticker
-import com.strone.presentation.constant.Constants.CODE
+import com.strone.presentation.constant.Constants.TICKER
 import com.strone.presentation.ui.trade.TradeActivity
 import com.strone.presentation.util.clickable
 import com.strone.presentation.util.searched
@@ -38,7 +38,7 @@ fun CryptoList(
                     .fillMaxWidth()
                     .clickable {
                         val intent = Intent(context, TradeActivity::class.java).apply {
-                            putExtra(CODE, it.code)
+                            putExtra(TICKER, it)
                         }
                         context.startActivity(intent)
                     }.padding(vertical = 16.dp),

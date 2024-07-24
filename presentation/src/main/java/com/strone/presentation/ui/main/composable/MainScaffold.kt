@@ -48,6 +48,7 @@ fun MainScaffold(
 
     val startDestination = Routes.HOME
     var currentRoute by remember { mutableStateOf(Routes.HOME) }
+    var destinationRoute by remember { mutableStateOf(Routes.HOME) }
     val searchInputState = rememberTextFieldState()
     var currentCryptoSortState by remember { mutableStateOf(CryptoSortState.CHANGE_RATE_DESCENDING) }
 
@@ -83,7 +84,7 @@ fun MainScaffold(
                 contentColor = ColorPrimary,
                 navController = navController,
                 onItemClick = {
-                    currentRoute = it
+                    destinationRoute = it
                 }
             )
         }
@@ -112,7 +113,10 @@ fun MainScaffold(
         viewModel.sortTickers(currentCryptoSortState)
     }
 
-    LaunchedEffect(currentRoute) {
-        navController.navigateToOtherTab(currentRoute)
+    LaunchedEffect(destinationRoute) {
+        if (currentRoute != destinationRoute) {
+            navController.navigateToOtherTab(destinationRoute)
+            currentRoute = destinationRoute
+        }
     }
 }
