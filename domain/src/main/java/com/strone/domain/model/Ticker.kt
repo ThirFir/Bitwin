@@ -27,7 +27,7 @@ data class Ticker(
     val lowest52WeekPrice: Double, // 52주 최저가
     val lowest52WeekDate: String, // 52주 최저가 달성일 yyyy-MM-dd
     val timestamp: Long, // 타임스탬프
-)
+) : StreamingModel()
 
 // delistingDate, isTradingSuspended, askBid, accAskVolume, accBidVolume, type, market, marketWarning
 // tradeDateKst, tradeTimeKst, marketWarning
