@@ -1,6 +1,7 @@
 package com.strone.bitwin.di
 
 import com.squareup.moshi.Moshi
+import com.strone.data.api.websocket.OrderbookWebSocketListener
 import com.strone.data.api.websocket.TickerWebSocketListener
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,13 @@ object WebSocketModule {
         moshi: Moshi
     ) : TickerWebSocketListener {
         return TickerWebSocketListener(moshi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderbookWebSocketListener(
+        moshi: Moshi
+    ) : OrderbookWebSocketListener {
+        return OrderbookWebSocketListener(moshi)
     }
 }

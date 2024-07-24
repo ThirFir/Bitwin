@@ -1,7 +1,10 @@
 package com.strone.bitwin.di
 
+import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.repository.OrderbookRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl
+import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import dagger.Module
 import dagger.Provides
@@ -19,5 +22,13 @@ object RepositoryModule {
         tickerRemoteDataSource: TickerRemoteDataSource
     ) : TickerRepository {
         return TickerRepositoryImpl(tickerRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderbookRepository(
+        orderbookRemoteDataSource: OrderbookRemoteDataSource
+    ) : OrderbookRepository {
+        return OrderbookRepositoryImpl(orderbookRemoteDataSource)
     }
 }

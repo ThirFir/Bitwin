@@ -71,16 +71,13 @@ object NetworkModule {
     fun provideWebSocketClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
     ) : OkHttpClient {
-        return OkHttpClient.Builder().apply {
-            connectTimeout(10, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(15, TimeUnit.SECONDS)
-            addInterceptor(httpLoggingInterceptor)
-            dispatcher(Dispatcher().apply {
-                maxRequests = 1
-            })
-            pingInterval(30, TimeUnit.SECONDS)
-        }.build()
+        return OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .pingInterval(30, TimeUnit.SECONDS)
+            .build()
     }
 
     @RestApi
