@@ -10,28 +10,17 @@ import okhttp3.Request
 import javax.inject.Inject
 
 class TickerRemoteDataSource @Inject constructor(
-    @WebSocket private val client: okhttp3.OkHttpClient,
-    private val request: Request,
-    private val tickerWebSocketListener: TickerWebSocketListener,
+    @WebSocket client: okhttp3.OkHttpClient,
+    request: Request,
+    tickerWebSocketListener: TickerWebSocketListener,
     private val tickerApi: TickerApi
-) {
+) : WebSocketRemoteDataSource<TickerStreamingResponse>(client, request, tickerWebSocketListener) {
 
-    fun fetchTickerStreamingResponse(json: String) : Flow<TickerStreamingResponse> {
-        initWebSocket(json)
-        return tickerWebSocketListener.fetchResponse()
-    }
-
-    fun fetchTickerStreamingResponse() : Flow<TickerStreamingResponse> {
-        return tickerWebSocketListener.fetchResponse()
+    fun fetchStreamingResponse() : Flow<TickerStreamingResponse> {
+        return webSocketListener.fetchResponse()
     }
 
     suspend fun fetchTickerSnapshotResponse(query: String): List<TickerSnapshotResponse> {
         return tickerApi.fetchAllTickers(query)
-    }
-
-    private fun initWebSocket(json: String) {
-        val webSocket = client.newWebSocket(request, tickerWebSocketListener)
-        client.dispatcher().executorService().shutdown()
-        webSocket.send(json)
     }
 }

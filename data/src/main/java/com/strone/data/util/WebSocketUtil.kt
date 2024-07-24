@@ -4,16 +4,16 @@ import com.squareup.moshi.JsonWriter
 import com.strone.data.constant.Constant.CODES
 import com.strone.data.constant.Constant.DEFAULT
 import com.strone.data.constant.Constant.FORMAT
-import com.strone.data.constant.Constant.TICKER
 import com.strone.data.constant.Constant.TICKET
 import com.strone.data.constant.Constant.TYPE
+import com.strone.data.request.RequestType
 import okio.Buffer
 import java.util.UUID
 
 /**
  * For Upbit WebSocket
  */
-internal fun List<String?>.getSendJson(): String {
+internal fun List<String?>.getSendJson(type: RequestType): String {
     val uuid = UUID.randomUUID().toString()
 
     val buffer = Buffer()
@@ -26,7 +26,7 @@ internal fun List<String?>.getSendJson(): String {
     writer.endObject()
 
     writer.beginObject()
-    writer.name(TYPE).value(TICKER)
+    writer.name(TYPE).value(type.value)
     writer.name(CODES).beginArray()
     this.forEach {
         writer.value(it)

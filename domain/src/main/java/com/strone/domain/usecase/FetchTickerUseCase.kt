@@ -24,7 +24,7 @@ class FetchTickerUseCase @Inject constructor(
 
     suspend fun fetchTickerStreaming(markets: List<Market>) : Result<Flow<Ticker>> {
         return try {
-            Result.success(tickerRepository.fetchTickerStreamingResponse(markets.map(Market::code)).filter {
+            Result.success(tickerRepository.fetchStreamingResponse(markets.map(Market::code)).filter {
                 it.type == MarketType.KRW
             })
         } catch (e: Exception) {

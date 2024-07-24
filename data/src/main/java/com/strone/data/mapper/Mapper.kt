@@ -2,6 +2,7 @@ package com.strone.data.mapper
 
 import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
+import com.strone.data.response.websocket.OrderbookResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
 import com.strone.data.util.getImageUrl
 import com.strone.data.util.toChangeType
@@ -11,6 +12,7 @@ import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.USDT
 import com.strone.domain.model.Market
 import com.strone.domain.model.MarketType
+import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
 
 fun TickerStreamingResponse.toTicker() = Ticker(
@@ -79,7 +81,22 @@ fun MarketResponse.toMarket() = Market(
     imageUrl = code?.getImageUrl() ?: ""
 )
 
-fun String.toMarketType() : MarketType {
+fun OrderbookResponse.toOrderbook() = Orderbook(
+    code = this.code ?: "",
+    totalAskSize = this.totalAskSize ?: 0.0,
+    totalBidSize = this.totalBidSize ?: 0.0,
+    orderbookUnits = this.orderbookUnitResps?.map { it.toOrderbookUnit() } ?: emptyList(),
+    timestamp = this.timestamp ?: 0
+)
+
+fun OrderbookResponse.OrderbookUnitResponse.toOrderbookUnit() = Orderbook.OrderbookUnit(
+    askPrice = this.askPrice ?: 0.0,
+    bidPrice = this.bidPrice ?: 0.0,
+    askSize = this.askSize ?: 0.0,
+    bidSize = this.bidSize ?: 0.0
+)
+
+private fun String.toMarketType() : MarketType {
     if (startsWith(KRW)) return MarketType.KRW
     if (startsWith(BTC)) return MarketType.BTC
     if (startsWith(USDT)) return MarketType.USDT
