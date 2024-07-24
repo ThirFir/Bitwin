@@ -14,7 +14,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class CryptoBaseViewModel: ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
