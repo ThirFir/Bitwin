@@ -2,24 +2,23 @@ package com.strone.presentation.ui.trade.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.strone.core.state.UiState
 import com.strone.core.viewmodel.CryptoBaseViewModel
 import com.strone.domain.model.Orderbook
-import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
+import com.strone.presentation.mapper.toTickerModel
+import com.strone.presentation.model.TickerModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = TradeViewModel.Factory::class)
 class TradeViewModel @AssistedInject constructor(
-    @Assisted private val tickerSnapshot: Ticker,
+    @Assisted private val tickerSnapshot: TickerModel,
     private val fetchTickerUseCase: FetchTickerUseCase,
     private val fetchOrderbookUseCase: FetchOrderbookUseCase,
     private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase
@@ -27,11 +26,11 @@ class TradeViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory {
-        fun create(tickerSnapshot: Ticker): TradeViewModel
+        fun create(tickerSnapshot: TickerModel): TradeViewModel
     }
 
-    private val _ticker: MutableStateFlow<Ticker> = MutableStateFlow(tickerSnapshot)
-    val ticker: StateFlow<Ticker>
+    private val _ticker: MutableStateFlow<TickerModel> = MutableStateFlow(tickerSnapshot)
+    val ticker: StateFlow<TickerModel>
         get() = _ticker
 
     private val _orderbook: MutableStateFlow<Orderbook?> = MutableStateFlow(null)
@@ -45,7 +44,7 @@ class TradeViewModel @AssistedInject constructor(
                 .onSuccess {
                     it.collect { ticker ->
                         if (ticker.code == code)
-                            _ticker.emit(ticker)
+                            _ticker.emit(ticker.toTickerModel())
                     }
                 }
         }

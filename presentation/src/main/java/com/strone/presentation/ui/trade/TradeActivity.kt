@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.strone.domain.constants.CryptoConstants.TICKER
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.theme.BitwinTheme
 import com.strone.presentation.ui.trade.composable.TradeScaffold
+import com.strone.presentation.util.getParcelableExtraCompat
 import com.strone.presentation.util.getSerializableExtraCompat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +21,7 @@ class TradeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val ticker = intent.getSerializableExtraCompat<Ticker>(TICKER)
+        val ticker = intent.getParcelableExtraCompat<TickerModel>(TICKER)
         if (ticker == null) {
             finish()
             return  // TODO : Error 처리

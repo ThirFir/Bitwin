@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.cryptoList.composable.CryptoListScreen
 import com.strone.presentation.ui.home.composable.HomeScreen
 import com.strone.presentation.ui.navigation.item.Routes
@@ -21,8 +21,8 @@ fun MainNavHost(
     navController: NavHostController,
     startDestination: String,
     searchInput: String,
-    tickers: List<Ticker>,
-    hotTickers: List<Ticker>
+    tickers: List<TickerModel>,
+    hotTickers: List<TickerModel>
 ) {
     NavHost(
         modifier = modifier,

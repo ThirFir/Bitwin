@@ -5,12 +5,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    hotTickers: List<Ticker>
+    hotTickers: List<TickerModel>
 ) {
     if (hotTickers.isEmpty())
         return

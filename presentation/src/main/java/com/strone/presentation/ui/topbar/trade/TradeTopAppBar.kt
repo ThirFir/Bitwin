@@ -10,16 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.strone.core.CryptoNamespace
-import com.strone.domain.model.Ticker
 import com.strone.presentation.R
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.theme.Typography
-import com.strone.presentation.util.clickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TradeTopAppBar(
     modifier: Modifier,
-    ticker: Ticker,
+    ticker: TickerModel,
     onNavigationIconClicked: () -> Unit = {},
 ) {
 

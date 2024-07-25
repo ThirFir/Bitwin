@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.trade.composable.TransactionScreen
 
@@ -14,7 +14,7 @@ fun TradeNavHost(
     modifier: Modifier,
     navController: NavHostController,
     startDestination: String,
-    ticker: Ticker
+    ticker: TickerModel
 ) {
 
     NavHost(

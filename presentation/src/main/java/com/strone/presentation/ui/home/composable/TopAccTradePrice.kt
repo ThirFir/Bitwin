@@ -9,14 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.strone.domain.model.Ticker
 import com.strone.presentation.R
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.theme.Typography
 
 @Composable
 fun TopAccTradePrice(
     modifier: Modifier = Modifier,
-    hotTickers: List<Ticker>
+    hotTickers: List<TickerModel>
 ) {
     Column(
         modifier = modifier

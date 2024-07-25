@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.strone.domain.constants.CryptoConstants.TICKER
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.trade.TradeActivity
 import com.strone.presentation.util.clickable
 import com.strone.presentation.util.searched
@@ -20,7 +20,7 @@ import com.strone.presentation.util.searched
 @Composable
 fun CryptoList(
     modifier: Modifier = Modifier,
-    tickers: List<Ticker>,
+    tickers: List<TickerModel>,
     searchInput: String,
     listState: LazyListState = rememberLazyListState()
 ) {

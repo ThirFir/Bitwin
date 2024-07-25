@@ -1,7 +1,7 @@
 package com.strone.presentation.util
 
 import com.strone.core.CryptoNamespace
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import java.text.NumberFormat
 import kotlin.math.absoluteValue
 
@@ -37,7 +37,7 @@ fun Double.toTradeVolume(): String {
     return "${formattedValue}백만"
 }
 
-fun List<Ticker>.searched(input: String): List<Ticker> {
+fun List<TickerModel>.searched(input: String): List<TickerModel> {
     return this.filter {
         it.signature.contains(input, ignoreCase = true) ||
                 CryptoNamespace.markets[it.code]?.koreanName?.contains(input, ignoreCase = true) == true ||

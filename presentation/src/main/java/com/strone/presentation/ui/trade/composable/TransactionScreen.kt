@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.toDisplayChangeRate
@@ -17,7 +16,7 @@ import com.strone.presentation.util.toDisplayPrice
 @Composable
 fun TransactionScreen(
     modifier: Modifier,
-    ticker: Ticker
+    ticker: TickerModel
 ) {
     Column(
         modifier = modifier
@@ -34,7 +33,7 @@ fun TransactionScreen(
 @Composable
 fun CryptoTickerRow(
     modifier: Modifier,
-    ticker: Ticker
+    ticker: TickerModel
 ) {
     Row(
         modifier = modifier

@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.strone.core.state.UiState
-import com.strone.domain.model.Ticker
+import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.loading.LoadingScreen
 import com.strone.presentation.ui.navigation.composable.TradeNavHost
 import com.strone.presentation.ui.navigation.item.Routes
@@ -35,7 +35,7 @@ import com.strone.presentation.util.navigateToOtherTab
 fun TradeScaffold(
     modifier: Modifier,
     navController: NavHostController,
-    tickerSnapshot: Ticker,
+    tickerSnapshot: TickerModel,
     viewModel: TradeViewModel = hiltViewModel<TradeViewModel, TradeViewModel.Factory> { it.create(tickerSnapshot) }
 ) {
 
