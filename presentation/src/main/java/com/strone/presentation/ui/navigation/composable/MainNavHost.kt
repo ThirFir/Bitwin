@@ -37,7 +37,7 @@ fun MainNavHost(
         }
         composable(Routes.CRYPTO_LIST) {
             CryptoListScreen(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 24.dp),
+                modifier = Modifier.fillMaxSize(),
                 searchInput = searchInput,
                 tickers = tickers
             )

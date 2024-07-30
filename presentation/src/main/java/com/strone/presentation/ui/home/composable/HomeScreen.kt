@@ -12,9 +12,6 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     hotTickers: List<TickerModel>
 ) {
-    if (hotTickers.isEmpty())
-        return
-
     val scrollState = rememberScrollState()
 
     Column(

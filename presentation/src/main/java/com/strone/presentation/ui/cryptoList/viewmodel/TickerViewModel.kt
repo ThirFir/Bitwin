@@ -1,5 +1,6 @@
 package com.strone.presentation.ui.cryptoList.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.strone.core.CryptoNamespace
 import com.strone.core.viewmodel.CryptoBaseViewModel
@@ -10,8 +11,6 @@ import com.strone.presentation.mapper.toTickerModel
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.state.CryptoSortState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,15 +18,13 @@ class TickerViewModel @Inject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
 ) : CryptoBaseViewModel() {
 
-    private val _tickers: MutableStateFlow<Map<String, MutableStateFlow<TickerModel>>> = MutableStateFlow(
-        linkedMapOf()
-    )
-    val tickers: StateFlow<Map<String, StateFlow<TickerModel>>>
-        get() = _tickers
+    private val _tickers = mutableStateListOf<TickerModel>()
+    val tickers get() = _tickers
+    private val tickerPositions = mutableMapOf<String, Int>()
 
-    private val _hotTickers: MutableStateFlow<List<TickerModel>> = MutableStateFlow(listOf())
-    val hotTickers: StateFlow<List<TickerModel>>
-        get() = _hotTickers
+    private val _hotTickers = mutableStateListOf<TickerModel>()
+    val hotTickers get() = _hotTickers
+    private val hotTickerPositions = mutableMapOf<String, Int>()
 
     init {
         viewModelScope.launchWithUiState {
@@ -47,58 +44,59 @@ class TickerViewModel @Inject constructor(
                 emitTickers(tickerModels)
                 emitHotTickers(tickerModels)
 
-                fetchTickerUseCase.fetchTickerStreaming(markets).onSuccess { streamingTickerFlow ->
-                    streamingTickerFlow.collect { ticker ->
-                        val tickerModel = ticker.toTickerModel()
-                        _tickers.value[ticker.code]?.emit(tickerModel)
-                        _hotTickers.emit(_hotTickers.value.map { original ->
-                            if (original.code == ticker.code)
-                                tickerModel
-                            else
-                                original
-                        })
+                fetchTickerUseCase.fetchTickerStreaming(markets)
+                    .emitUiState()
+                    .onSuccess { streamingTickerFlow ->
+                        streamingTickerFlow.collect { ticker ->
+                            val tickerModel = ticker.toTickerModel()
+                            emitTicker(tickerModel)
+
+                            if (hotTickerPositions.containsKey(tickerModel.code))
+                                emitHotTicker(tickerModel)
+                        }
                     }
-                }.onFailure {
-                    // TODO : Streaming 시세 Failure
-                }
-            }.onFailure {
-                // TODO : 초기 시세 Failure
             }
     }
 
     fun sortTickers(state: CryptoSortState) {
         val sortedTickers = when (state) {
-            CryptoSortState.NAME_DESCENDING -> _tickers.value.toList().sortedByDescending { CryptoNamespace.markets[it.second.value.code]?.koreanName }
-            CryptoSortState.NAME_ASCENDING -> _tickers.value.toList().sortedBy { CryptoNamespace.markets[it.second.value.code]?.koreanName }
-            CryptoSortState.PRICE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.tradePrice }
-            CryptoSortState.PRICE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.tradePrice }
-            CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.signedChangeRate }
-            CryptoSortState.CHANGE_RATE_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.signedChangeRate }
-            CryptoSortState.VOLUME_DESCENDING -> _tickers.value.toList().sortedByDescending { it.second.value.accTradePrice24h }
-            CryptoSortState.VOLUME_ASCENDING -> _tickers.value.toList().sortedBy { it.second.value.accTradePrice24h }
+            CryptoSortState.NAME_DESCENDING -> _tickers.sortedByDescending { CryptoNamespace.markets[it.code]?.koreanName }
+            CryptoSortState.NAME_ASCENDING -> _tickers.sortedBy { CryptoNamespace.markets[it.code]?.koreanName }
+            CryptoSortState.PRICE_DESCENDING -> _tickers.sortedByDescending { it.tradePrice }
+            CryptoSortState.PRICE_ASCENDING -> _tickers.sortedBy { it.tradePrice }
+            CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.sortedByDescending { it.signedChangeRate }
+            CryptoSortState.CHANGE_RATE_ASCENDING -> _tickers.sortedBy { it.signedChangeRate }
+            CryptoSortState.VOLUME_DESCENDING -> _tickers.sortedByDescending { it.accTradePrice24h }
+            CryptoSortState.VOLUME_ASCENDING -> _tickers.sortedBy { it.accTradePrice24h }
         }
 
-        if(sortedTickers.isEmpty()) return
-
-        val sortedMap = mutableMapOf<String, MutableStateFlow<TickerModel>>()
-        sortedTickers.forEach { (key, value) ->
-            sortedMap[key] = MutableStateFlow(value.value)
-        }
-
-        _tickers.value = sortedMap
+        emitTickers(sortedTickers)
     }
 
-    private suspend fun emitHotTickers(tickers: List<TickerModel>) {
-        _hotTickers.emit(
-            tickers.sortedByDescending { it.accTradePrice }.take(4)
-        )
+    private fun emitHotTickers(tickerModels: List<TickerModel>) {
+        _hotTickers.clear()
+        tickerModels
+            .sortedByDescending { it.accTradePrice24h }
+            .take(4)
+            .forEachIndexed { index, tickerModel ->
+                _hotTickers.add(tickerModel)
+                hotTickerPositions[tickerModel.code] = index
+            }
     }
 
-    private suspend fun emitTickers(tickers: List<TickerModel>) {
-        val initialMap = linkedMapOf<String, MutableStateFlow<TickerModel>>()
-        tickers.forEach { ticker ->
-            initialMap[ticker.code] = MutableStateFlow(ticker)
+    private fun emitTickers(tickerModels: List<TickerModel>) {
+        _tickers.clear()
+        tickerModels.forEachIndexed { index, tickerModel ->
+            _tickers.add(tickerModel)
+            tickerPositions[tickerModel.code] = index
         }
-        _tickers.emit(initialMap)
+    }
+
+    private fun emitTicker(tickerModel: TickerModel) {
+        _tickers[tickerPositions[tickerModel.code]!!] = tickerModel
+    }
+
+    private fun emitHotTicker(tickerModel: TickerModel) {
+        _hotTickers[hotTickerPositions[tickerModel.code]!!] = tickerModel
     }
 }

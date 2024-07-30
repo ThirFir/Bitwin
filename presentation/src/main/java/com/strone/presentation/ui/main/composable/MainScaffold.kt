@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.strone.core.state.UiState
-import com.strone.presentation.model.TickerModel
 import com.strone.presentation.state.CryptoSortState
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 import com.strone.presentation.ui.loading.LoadingScreen
@@ -40,15 +39,8 @@ fun MainScaffold(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    val tickers by viewModel.tickers.collectAsStateWithLifecycle(emptyMap())
-    val tickerList = mutableListOf<TickerModel>()
-    tickers.values.forEach {
-        val ticker by it.collectAsStateWithLifecycle()
-        tickerList.add(ticker)
-    }
-
-    val hotTickers by viewModel.hotTickers.collectAsStateWithLifecycle(emptyList())
+    val tickers = viewModel.tickers
+    val hotTickers = viewModel.hotTickers
 
     val startDestination = Routes.HOME
     var currentRoute by remember { mutableStateOf(Routes.HOME) }
@@ -112,7 +104,7 @@ fun MainScaffold(
                         navController = navController,
                         startDestination = startDestination,
                         searchInput = searchInputState.text.toString(),
-                        tickers = tickerList,
+                        tickers = tickers,
                         hotTickers = hotTickers
                     )
                 }
