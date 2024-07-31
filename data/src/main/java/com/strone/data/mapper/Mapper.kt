@@ -11,7 +11,8 @@ import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.USDT
 import com.strone.domain.model.Market
-import com.strone.domain.model.MarketType
+import com.strone.domain.model.type.MarketType
+import com.strone.domain.model.type.OrderType
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
 
@@ -85,15 +86,21 @@ fun OrderbookResponse.toOrderbook() = Orderbook(
     code = this.code ?: "",
     totalAskSize = this.totalAskSize ?: 0.0,
     totalBidSize = this.totalBidSize ?: 0.0,
-    orderbookUnits = this.orderbookUnitResps?.map { it.toOrderbookUnit() } ?: emptyList(),
+    orderbookUnits = this.orderbookUnitResps?.flatMap { it.toOrderbookUnit() } ?: emptyList(),
     timestamp = this.timestamp ?: 0
 )
 
-fun OrderbookResponse.OrderbookUnitResponse.toOrderbookUnit() = Orderbook.OrderbookUnit(
-    askPrice = this.askPrice ?: 0.0,
-    bidPrice = this.bidPrice ?: 0.0,
-    askSize = this.askSize ?: 0.0,
-    bidSize = this.bidSize ?: 0.0
+fun OrderbookResponse.OrderbookUnitResponse.toOrderbookUnit() = listOf(
+    Orderbook.OrderbookUnit(
+        price = this.askPrice ?: 0.0,
+        size = this.askSize ?: 0.0,
+        orderType = OrderType.ASK
+    ),
+    Orderbook.OrderbookUnit(
+        price = this.bidPrice ?: 0.0,
+        size = this.bidSize ?: 0.0,
+        orderType = OrderType.BID
+    )
 )
 
 private fun String.toMarketType() : MarketType {

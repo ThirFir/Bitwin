@@ -4,7 +4,7 @@ import com.strone.data.constant.URLConstant.IMAGE_BASE_URL
 import com.strone.domain.constants.CryptoConstants.EVEN
 import com.strone.domain.constants.CryptoConstants.FALL
 import com.strone.domain.constants.CryptoConstants.RISE
-import com.strone.domain.model.ChangeType
+import com.strone.domain.model.type.ChangeType
 
 internal fun String.toSignature(): String {
     return this.split("-")[1]

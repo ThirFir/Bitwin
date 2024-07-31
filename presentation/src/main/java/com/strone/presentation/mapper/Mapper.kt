@@ -35,16 +35,17 @@ fun Ticker.toTickerModel() = TickerModel(
 )
 
 fun Orderbook.OrderbookUnit.toOrderbookUnitModel() = OrderbookModel.OrderbookUnitModel(
-    askPrice = this.askPrice,
-    bidPrice = this.bidPrice,
-    askSize = this.askSize,
-    bidSize = this.bidSize,
+    price = this.price,
+    size = this.size,
+    orderType = this.orderType,
 )
 
 fun Orderbook.toOrderbookModel() = OrderbookModel(
     code = this.code,
     totalAskSize = this.totalAskSize,
     totalBidSize = this.totalBidSize,
-    orderbookUnitModels = this.orderbookUnits.map { it.toOrderbookUnitModel() },
+    orderbookUnitModels = this.orderbookUnits.map {
+        it.toOrderbookUnitModel()
+    }.sortedByDescending { it.price },
     timestamp = this.timestamp,
 )

@@ -1,7 +1,7 @@
 package com.strone.presentation.ui.util
 
 import androidx.compose.ui.graphics.Color
-import com.strone.domain.model.ChangeType
+import com.strone.domain.model.type.ChangeType
 import com.strone.presentation.ui.theme.ColorEven
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise

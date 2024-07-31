@@ -1,5 +1,8 @@
 package com.strone.domain.model
 
+import com.strone.domain.model.type.ChangeType
+import com.strone.domain.model.type.MarketType
+
 data class Ticker(
     val code: String,   // 마켓 코드 ex) KRW-BTC   웹소켓 전용
     val signature: String, // 코인 시그니처 ex) BTC, ETH, XRP

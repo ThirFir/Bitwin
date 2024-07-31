@@ -2,6 +2,7 @@ package com.strone.presentation.model
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import com.strone.domain.model.type.OrderType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,9 +18,8 @@ class OrderbookModel(
     @Parcelize
     @Immutable
     data class OrderbookUnitModel(
-        val askPrice: Double, // 매도 호가
-        val bidPrice: Double, // 매수 호가
-        val askSize: Double, // 매도 잔량
-        val bidSize: Double, // 매수 잔량
+        val price: Double,
+        val size: Double,
+        val orderType: OrderType
     ): Parcelable
 }

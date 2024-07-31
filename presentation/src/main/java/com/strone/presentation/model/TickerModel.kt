@@ -2,8 +2,8 @@ package com.strone.presentation.model
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.strone.domain.model.ChangeType
-import com.strone.domain.model.MarketType
+import com.strone.domain.model.type.ChangeType
+import com.strone.domain.model.type.MarketType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

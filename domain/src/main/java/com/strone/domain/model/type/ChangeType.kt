@@ -1,4 +1,4 @@
-package com.strone.domain.model
+package com.strone.domain.model.type
 
 enum class ChangeType {
     RISE,

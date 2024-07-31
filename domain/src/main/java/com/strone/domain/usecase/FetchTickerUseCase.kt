@@ -1,7 +1,7 @@
 package com.strone.domain.usecase
 
 import com.strone.domain.model.Market
-import com.strone.domain.model.MarketType
+import com.strone.domain.model.type.MarketType
 import com.strone.domain.model.Ticker
 import com.strone.domain.repository.TickerRepository
 import kotlinx.coroutines.flow.Flow

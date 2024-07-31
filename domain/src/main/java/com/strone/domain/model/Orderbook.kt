@@ -1,5 +1,7 @@
 package com.strone.domain.model
 
+import com.strone.domain.model.type.OrderType
+
 data class Orderbook(
     val code: String, // 마켓 코드 ex) KRW-BTC
     val totalAskSize: Double, // 호가 매도 총 잔량
@@ -9,9 +11,8 @@ data class Orderbook(
 ) : StreamingModel() {
 
     data class OrderbookUnit(
-        val askPrice: Double, // 매도 호가
-        val bidPrice: Double, // 매수 호가
-        val askSize: Double, // 매도 잔량
-        val bidSize: Double, // 매수 잔량
+        val price: Double,
+        val size: Double,
+        val orderType: OrderType
     )
 }
