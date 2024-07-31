@@ -7,7 +7,9 @@ import com.strone.domain.model.Orderbook
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
+import com.strone.presentation.mapper.toOrderbookModel
 import com.strone.presentation.mapper.toTickerModel
+import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -33,8 +35,8 @@ class TradeViewModel @AssistedInject constructor(
     val ticker: StateFlow<TickerModel>
         get() = _ticker
 
-    private val _orderbook: MutableStateFlow<Orderbook?> = MutableStateFlow(null)
-    val orderbook: StateFlow<Orderbook?>
+    private val _orderbook: MutableStateFlow<OrderbookModel?> = MutableStateFlow(null)
+    val orderbook: StateFlow<OrderbookModel?>
         get() = _orderbook
 
     suspend fun fetchTicker(code: String) {
@@ -56,7 +58,7 @@ class TradeViewModel @AssistedInject constructor(
                 .emitUiState()
                 .onSuccess {
                     it.collect { orderbook ->
-                        Log.d("TradeViewModel", "orderbook: ${orderbook.orderbookUnits}")
+                        _orderbook.emit(orderbook.toOrderbookModel())
                     }
                 }
         }

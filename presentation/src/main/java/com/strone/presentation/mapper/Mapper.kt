@@ -1,6 +1,8 @@
 package com.strone.presentation.mapper
 
+import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
+import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
 
 fun Ticker.toTickerModel() = TickerModel(
@@ -29,5 +31,20 @@ fun Ticker.toTickerModel() = TickerModel(
     highest52WeekDate = this.highest52WeekDate,
     lowest52WeekPrice = this.lowest52WeekPrice,
     lowest52WeekDate = this.lowest52WeekDate,
+    timestamp = this.timestamp,
+)
+
+fun Orderbook.OrderbookUnit.toOrderbookUnitModel() = OrderbookModel.OrderbookUnitModel(
+    askPrice = this.askPrice,
+    bidPrice = this.bidPrice,
+    askSize = this.askSize,
+    bidSize = this.bidSize,
+)
+
+fun Orderbook.toOrderbookModel() = OrderbookModel(
+    code = this.code,
+    totalAskSize = this.totalAskSize,
+    totalBidSize = this.totalBidSize,
+    orderbookUnitModels = this.orderbookUnits.map { it.toOrderbookUnitModel() },
     timestamp = this.timestamp,
 )
