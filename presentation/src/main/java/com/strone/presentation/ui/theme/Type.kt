@@ -87,7 +87,7 @@ val Typography = Typography(
         fontSize = 13.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.35.sp,
-        color = ColorTextGray
+        color = ColorGray
     ),
     labelSmall = TextStyle(
         fontFamily = spoqaHanSansNeo,
@@ -95,6 +95,6 @@ val Typography = Typography(
         fontSize = 10.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp,
-        color = ColorTextGray
+        color = ColorGray
     )
 )

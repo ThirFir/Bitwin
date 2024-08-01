@@ -42,7 +42,11 @@ val ColorOutlineVariant = Color(0xFFF3F4F6)
 val ColorOutline = Color(0xFFE1E1E1)
 
 val ColorBackgroundGray = Color(0xFFF5F5F5)
-val ColorTextGray = Color.Gray
+val ColorGray = Color.Gray
+val ColorGrayLight = Color(0xFFD3D3D3)
+val ColorGraySemiLight = Color(0xFFC2C2C2)
+val ColorGraySemiDark = Color(0xFF7A7A7A)
+val ColorGrayDark = Color(0xFF6B6B6B)
 
 val ColorRise = Color(0xFF00C853)
 val ColorRiseLight = Color(0xFFD5FFE7)
