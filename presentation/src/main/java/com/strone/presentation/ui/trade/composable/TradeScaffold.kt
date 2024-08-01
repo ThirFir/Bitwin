@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -56,27 +57,31 @@ fun TradeScaffold(
         orderbook?.let { ob ->
             Scaffold(
                 topBar = {
-                    TradeTopAppBar(modifier = Modifier, ticker = ticker, onNavigationIconClicked = {
+                    TradeTopAppBar(modifier = Modifier.padding(horizontal = 24.dp), ticker = ticker, onNavigationIconClicked = {
                         context.findActivity().finish()
                     })
                 },
             ) {
-                Surface(modifier = modifier) {
+                Surface(modifier = modifier.padding(horizontal = 24.dp)) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(it)
                     ) {
-                        TabRow(selectedTabIndex = TradeNavItem.entries.indexOfFirst { it.route == currentRoute }) {
-                            TradeNavItem.entries.forEach {
-                                Tab(selected = currentRoute == it.route, onClick = {
-                                    currentRoute = it.route
-                                }) {
-                                    Text(text = stringResource(it.title))
+                        TradeTickerRow(modifier = Modifier, ticker = ticker)
+                        TabRow(
+                            modifier = Modifier,
+                            selectedTabIndex = TradeNavItem.entries.indexOfFirst { it.route == currentRoute },
+                            tabs = {
+                                TradeNavItem.entries.forEach {
+                                    Tab(selected = currentRoute == it.route, onClick = {
+                                        currentRoute = it.route
+                                    }) {
+                                        Text(text = stringResource(it.title))
+                                    }
                                 }
                             }
-                        }
-                        TradeTickerRow(modifier = Modifier, ticker = ticker)
+                        )
                         TradeNavHost(
                             modifier = Modifier,
                             navController = navController,

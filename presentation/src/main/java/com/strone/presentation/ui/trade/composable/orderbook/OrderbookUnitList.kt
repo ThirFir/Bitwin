@@ -1,4 +1,4 @@
-package com.strone.presentation.ui.trade.orderbook.composable
+package com.strone.presentation.ui.trade.composable.orderbook
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

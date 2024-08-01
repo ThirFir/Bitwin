@@ -1,4 +1,4 @@
-package com.strone.presentation.ui.trade.composable
+package com.strone.presentation.ui.trade.composable.transaction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,8 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
-import com.strone.presentation.ui.trade.orderbook.composable.OrderbookUnitListContainer
-import com.strone.presentation.ui.trade.orderbook.composable.OrderbookUnitsList
+import com.strone.presentation.ui.trade.composable.orderbook.OrderbookUnitListContainer
 
 @Composable
 fun TransactionScreen(

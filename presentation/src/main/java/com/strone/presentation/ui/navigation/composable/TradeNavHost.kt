@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.navigation.item.Routes
-import com.strone.presentation.ui.trade.composable.TransactionScreen
+import com.strone.presentation.ui.trade.composable.transaction.TransactionScreen
 
 @Composable
 fun TradeNavHost(
