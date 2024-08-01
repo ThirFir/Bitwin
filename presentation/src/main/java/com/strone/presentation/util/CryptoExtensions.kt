@@ -2,6 +2,7 @@ package com.strone.presentation.util
 
 import com.strone.core.CryptoNamespace
 import com.strone.presentation.model.TickerModel
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import kotlin.math.absoluteValue
 
@@ -17,11 +18,11 @@ fun Double.slicePriceDecimal(): String {
     }
 }
 
-fun Double.toDisplayPrice(): String {
+fun Double.toDisplayedDoubleFormat(): String {
     if(this.absoluteValue < 1_000) {
         return slicePriceDecimal()
     }
-    val formatter = NumberFormat.getNumberInstance()
+    val formatter = DecimalFormat("#,###")
     return formatter.format(this)
 }
 
