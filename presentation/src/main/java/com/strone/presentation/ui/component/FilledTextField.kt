@@ -55,7 +55,8 @@ fun FilledTextField(
     cursorBrush: Brush = SolidColor(Color.Black),
     codepointTransformation: CodepointTransformation? = null,
     scrollState: ScrollState = rememberScrollState(),
-    navigationIcon: Painter,
+    navigationIcon: Painter? = null,
+    trailingIcon: Painter? = null,
     label: String = "",
 ) {
     BasicTextField2(
@@ -77,16 +78,16 @@ fun FilledTextField(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = ColorBackgroundGray, shape = RoundedCornerShape(13.dp))
-                    .padding(horizontal = 16.dp, vertical = 14.dp),
+                    .background(color = ColorBackgroundGray, shape = RoundedCornerShape(12.dp))
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
-
             ) {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    painter = navigationIcon,
-                    contentDescription = stringResource(R.string.navigation_icon)
-                )
+                if(navigationIcon != null)
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        painter = navigationIcon,
+                        contentDescription = stringResource(R.string.navigation_icon)
+                    )
                 Spacer(modifier = Modifier.width(8.dp))
                 Box {
                     if (state.text.isEmpty()) {
@@ -94,6 +95,12 @@ fun FilledTextField(
                     }
                     innerTextField()
                 }
+                if(trailingIcon != null)
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        painter = trailingIcon,
+                        contentDescription = stringResource(R.string.trailing_icon)
+                    )
             }
         }
     )
