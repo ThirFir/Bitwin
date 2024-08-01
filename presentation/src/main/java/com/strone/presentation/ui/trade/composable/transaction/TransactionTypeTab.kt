@@ -144,7 +144,7 @@ fun SellTab(
         modifier = modifier,
         contentAlignment = Alignment.CenterEnd
     ) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.9f)) {
             drawRoundRect(
                 color = backgroundColor,
                 size = Size(width = size.width, height = size.height - 10),

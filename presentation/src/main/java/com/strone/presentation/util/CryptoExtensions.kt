@@ -45,3 +45,19 @@ fun List<TickerModel>.searched(input: String): List<TickerModel> {
                 CryptoNamespace.markets[it.code]?.englishName?.contains(input, ignoreCase = true) == true
     }
 }
+
+fun Double.getMinChangeablePrice(): Double {
+    return when {
+        this < 0.01 -> 0.000001
+        this < 0.1 -> 0.00001
+        this < 1.0 -> 0.0001
+        this < 10.0 -> 0.001
+        this < 100.0 -> 0.01
+        this < 1000.0 -> 0.1
+        this < 10_000.0 -> 1.0
+        this < 100_000.0 -> 10.0
+        this < 500_000.0 -> 50.0
+        this < 1_000_000.0 -> 100.0
+        else -> 1_000.0
+    }
+}

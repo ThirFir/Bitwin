@@ -37,5 +37,7 @@
     <string name="crypto_image">코인 이미지</string>
     <string name="sort_crypto">정렬</string>
     <string name="back">뒤로가기</string>
+    <string name="action_price_minus">가격 감소</string>
+    <string name="action_price_plus">가격 증가</string>
 
 </resources>
