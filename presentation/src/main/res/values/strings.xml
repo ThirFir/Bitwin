@@ -26,6 +26,8 @@
     <string name="title_orderbook">호가</string>
     <string name="title_chart">차트</string>
     <string name="title_information">정보</string>
+    <string name="tab_buy">매수</string>
+    <string name="tab_sell">매도</string>
 
     <!-- Non-Display Descriptions -->
     <string name="kakao_button">카카오 로그인 버튼</string>

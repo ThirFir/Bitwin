@@ -1,7 +1,9 @@
 package com.strone.presentation.ui.navigation.composable
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,7 +29,10 @@ fun TradeNavHost(
         startDestination = startDestination
     ) {
         composable(Routes.TRANSACTION) {
-            TransactionScreen(modifier = Modifier, ticker = ticker, orderbookUnits = orderbookUnits)
+            TransactionScreen(
+                modifier = Modifier.padding(top = 12.dp),
+                ticker = ticker, orderbookUnits = orderbookUnits
+            )
         }
 
         composable(Routes.ORDERBOOK) {
