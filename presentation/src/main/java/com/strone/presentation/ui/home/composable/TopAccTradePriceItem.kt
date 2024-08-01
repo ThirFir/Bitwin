@@ -19,7 +19,7 @@ import com.strone.presentation.ui.component.BitwinOutlinedCard
 import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.toDisplayChangeRate
-import com.strone.presentation.util.toDisplayPrice
+import com.strone.presentation.util.toDisplayedDoubleFormat
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -63,7 +63,7 @@ fun TopAccTradePriceItem(
 
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
-                    text = hotTicker.tradePrice.toDisplayPrice(),
+                    text = hotTicker.tradePrice.toDisplayedDoubleFormat(),
                     style = Typography.labelMedium
                 )
             }

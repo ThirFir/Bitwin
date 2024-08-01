@@ -22,7 +22,7 @@ import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate
-import com.strone.presentation.util.toDisplayPrice
+import com.strone.presentation.util.toDisplayedDoubleFormat
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -60,7 +60,7 @@ fun CryptoListItem(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.End
         ) {
-            Text(text = ticker.tradePrice.toDisplayPrice(), style = Typography.titleSmall)
+            Text(text = ticker.tradePrice.toDisplayedDoubleFormat(), style = Typography.titleSmall)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CryptoColoredText(
                     text = ticker.changeRate.toDisplayChangeRate(),

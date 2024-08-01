@@ -45,5 +45,7 @@ val ColorBackgroundGray = Color(0xFFF5F5F5)
 val ColorTextGray = Color.Gray
 
 val ColorRise = Color(0xFF00C853)
+val ColorRiseLight = Color(0xFFD5FFE7)
 val ColorEven = Color(0xFF000000)
 val ColorFall = Color(0xFFFF3D00)
+val ColorFallLight = Color(0xFFFFD8D8)

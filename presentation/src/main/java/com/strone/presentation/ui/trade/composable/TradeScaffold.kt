@@ -53,37 +53,39 @@ fun TradeScaffold(
     if (uiState is UiState.Loading) {
         LoadingScreen()
     } else {
-        Scaffold(
-            topBar = {
-                TradeTopAppBar(modifier = Modifier, ticker = ticker, onNavigationIconClicked = {
-                    context.findActivity().finish()
-                })
-            },
-        ) {
-            Surface(modifier = modifier) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it)
-                ) {
-                    TabRow(selectedTabIndex = TradeNavItem.entries.indexOfFirst { it.route == currentRoute }) {
-                        TradeNavItem.entries.forEach {
-                            Tab(selected = currentRoute == it.route, onClick = {
-                                currentRoute = it.route
-                            }) {
-                                Text(text = stringResource(it.title))
+        orderbook?.let { ob ->
+            Scaffold(
+                topBar = {
+                    TradeTopAppBar(modifier = Modifier, ticker = ticker, onNavigationIconClicked = {
+                        context.findActivity().finish()
+                    })
+                },
+            ) {
+                Surface(modifier = modifier) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(it)
+                    ) {
+                        TabRow(selectedTabIndex = TradeNavItem.entries.indexOfFirst { it.route == currentRoute }) {
+                            TradeNavItem.entries.forEach {
+                                Tab(selected = currentRoute == it.route, onClick = {
+                                    currentRoute = it.route
+                                }) {
+                                    Text(text = stringResource(it.title))
+                                }
                             }
                         }
-
+                        TradeTickerRow(modifier = Modifier, ticker = ticker)
+                        TradeNavHost(
+                            modifier = Modifier,
+                            navController = navController,
+                            startDestination = startDestination,
+                            ticker = ticker,
+                            orderbook = ob
+                        )
                     }
-                    TradeNavHost(
-                        modifier = Modifier,
-                        navController = navController,
-                        startDestination = startDestination,
-                        ticker = ticker
-                    )
                 }
-
             }
         }
     }

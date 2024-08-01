@@ -28,11 +28,11 @@ fun CryptoList(
 
     val context = LocalContext.current
     LazyColumn(
-        modifier = modifier,
-        state = listState
+        modifier = modifier
     ) {
         items(
             items = tickers.searched(searchInput),
+            key = { it.code }
         ) {
             CryptoListItem(
                 modifier = remember {

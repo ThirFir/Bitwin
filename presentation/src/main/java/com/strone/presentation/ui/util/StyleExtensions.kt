@@ -1,6 +1,8 @@
 package com.strone.presentation.ui.util
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import com.strone.domain.model.type.ChangeType
 import com.strone.presentation.ui.theme.ColorEven
 import com.strone.presentation.ui.theme.ColorFall
@@ -20,4 +22,8 @@ internal fun ChangeType.getChangeMark(): String {
         ChangeType.FALL -> "▼"
         ChangeType.EVEN -> "-"
     }
+}
+
+operator fun TextUnit.minus(value: Float): TextUnit {
+    return TextUnit(this.value - value, TextUnitType.Sp)
 }

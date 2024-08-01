@@ -1,9 +1,7 @@
 package com.strone.presentation.ui.trade.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.strone.core.viewmodel.CryptoBaseViewModel
-import com.strone.domain.model.Orderbook
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
@@ -25,11 +23,6 @@ class TradeViewModel @AssistedInject constructor(
     private val fetchOrderbookUseCase: FetchOrderbookUseCase,
     private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase
 ) : CryptoBaseViewModel() {
-
-    @AssistedFactory
-    interface Factory {
-        fun create(tickerSnapshot: TickerModel): TradeViewModel
-    }
 
     private val _ticker: MutableStateFlow<TickerModel> = MutableStateFlow(tickerSnapshot)
     val ticker: StateFlow<TickerModel>
@@ -75,5 +68,10 @@ class TradeViewModel @AssistedInject constructor(
     override fun onCleared() {
         super.onCleared()
         stopFetchingOrderbook()
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(tickerSnapshot: TickerModel): TradeViewModel
     }
 }
