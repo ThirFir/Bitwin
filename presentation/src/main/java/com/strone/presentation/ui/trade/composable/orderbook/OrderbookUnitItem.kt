@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.strone.domain.model.type.ChangeType
@@ -29,7 +28,7 @@ import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.ui.component.CryptoColoredText
 import com.strone.presentation.ui.theme.ColorFallLight
 import com.strone.presentation.ui.theme.ColorRiseLight
-import com.strone.presentation.ui.util.minus
+import com.strone.presentation.util.minus
 import com.strone.presentation.util.toDisplayedDoubleFormat
 
 @Composable
@@ -86,7 +85,6 @@ fun OrderbookUnitItem(
                 softWrap = false,
                 fontWeight = FontWeight.Bold,
                 fontSize = sizeFontSize,
-                overflow = TextOverflow.Visible,
                 onTextLayout = {
                     if (it.didOverflowWidth) {
                         sizeFontSize -= 1f

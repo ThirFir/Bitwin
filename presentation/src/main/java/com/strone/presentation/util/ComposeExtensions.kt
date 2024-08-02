@@ -6,6 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.navigation.NavHostController
 
 
@@ -36,4 +38,16 @@ internal fun NavHostController.navigateToOtherTab(route: String) {
 //        launchSingleTop = true
         restoreState = true
     }
+}
+
+operator fun TextUnit.minus(value: Float): TextUnit {
+    return TextUnit(this.value - value, TextUnitType.Sp)
+}
+
+operator fun TextUnit.plus(value: Float): TextUnit {
+    return TextUnit(this.value + value, TextUnitType.Sp)
+}
+
+fun TextUnit.min(other: TextUnit): TextUnit {
+    return TextUnit(this.value.coerceAtMost(other.value), TextUnitType.Sp)
 }

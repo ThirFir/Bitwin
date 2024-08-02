@@ -24,7 +24,7 @@ import com.strone.presentation.state.TransactionTabState
 import com.strone.presentation.ui.theme.ColorBackgroundGray
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise
-import com.strone.presentation.ui.theme.ColorTextGray
+import com.strone.presentation.ui.theme.ColorGray
 import com.strone.presentation.util.clickable
 import kotlin.math.sqrt
 
@@ -123,7 +123,7 @@ fun BuyTab(
             textColor = Color.White
         } else {
             backgroundColor = ColorBackgroundGray
-            textColor = ColorTextGray
+            textColor = ColorGray
         }
     }
 }
@@ -137,7 +137,7 @@ fun SellTab(
         mutableStateOf(ColorBackgroundGray)
     }
     var textColor by remember {
-        mutableStateOf(ColorTextGray)
+        mutableStateOf(ColorGray)
     }
 
     Box(
@@ -170,7 +170,7 @@ fun SellTab(
             textColor = Color.White
         } else {
             backgroundColor = ColorBackgroundGray
-            textColor = ColorTextGray
+            textColor = ColorGray
         }
     }
 }

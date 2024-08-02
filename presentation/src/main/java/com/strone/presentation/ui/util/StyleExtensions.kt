@@ -23,7 +23,3 @@ internal fun ChangeType.getChangeMark(): String {
         ChangeType.EVEN -> "-"
     }
 }
-
-operator fun TextUnit.minus(value: Float): TextUnit {
-    return TextUnit(this.value - value, TextUnitType.Sp)
-}

@@ -28,10 +28,13 @@
     <string name="title_information">정보</string>
     <string name="tab_buy">매수</string>
     <string name="tab_sell">매도</string>
+    <string name="amount">수량</string>
+    <string name="price">가격</string>
 
     <!-- Non-Display Descriptions -->
     <string name="kakao_button">카카오 로그인 버튼</string>
-    <string name="navigation_icon">네비게이션 버튼</string>
+    <string name="navigation_icon">네비게이션 아이콘</string>
+    <string name="trailing_icon">트레일링 아이콘</string>
     <string name="action_notice_setting">알림 설정</string>
     <string name="action_profile">프로필</string>
     <string name="crypto_image">코인 이미지</string>
