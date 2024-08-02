@@ -13,6 +13,7 @@ import com.strone.core.CryptoNamespace
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.theme.Typography
+import com.strone.presentation.util.clickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,21 +27,21 @@ fun TradeTopAppBar(
         modifier = modifier,
         title = {
             Text(
-                text = CryptoNamespace.markets[ticker.code]?.koreanName ?: "",
-                style = Typography.headlineSmall
+                text = CryptoNamespace.markets[ticker.code]?.koreanName + "(${ticker.code})",
+                style = Typography.titleSmall
             )
         },
         navigationIcon = {
-            IconButton(onClick = {
-                onNavigationIconClicked()
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back),
-                    contentDescription = stringResource(
-                        id = R.string.back
-                    )
-                )
-            }
+            Icon(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = stringResource(
+                    id = R.string.back
+                ),
+                modifier = Modifier.clickable(showRipple = false) {
+                    onNavigationIconClicked()
+                }
+            )
+
         },
         actions = {
 

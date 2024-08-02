@@ -49,7 +49,7 @@ val ColorGraySemiDark = Color(0xFF7A7A7A)
 val ColorGrayDark = Color(0xFF6B6B6B)
 
 val ColorRise = Color(0xFF00C853)
-val ColorRiseLight = Color(0xFFD5FFE7)
+val ColorRiseLight = Color(0xFFCFFFE4)
 val ColorEven = Color(0xFF000000)
 val ColorFall = Color(0xFFFF3D00)
 val ColorFallLight = Color(0xFFFFD8D8)

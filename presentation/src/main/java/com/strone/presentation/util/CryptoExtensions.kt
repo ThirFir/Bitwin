@@ -27,8 +27,12 @@ fun BigDecimal.toDisplayedDoubleFormat(): String {
     return formatter.format(this)
 }
 
-fun Double.toMaximumDoubleFormat(): String {
-    val formatter = DecimalFormat("#,##0.########")
+fun BigDecimal.toDecimalFormattedString(dec: Int): String {
+    var pattern = "#,##0."
+    for (i in 0 until dec) {
+        pattern += "0"
+    }
+    val formatter = DecimalFormat(pattern)
     return formatter.format(this)
 }
 

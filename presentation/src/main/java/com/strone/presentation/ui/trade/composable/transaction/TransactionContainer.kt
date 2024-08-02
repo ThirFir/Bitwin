@@ -59,8 +59,11 @@ fun TransactionContainer(
     var transactionAmount by remember {
         mutableStateOf(BigDecimal.ZERO)
     }
+    var totalPrice by remember {
+        mutableStateOf(BigDecimal.ZERO)
+    }
     var transactionPriceText by remember {
-        mutableStateOf(transactionPrice.toPlainString())
+        mutableStateOf(transactionPrice.stripTrailingZeros().toPlainString())
     }
     var transactionAmountText by remember {
         mutableStateOf("")
@@ -153,7 +156,7 @@ fun TransactionContainer(
                     )
                     .padding(vertical = 8.dp, horizontal = 6.dp)
                     .padding(top = 4.dp),
-                totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0.00" })
+                totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0" })
             )
 
             TransactionAvailableRow(
@@ -179,5 +182,9 @@ fun TransactionContainer(
     LaunchedEffect(key1 = transactionPriceText) {
         transactionPrice = BigDecimal(transactionPriceText.removeComma().ifEmpty { "0" })
         totalPriceText = (transactionAmount * transactionPrice).toPlainString()
+    }
+
+    LaunchedEffect(key1 = totalPriceText) {
+        totalPrice = BigDecimal(totalPriceText)
     }
 }

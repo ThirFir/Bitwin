@@ -30,6 +30,7 @@ import com.strone.presentation.ui.theme.ColorFallLight
 import com.strone.presentation.ui.theme.ColorRiseLight
 import com.strone.presentation.util.minus
 import com.strone.presentation.util.toDisplayedDoubleFormat
+import com.strone.presentation.util.toDecimalFormattedString
 
 @Composable
 fun OrderbookUnitItem(
@@ -37,8 +38,8 @@ fun OrderbookUnitItem(
     orderbookUnit: OrderbookModel.OrderbookUnitModel,
     sizeRatio: Float
 ) {
-    var priceFontSize by remember { mutableStateOf(12.sp) }
-    var sizeFontSize by remember { mutableStateOf(12.sp) }
+    var priceFontSize by remember { mutableStateOf(13.5.sp) }
+    var sizeFontSize by remember { mutableStateOf(13.5.sp) }
     var readyToDraw by remember { mutableStateOf(false) }
 
     Box(
@@ -81,7 +82,7 @@ fun OrderbookUnitItem(
                 modifier = Modifier.drawWithContent {
                     if(readyToDraw) drawContent()
                 },
-                text = orderbookUnit.size.toDisplayedDoubleFormat(),
+                text = orderbookUnit.size.toDecimalFormattedString(3),
                 softWrap = false,
                 fontWeight = FontWeight.Bold,
                 fontSize = sizeFontSize,

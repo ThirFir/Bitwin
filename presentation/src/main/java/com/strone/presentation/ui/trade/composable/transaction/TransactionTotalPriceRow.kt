@@ -15,6 +15,7 @@ import com.strone.presentation.R
 import com.strone.presentation.ui.component.FilledCentralTextField
 import com.strone.presentation.ui.theme.ColorGraySemiDark
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 @Composable
 fun TransactionTotalPriceRow(
@@ -25,7 +26,7 @@ fun TransactionTotalPriceRow(
         modifier = modifier,
         readOnly = true,
         value = if (totalPriceText.compareTo(BigDecimal("0")) == 0) "" else {
-            totalPriceText.stripTrailingZeros().toPlainString()
+            totalPriceText.setScale(0, RoundingMode.HALF_UP).toPlainString()
         },
         onValueChange = {},
         navigationIcon = { Spacer(modifier = Modifier.size(24.dp)) },
