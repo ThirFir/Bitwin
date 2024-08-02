@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.strone.presentation.ui.theme.ColorBackgroundGray
@@ -69,6 +70,7 @@ fun FilledCentralTextField(
     navigationIcon: @Composable () -> Unit,
     trailingIcon: @Composable () -> Unit,
     label: String = "",
+    minTextWidth: Dp = 120.dp
 ) {
     var adaptedFontSize by remember { mutableStateOf(fontSize) }
     val focusRequester = remember { FocusRequester() }
@@ -110,7 +112,7 @@ fun FilledCentralTextField(
             ) {
                 navigationIcon()
                 Text(
-                    modifier = Modifier.widthIn(max = 120.dp),
+                    modifier = Modifier.widthIn(max = minTextWidth),
                     text = value.ifEmpty { label },
                     style = style,
                     color = color,

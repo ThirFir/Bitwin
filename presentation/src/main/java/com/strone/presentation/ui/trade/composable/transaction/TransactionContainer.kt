@@ -1,6 +1,5 @@
 package com.strone.presentation.ui.trade.composable.transaction
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,6 +46,9 @@ fun TransactionContainer(
         mutableStateOf(transactionPrice.toPlainString())
     }
     var transactionAmountText by remember {
+        mutableStateOf("")
+    }
+    var totalPriceText by remember {
         mutableStateOf("")
     }
 
@@ -107,14 +109,37 @@ fun TransactionContainer(
                 transactionPrice = transactionPrice,
                 signature = ticker.signature
             )
+
+            TransactionAmountPercentageRow(
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 8.dp, end = 8.dp)
+                    .fillMaxWidth(),
+                percentages = listOf(BigDecimal(10), BigDecimal(25), BigDecimal(50), BigDecimal(100)),
+                onPercentageSelected = {
+                    // TODO : 보유 자산 * (percentage / 100.0) / transactionPrice
+                }
+            )
+
+            TransactionTotalPriceRow(modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = ColorBackgroundGray,
+                    shape = LocalContainerCornerShapeComposition.current
+                )
+                .padding(vertical = 8.dp, horizontal = 6.dp)
+                .padding(top = 4.dp),
+                totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0.00" })
+            )
         }
     }
 
     LaunchedEffect(key1 = transactionAmountText) {
         transactionAmount = BigDecimal(transactionAmountText.removeComma().ifEmpty { "0" })
+        totalPriceText = (transactionAmount * transactionPrice).toPlainString()
     }
 
     LaunchedEffect(key1 = transactionPriceText) {
         transactionPrice = BigDecimal(transactionPriceText.removeComma().ifEmpty { "0" })
+        totalPriceText = (transactionAmount * transactionPrice).toPlainString()
     }
 }
