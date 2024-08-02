@@ -23,7 +23,7 @@ fun TransactionTotalPriceRow(
     FilledCentralTextField(
         modifier = modifier,
         readOnly = true,
-        value = if (totalPriceText == BigDecimal("0.00")) "" else {
+        value = if (totalPriceText.compareTo(BigDecimal("0")) == 0) "" else {
             totalPriceText.stripTrailingZeros().toPlainString()
         },
         onValueChange = {},
@@ -31,7 +31,7 @@ fun TransactionTotalPriceRow(
         trailingIcon = { Spacer(modifier = Modifier.size(24.dp)) },
         label = stringResource(id = R.string.total_price) + "($KRW)",
         fontSize = 16.sp,
-        color = if (totalPriceText == BigDecimal("0.00")) ColorGraySemiDark else Color.Black,
+        color = if (totalPriceText.compareTo(BigDecimal("0")) == 0) ColorGraySemiDark else Color.Black,
         softWrap = false,
         singleLine = true,
         minTextWidth = 150.dp

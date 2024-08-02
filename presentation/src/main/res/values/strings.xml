@@ -31,6 +31,8 @@
     <string name="amount">수량</string>
     <string name="price">가격</string>
     <string name="total_price">총액</string>
+    <string name="buy">매수</string>
+    <string name="sell">매도</string>
 
     <!-- Non-Display Descriptions -->
     <string name="kakao_button">카카오 로그인 버튼</string>
