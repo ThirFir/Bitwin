@@ -3,6 +3,8 @@ package com.strone.presentation.ui.trade.composable.transaction
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.util.checkFloatRegex
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
@@ -30,6 +36,7 @@ import com.strone.presentation.state.TransactionTabState
 import com.strone.presentation.ui.theme.ColorBackgroundGray
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise
+import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.removeComma
 import java.math.BigDecimal
 
@@ -149,9 +156,15 @@ fun TransactionContainer(
                 totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0.00" })
             )
 
-            TransactionButton(
+            TransactionAvailableRow(
                 modifier = Modifier
                     .padding(top = 16.dp)
+                    .fillMaxWidth()
+            )
+
+            TransactionButton(
+                modifier = Modifier
+                    .padding(top = 2.dp)
                     .fillMaxWidth(),
                 selectedTab = selectedTab
             )
