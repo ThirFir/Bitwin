@@ -1,7 +1,8 @@
 package com.strone.data.api.websocket
 
 import com.squareup.moshi.Moshi
-import com.strone.data.response.websocket.UpbitWebSocketResponse
+import com.strone.data.response.websocket.ErrorStreamingResponse
+import com.strone.data.response.websocket.UpbitStreamingResponse
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -10,22 +11,20 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 
-abstract class UpbitWebSocketListener<T : UpbitWebSocketResponse>(
+abstract class UpbitWebSocketListener(
     protected val moshi: Moshi,
 ) : WebSocketListener() {
 
-    private val incomingData = MutableSharedFlow<T>(
+    private val incomingData = MutableSharedFlow<UpbitStreamingResponse>(
         replay = 1,
         extraBufferCapacity = 0,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
-        super.onOpen(webSocket, response)
     }
 
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-        super.onMessage(webSocket, bytes)
         val resp = parseResponse(bytes)
         resp?.let {
             onReceiveResponse(it)
@@ -33,22 +32,20 @@ abstract class UpbitWebSocketListener<T : UpbitWebSocketResponse>(
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        super.onClosing(webSocket, code, reason)
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-        super.onClosed(webSocket, code, reason)
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        super.onFailure(webSocket, t, response)
+        incomingData.tryEmit(ErrorStreamingResponse(t))
     }
 
-    protected abstract fun parseResponse(bytes: ByteString): T?
+    protected abstract fun parseResponse(bytes: ByteString): UpbitStreamingResponse?
 
-    private fun onReceiveResponse(response: T) {
+    private fun onReceiveResponse(response: UpbitStreamingResponse) {
         incomingData.tryEmit(response)
     }
 
-    fun fetchResponse(): Flow<T> = incomingData
+    fun fetchResponse(): Flow<UpbitStreamingResponse> = incomingData
 }

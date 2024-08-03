@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class TickerWebSocketListener @Inject constructor(
     moshi: Moshi,
-) : UpbitWebSocketListener<TickerStreamingResponse>(moshi) {
+) : UpbitWebSocketListener(moshi) {
 
     override fun parseResponse(bytes: ByteString): TickerStreamingResponse? {
         return moshi.adapter(TickerStreamingResponse::class.java).fromJson(bytes.utf8())
