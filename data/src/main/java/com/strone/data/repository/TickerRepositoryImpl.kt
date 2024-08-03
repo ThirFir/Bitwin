@@ -1,15 +1,14 @@
 package com.strone.data.repository
 
+import com.strone.data.api.websocket.getSendJson
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.mapper.mapTicker
 import com.strone.data.mapper.toTicker
 import com.strone.data.request.RequestType
 import com.strone.data.response.rest.TickerSnapshotResponse
-import com.strone.data.response.websocket.TickerStreamingResponse
-import com.strone.data.util.getSendJson
 import com.strone.domain.model.Ticker
 import com.strone.domain.repository.TickerRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TickerRepositoryImpl @Inject constructor(
@@ -28,10 +27,10 @@ class TickerRepositoryImpl @Inject constructor(
 
         return if (isStreaming)
             tickerRemoteDataSource.fetchStreamingResponse()
-                .map(TickerStreamingResponse::toTicker)
+                .mapTicker()
         else
             tickerRemoteDataSource.fetchStreamingResponse(json)
-                .map(TickerStreamingResponse::toTicker).also {
+                .mapTicker().also {
                     isStreaming = true
                 }
     }

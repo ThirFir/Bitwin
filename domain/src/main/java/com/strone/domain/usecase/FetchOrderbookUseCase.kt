@@ -1,19 +1,19 @@
 package com.strone.domain.usecase
 
+import com.strone.domain.exception.ExceptionHandler
+import com.strone.domain.exception.mapCatchWith
 import com.strone.domain.model.Orderbook
 import com.strone.domain.repository.OrderbookRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FetchOrderbookUseCase @Inject constructor(
-    private val orderbookRepository: OrderbookRepository
+    private val orderbookRepository: OrderbookRepository,
+    private val exceptionHandler: ExceptionHandler
 ) {
 
-    suspend fun fetchOrderbookStreaming(code: String) : Result<Flow<Orderbook>> {
-        return try {
-            Result.success(orderbookRepository.fetchStreamingResponse(code))
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    suspend fun fetchOrderbookStreaming(code: String) : Flow<Result<Orderbook>> {
+        return orderbookRepository.fetchStreamingResponse(code)
+            .mapCatchWith(exceptionHandler)
     }
 }
