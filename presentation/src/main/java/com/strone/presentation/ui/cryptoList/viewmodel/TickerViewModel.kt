@@ -38,16 +38,14 @@ class TickerViewModel @Inject constructor(
 
     private suspend fun fetchTicker(markets: List<Market>) {
         fetchTickerUseCase.fetchTickerSnapshot(markets)
-            .emitUiState()
-            .onSuccess { tickers ->
+            .onComplete { tickers ->
                 val tickerModels = tickers.map(Ticker::toTickerModel)
                 emitTickers(tickerModels)
                 emitHotTickers(tickerModels)
 
                 fetchTickerUseCase.fetchTickerStreaming(markets)
-                    .emitUiState()
-                    .onSuccess { streamingTickerFlow ->
-                        streamingTickerFlow.collect { ticker ->
+                    .collect {
+                        it.onComplete { ticker ->
                             val tickerModel = ticker.toTickerModel()
                             emitTicker(tickerModel)
 

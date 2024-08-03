@@ -35,9 +35,8 @@ class TradeViewModel @AssistedInject constructor(
     suspend fun fetchTicker(code: String) {
         viewModelScope.launchWithUiState {
             fetchTickerUseCase.fetchTickerStreaming()    // 기존에 열린 Flow 이용
-                .emitUiState()
-                .onSuccess {
-                    it.collect { ticker ->
+                .collect {
+                    it.onComplete { ticker ->
                         if (ticker.code == code)
                             _ticker.emit(ticker.toTickerModel())
                     }
@@ -48,9 +47,8 @@ class TradeViewModel @AssistedInject constructor(
     suspend fun fetchOrderBook(code: String) {
         viewModelScope.launchWithUiState {
             fetchOrderbookUseCase.fetchOrderbookStreaming(code)
-                .emitUiState()
-                .onSuccess {
-                    it.collect { orderbook ->
+                .collect {
+                    it.onComplete { orderbook ->
                         _orderbook.emit(orderbook.toOrderbookModel())
                     }
                 }

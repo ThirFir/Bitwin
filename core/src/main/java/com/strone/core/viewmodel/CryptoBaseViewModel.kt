@@ -35,12 +35,17 @@ abstract class CryptoBaseViewModel: ViewModel() {
         block()
     }
 
-    protected fun<T> Result<T>.emitUiState(): Result<T> {
-        return if(inProgressTasks.decrementAndGet() == 0) {
+    /**
+     * Result를 수신 객체로 하여 UiState와 실행 코드를 한 번에 처리
+     */
+    protected suspend fun<T> Result<T>.onComplete(block: suspend (T) -> Unit): Result<T> {
+        return if(inProgressTasks.decrementAndGet() <= 0) {
+            inProgressTasks.set(0)
             this.onSuccess {
                 _uiState.value = UiState.Success
+                block(it)
             }.onFailure {
-                _uiState.value = UiState.Error(it)
+                _uiState.value = UiState.Error(it)  // TODO : Error Presentation
                 job.cancel()
             }
         } else {
