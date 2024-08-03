@@ -11,7 +11,7 @@ data class OrderbookResponse(
     @Json(name = "total_bid_size") val totalBidSize: Double?, // 호가 매수 총 잔량
     @Json(name = "orderbook_units") val orderbookUnitResps: List<OrderbookUnitResponse>?, // 호가 정보
     @Json(name = "timestamp") val timestamp: Long?, // 타임스탬프
-) : UpbitWebSocketResponse() {
+) : UpbitStreamingResponse() {
 
     @JsonClass(generateAdapter = true)
     data class OrderbookUnitResponse(

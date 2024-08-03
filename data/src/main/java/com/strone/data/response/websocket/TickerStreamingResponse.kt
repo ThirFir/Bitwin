@@ -37,4 +37,4 @@ data class TickerStreamingResponse(
     @Json(name = "market_warning") val marketWarning: String?, // 유의 종목 여부 - NONE : 해당 사항 없음, CAUTION : 투자유의
     @Json(name = "delisting_date") val delistingDate: String?, // 상장폐지 예정일 yyyy-MM-dd
     @Json(name = "is_trading_suspended") val isTradingSuspended: Boolean?, // 거래 정지 여부
-) : UpbitWebSocketResponse()
+) : UpbitStreamingResponse()
