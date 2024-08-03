@@ -1,4 +1,4 @@
-package com.strone.data.util
+package com.strone.data.api.websocket
 
 import com.squareup.moshi.JsonWriter
 import com.strone.data.request.RequestType

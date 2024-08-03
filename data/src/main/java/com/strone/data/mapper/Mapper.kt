@@ -4,9 +4,6 @@ import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.OrderbookResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
-import com.strone.data.util.getImageUrl
-import com.strone.data.util.toChangeType
-import com.strone.data.util.toSignature
 import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.USDT
