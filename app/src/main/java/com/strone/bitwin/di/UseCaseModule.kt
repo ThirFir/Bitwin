@@ -1,7 +1,7 @@
 package com.strone.bitwin.di
 
+import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
-import com.strone.domain.exception.ExceptionHandler
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import com.strone.domain.usecase.FetchOrderbookUseCase
@@ -21,19 +21,19 @@ object UseCaseModule {
     @Provides
     fun provideFetchTickerUseCase(
         tickerRepository: TickerRepository,
-        tickerExceptionHandler: TickerExceptionHandler
-    ): FetchTickerUseCase = FetchTickerUseCase(tickerRepository, tickerExceptionHandler)
+        exceptionHandler: TickerExceptionHandler
+    ): FetchTickerUseCase = FetchTickerUseCase(tickerRepository, exceptionHandler)
+
+    @Singleton
+    @Provides
+    fun provideFetchOrderbookUseCase(
+        orderbookRepository: OrderbookRepository,
+        exceptionHandler: OrderbookExceptionHandler
+    ): FetchOrderbookUseCase = FetchOrderbookUseCase(orderbookRepository, exceptionHandler)
 
     @Singleton
     @Provides
     fun provideStopFetchingOrderbookUseCase(
         orderbookRepository: OrderbookRepository
     ): StopFetchingOrderbookUseCase = StopFetchingOrderbookUseCase(orderbookRepository)
-
-    @Singleton
-    @Provides
-    fun provideFetchOrderbookUseCase(
-        orderbookRepository: OrderbookRepository,
-        exceptionHandler: ExceptionHandler
-    ): FetchOrderbookUseCase = FetchOrderbookUseCase(orderbookRepository, exceptionHandler)
 }

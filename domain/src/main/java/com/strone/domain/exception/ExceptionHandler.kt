@@ -8,8 +8,9 @@ interface ExceptionHandler {
         )
     }
     fun handleMessage(e: Throwable): String
+
+    fun Throwable.copy(message: String? = this.message, cause: Throwable? = this.cause): Throwable {
+        return Throwable(message, cause)
+    }
 }
 
-fun Throwable.copy(message: String? = this.message, cause: Throwable? = this.cause): Throwable {
-    return Throwable(message, cause)
-}
