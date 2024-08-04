@@ -32,7 +32,6 @@ abstract class CryptoBaseViewModel: ViewModel() {
     ) = this.launch(
         context + job, start
     ) {
-        CoroutineExceptionHandler { coroutineContext, throwable ->  }
         _uiState.value = UiState.Loading
         inProgressTasks.incrementAndGet()
 

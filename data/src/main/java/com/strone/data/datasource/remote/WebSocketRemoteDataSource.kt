@@ -29,6 +29,6 @@ abstract class WebSocketRemoteDataSource(
     }
 
     fun closeWebSocket(reason: String = "TODO") {
-        webSocket.close(1000, reason)
+        while(!webSocket.close(1000, reason));
     }
 }
