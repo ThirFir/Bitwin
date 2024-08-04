@@ -2,12 +2,15 @@ package com.strone.core.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.strone.core.state.UiState
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -20,15 +23,16 @@ abstract class CryptoBaseViewModel: ViewModel() {
 
     private val inProgressTasks = AtomicInteger(0)
     private val job = Job()
+    private val mutex = Mutex()
 
     protected fun CoroutineScope.launchWithUiState(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        ignoreCancellationException: Boolean = true,
         block: suspend CoroutineScope.() -> Unit
     ) = this.launch(
         context + job, start
     ) {
+        CoroutineExceptionHandler { coroutineContext, throwable ->  }
         _uiState.value = UiState.Loading
         inProgressTasks.incrementAndGet()
 
@@ -37,19 +41,25 @@ abstract class CryptoBaseViewModel: ViewModel() {
 
     /**
      * Result를 수신 객체로 하여 UiState와 실행 코드를 한 번에 처리
+     * @param block 실행 코드
+     * @return Result<T>
      */
     protected suspend fun<T> Result<T>.onComplete(block: suspend (T) -> Unit): Result<T> {
-        return if(inProgressTasks.decrementAndGet() <= 0) {
-            inProgressTasks.set(0)
-            this.onSuccess {
-                _uiState.value = UiState.Success
-                block(it)
+        val result = mutex.withLock {
+            if (inProgressTasks.decrementAndGet() <= 0) {
+                inProgressTasks.set(0)
+                this.onSuccess {
+                    _uiState.value = UiState.Success
+                }
+            } else {    // 다른 작업이 진행 중이면 Loading 상태 유지
+                this
             }.onFailure {
-                _uiState.value = UiState.Error(it)  // TODO : Error Presentation
-                job.cancel()
+                _uiState.value = UiState.Error(it)
+                job.cancel()    // 에러 발생 시 모든 작업 취소
             }
-        } else {
-            this
+        }
+        return result.onSuccess {
+            block(it)
         }
     }
 }

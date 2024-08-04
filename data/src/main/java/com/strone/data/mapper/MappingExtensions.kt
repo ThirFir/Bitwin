@@ -9,6 +9,7 @@ import com.strone.domain.constants.CryptoConstants.EVEN
 import com.strone.domain.constants.CryptoConstants.FALL
 import com.strone.domain.constants.CryptoConstants.RISE
 import com.strone.domain.model.Orderbook
+import com.strone.domain.model.StreamingModel
 import com.strone.domain.model.Ticker
 import com.strone.domain.model.type.ChangeType
 import kotlinx.coroutines.flow.Flow
@@ -31,22 +32,13 @@ internal fun String?.toChangeType(): ChangeType {
     }
 }
 
-fun Flow<UpbitStreamingResponse>.mapTicker(): Flow<Ticker> {
+inline fun<reified R: StreamingModel> Flow<UpbitStreamingResponse>.mapStreamingResponse(): Flow<R> {
     return map {
         when(it) {
             is TickerStreamingResponse -> it.toTicker()
-            is ErrorStreamingResponse -> throw it.exception
-            else -> throw IllegalStateException("Unknown response type")
-        }
-    }
-}
-
-fun Flow<UpbitStreamingResponse>.mapOrderbook(): Flow<Orderbook> {
-    return map {
-        when(it) {
             is OrderbookResponse -> it.toOrderbook()
             is ErrorStreamingResponse -> throw it.exception
             else -> throw IllegalStateException("Unknown response type")
-        }
+        } as R
     }
 }

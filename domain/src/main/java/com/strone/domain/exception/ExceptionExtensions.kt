@@ -12,7 +12,7 @@ internal inline fun <R> runCatchWith(handler: ExceptionHandler, block: () -> R):
     }
 }
 
-fun<T> Flow<T>.mapCatchWith(exceptionHandler: ExceptionHandler) : Flow<Result<T>> {
+fun <T> Flow<T>.mapCatchWith(exceptionHandler: ExceptionHandler): Flow<Result<T>> {
     return map {
         Result.success(it)
     }.catch {

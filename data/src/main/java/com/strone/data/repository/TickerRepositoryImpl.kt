@@ -2,7 +2,7 @@ package com.strone.data.repository
 
 import com.strone.data.api.websocket.getSendJson
 import com.strone.data.datasource.remote.TickerRemoteDataSource
-import com.strone.data.mapper.mapTicker
+import com.strone.data.mapper.mapStreamingResponse
 import com.strone.data.mapper.toTicker
 import com.strone.data.request.RequestType
 import com.strone.data.response.rest.TickerSnapshotResponse
@@ -27,10 +27,10 @@ class TickerRepositoryImpl @Inject constructor(
 
         return if (isStreaming)
             tickerRemoteDataSource.fetchStreamingResponse()
-                .mapTicker()
+                .mapStreamingResponse<Ticker>()
         else
             tickerRemoteDataSource.fetchStreamingResponse(json)
-                .mapTicker().also {
+                .mapStreamingResponse<Ticker>().also {
                     isStreaming = true
                 }
     }
