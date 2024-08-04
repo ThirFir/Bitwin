@@ -1,9 +1,15 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     kotlin("kapt")
     alias(libs.plugins.hilt)
 }
+
+val localProperties = Properties()
+localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
 android {
     namespace = "com.strone.bitwin"
@@ -20,9 +26,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = "kakao" + localProperties["KAKAO_NATIVE_APP_KEY"].toString()
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "KAKAO_NATIVE_APP_KEY", localProperties["KAKAO_NATIVE_APP_KEY"].toString())
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -82,4 +93,6 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.logging.interceptor)
+
+    implementation(libs.kakao.login)
 }

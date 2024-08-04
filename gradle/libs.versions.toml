@@ -22,6 +22,7 @@ logging-interceptor = "4.11.0"
 coroutines = "1.7.1"
 composeViewModel = "2.7.0"
 composeGlide = "1.0.0-beta01"
+kakao = "2.20.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,8 @@ compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-
 compose-viewmodel-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "composeViewModel" }
 
 compose-glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "composeGlide" }
+
+kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
