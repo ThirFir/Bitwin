@@ -30,6 +30,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.strone.presentation.R
+import com.strone.presentation.ui.login.LoginActivity
 import com.strone.presentation.ui.main.MainActivity
 import com.strone.presentation.util.findActivity
 
@@ -85,7 +86,7 @@ fun LoginContent(modifier: Modifier) {
             },
         )
 
-        val context = LocalContext.current
+        val context = LocalContext.current as LoginActivity
         Spacer(modifier = Modifier.weight(1f))
         Image(
             modifier = Modifier

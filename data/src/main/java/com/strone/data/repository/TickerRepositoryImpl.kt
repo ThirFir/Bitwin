@@ -15,8 +15,6 @@ class TickerRepositoryImpl @Inject constructor(
     private val tickerRemoteDataSource: TickerRemoteDataSource
 ) : TickerRepository {
 
-    private var isStreaming = false
-
     override suspend fun fetchTickerSnapshotResponse(codes: List<String>): List<Ticker> {
         val query = codes.joinToString(",")
         return tickerRemoteDataSource.fetchTickerSnapshotResponse(query).map(TickerSnapshotResponse::toTicker)
@@ -25,13 +23,7 @@ class TickerRepositoryImpl @Inject constructor(
     override suspend fun fetchStreamingResponse(codes: List<String>): Flow<Ticker> {
         val json = codes.getSendJson(RequestType.TICKER)
 
-        return if (isStreaming)
-            tickerRemoteDataSource.fetchStreamingResponse()
+        return tickerRemoteDataSource.fetchStreamingResponse(json)
                 .mapStreamingResponse<Ticker>()
-        else
-            tickerRemoteDataSource.fetchStreamingResponse(json)
-                .mapStreamingResponse<Ticker>().also {
-                    isStreaming = true
-                }
     }
 }

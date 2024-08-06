@@ -8,6 +8,6 @@ class StopFetchingOrderbookUseCase @Inject constructor(
 ) {
 
     operator fun invoke() {
-        orderbookRepository.closeWebSocket("TODO")
+        orderbookRepository.closeWebSocket()
     }
 }

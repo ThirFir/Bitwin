@@ -3,9 +3,7 @@ package com.strone.data.api.websocket
 import com.squareup.moshi.Moshi
 import com.strone.data.response.websocket.ErrorStreamingResponse
 import com.strone.data.response.websocket.UpbitStreamingResponse
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.SendChannel
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
@@ -15,11 +13,7 @@ abstract class UpbitWebSocketListener(
     protected val moshi: Moshi,
 ) : WebSocketListener() {
 
-    private val incomingData = MutableSharedFlow<UpbitStreamingResponse>(
-        replay = 1,
-        extraBufferCapacity = 0,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    lateinit var channel: SendChannel<UpbitStreamingResponse>
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
     }
@@ -38,14 +32,16 @@ abstract class UpbitWebSocketListener(
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        incomingData.tryEmit(ErrorStreamingResponse(t))
+        channel.trySend(ErrorStreamingResponse(t))
     }
 
     protected abstract fun parseResponse(bytes: ByteString): UpbitStreamingResponse?
 
     private fun onReceiveResponse(response: UpbitStreamingResponse) {
-        incomingData.tryEmit(response)
+        channel.trySend(response)
     }
 
-    fun fetchResponse(): Flow<UpbitStreamingResponse> = incomingData
+    fun closeChannel() {
+        channel.close()
+    }
 }
