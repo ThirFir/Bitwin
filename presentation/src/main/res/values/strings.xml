@@ -13,6 +13,7 @@
     <string name="sort_by_volume_ascending">거래량 낮은순</string>
     <string name="top_acc_trade_price">거래량 TOP</string>
     <string name="kakao_login">카카오 로그인</string>
+    <string name="guest_login">게스트 로그인</string>
 
     <!-- Titles -->
     <string name="app_name">Bitwin</string>

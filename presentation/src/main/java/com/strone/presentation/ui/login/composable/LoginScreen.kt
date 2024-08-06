@@ -30,6 +30,7 @@ import com.strone.presentation.R
 import com.strone.presentation.model.LoginResultModel
 import com.strone.presentation.ui.login.viewmodel.LoginViewModel
 import com.strone.presentation.ui.main.MainActivity
+import com.strone.presentation.util.clickable
 import com.strone.presentation.util.finishActivity
 
 @Composable
@@ -96,6 +97,14 @@ fun LoginContent(
         KakaoLoginButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = onKakaoLoginClicked
+        )
+        Text(
+            text = stringResource(id = R.string.guest_login),
+            modifier = Modifier.clickable {
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+                context.finishActivity()
+            }
         )
     }
 

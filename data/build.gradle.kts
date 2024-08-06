@@ -52,4 +52,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
 
     implementation(libs.kakao.login)
+
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
 }
