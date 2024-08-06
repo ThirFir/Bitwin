@@ -20,7 +20,7 @@ class OrderbookRepositoryImpl @Inject constructor(
             .mapStreamingResponse<Orderbook>()
     }
 
-    override fun closeWebSocket(reason: String) {
-        orderbookRemoteDataSource.closeWebSocket(reason)
+    override fun closeWebSocket() {
+        orderbookRemoteDataSource.closeWebSocket()
     }
 }

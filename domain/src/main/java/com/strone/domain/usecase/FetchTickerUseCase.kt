@@ -29,7 +29,7 @@ class FetchTickerUseCase @Inject constructor(
         }.mapResultWith(exceptionHandler)
     }
 
-    suspend fun fetchTickerStreaming() : Flow<Result<Ticker>> {
-        return fetchTickerStreaming(emptyList())
+    suspend fun fetchTickerStreaming(market: Market) : Flow<Result<Ticker>> {
+        return fetchTickerStreaming(listOf(market))
     }
 }

@@ -1,6 +1,7 @@
 package com.strone.presentation.ui.trade.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.strone.core.CryptoNamespace
 import com.strone.core.viewmodel.CryptoBaseViewModel
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
@@ -34,7 +35,7 @@ class TradeViewModel @AssistedInject constructor(
 
     suspend fun fetchTicker(code: String) {
         viewModelScope.launchWithUiState {
-            fetchTickerUseCase.fetchTickerStreaming()    // 기존에 열린 Flow 이용
+            fetchTickerUseCase.fetchTickerStreaming(CryptoNamespace.markets[code]!!)
                 .collect {
                     it.onComplete { ticker ->
                         if (ticker.code == code)
