@@ -17,6 +17,10 @@ internal fun Context.findActivity(): Activity {
     throw IllegalStateException("no activity")
 }
 
+internal fun Context.finishActivity() {
+    findActivity().finish()
+}
+
 internal inline fun<reified T: Serializable> Intent.getSerializableExtraCompat(key: String): T? {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getSerializableExtra(key, T::class.java)

@@ -1,7 +1,9 @@
 package com.strone.presentation.mapper
 
+import com.strone.domain.model.KakaoAuthResult
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
+import com.strone.presentation.model.LoginResultModel
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
 
@@ -48,4 +50,8 @@ fun Orderbook.toOrderbookModel() = OrderbookModel(
         it.toOrderbookUnitModel()
     }.sortedByDescending { it.price },
     timestamp = this.timestamp,
+)
+
+fun KakaoAuthResult.toLoginModel() = LoginResultModel(
+    isSuccess = error == null,
 )

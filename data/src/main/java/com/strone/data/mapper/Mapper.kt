@@ -7,6 +7,7 @@ import com.strone.data.response.websocket.TickerStreamingResponse
 import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.USDT
+import com.strone.domain.model.KakaoAuthResult
 import com.strone.domain.model.Market
 import com.strone.domain.model.type.MarketType
 import com.strone.domain.model.type.OrderType
@@ -100,10 +101,3 @@ fun OrderbookResponse.OrderbookUnitResponse.toOrderbookUnit() = listOf(
         orderType = OrderType.BID
     )
 )
-
-private fun String.toMarketType() : MarketType {
-    if (startsWith(KRW)) return MarketType.KRW
-    if (startsWith(BTC)) return MarketType.BTC
-    if (startsWith(USDT)) return MarketType.USDT
-    return MarketType.UNKNOWN
-}

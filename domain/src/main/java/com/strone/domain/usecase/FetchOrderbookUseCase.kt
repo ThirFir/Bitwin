@@ -1,7 +1,7 @@
 package com.strone.domain.usecase
 
 import com.strone.domain.exception.ExceptionHandler
-import com.strone.domain.exception.mapCatchWith
+import com.strone.domain.exception.mapResultWith
 import com.strone.domain.model.Orderbook
 import com.strone.domain.repository.OrderbookRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +14,6 @@ class FetchOrderbookUseCase @Inject constructor(
 
     suspend fun fetchOrderbookStreaming(code: String) : Flow<Result<Orderbook>> {
         return orderbookRepository.fetchStreamingResponse(code)
-            .mapCatchWith(exceptionHandler)
+            .mapResultWith(exceptionHandler)
     }
 }

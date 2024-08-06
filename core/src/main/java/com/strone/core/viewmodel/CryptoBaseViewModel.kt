@@ -1,5 +1,6 @@
 package com.strone.core.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.strone.core.state.UiState
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -54,6 +55,7 @@ abstract class CryptoBaseViewModel: ViewModel() {
                 this
             }.onFailure {
                 _uiState.value = UiState.Error(it)
+                Log.d("CryptoBaseViewModel", "Error: $it")
                 job.cancel()    // 에러 발생 시 모든 작업 취소
             }
         }

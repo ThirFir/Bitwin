@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Display Descriptions -->
-    <string name="intro_bitwin">Bitwin에서 투자 실력을\n키우고 승리를 쟁취하세요!</string>
+    <!-- Display Contents -->
+    <string name="intro_bitwin">인트로 메시지</string>
     <string name="label_input_crypto">검색</string>
     <string name="sort_by_name_descending">이름순 ㅎ부터</string>
     <string name="sort_by_name_ascending">이름순 ㄱ부터</string>
@@ -12,6 +12,7 @@
     <string name="sort_by_volume_descending">거래량 높은순</string>
     <string name="sort_by_volume_ascending">거래량 낮은순</string>
     <string name="top_acc_trade_price">거래량 TOP</string>
+    <string name="kakao_login">카카오 로그인</string>
 
     <!-- Titles -->
     <string name="app_name">Bitwin</string>
@@ -36,7 +37,7 @@
     <string name="available_balance">주문가능</string>
 
     <!-- Non-Display Descriptions -->
-    <string name="kakao_button">카카오 로그인 버튼</string>
+    <string name="kakao_login_button">카카오 로그인 버튼</string>
     <string name="navigation_icon">네비게이션 아이콘</string>
     <string name="trailing_icon">트레일링 아이콘</string>
     <string name="action_notice_setting">알림 설정</string>

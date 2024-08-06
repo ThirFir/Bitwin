@@ -53,3 +53,5 @@ val ColorRiseLight = Color(0xFFCFFFE4)
 val ColorEven = Color(0xFF000000)
 val ColorFall = Color(0xFFFF3D00)
 val ColorFallLight = Color(0xFFFFD8D8)
+
+val ColorKakaoPrimary = Color(0xFFFEE500)

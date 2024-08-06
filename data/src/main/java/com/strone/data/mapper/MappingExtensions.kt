@@ -5,13 +5,17 @@ import com.strone.data.response.websocket.ErrorStreamingResponse
 import com.strone.data.response.websocket.OrderbookResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
 import com.strone.data.response.websocket.UpbitStreamingResponse
+import com.strone.domain.constants.CryptoConstants.BTC
 import com.strone.domain.constants.CryptoConstants.EVEN
 import com.strone.domain.constants.CryptoConstants.FALL
+import com.strone.domain.constants.CryptoConstants.KRW
 import com.strone.domain.constants.CryptoConstants.RISE
+import com.strone.domain.constants.CryptoConstants.USDT
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.StreamingModel
 import com.strone.domain.model.Ticker
 import com.strone.domain.model.type.ChangeType
+import com.strone.domain.model.type.MarketType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -30,6 +34,13 @@ internal fun String?.toChangeType(): ChangeType {
         FALL -> ChangeType.FALL
         else -> ChangeType.EVEN
     }
+}
+
+internal fun String.toMarketType() : MarketType {
+    if (startsWith(KRW)) return MarketType.KRW
+    if (startsWith(BTC)) return MarketType.BTC
+    if (startsWith(USDT)) return MarketType.USDT
+    return MarketType.UNKNOWN
 }
 
 inline fun<reified R: StreamingModel> Flow<UpbitStreamingResponse>.mapStreamingResponse(): Flow<R> {

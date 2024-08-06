@@ -1,7 +1,7 @@
 package com.strone.domain.usecase
 
 import com.strone.domain.exception.ExceptionHandler
-import com.strone.domain.exception.mapCatchWith
+import com.strone.domain.exception.mapResultWith
 import com.strone.domain.exception.runCatchWith
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
@@ -26,7 +26,7 @@ class FetchTickerUseCase @Inject constructor(
     suspend fun fetchTickerStreaming(markets: List<Market>) : Flow<Result<Ticker>> {
         return tickerRepository.fetchStreamingResponse(markets.map(Market::code)).filter {
             it.type == MarketType.KRW
-        }.mapCatchWith(exceptionHandler)
+        }.mapResultWith(exceptionHandler)
     }
 
     suspend fun fetchTickerStreaming() : Flow<Result<Ticker>> {

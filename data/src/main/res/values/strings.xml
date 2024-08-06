@@ -19,4 +19,8 @@
     <string name="error_service_unavailable">현재 서비스를 이용할 수 없어요.</string>
     <string name="error_gateway_timeout">서버 접속에 실패했어요.</string>
 
+    <!-- Kakao Login Error-->
+    <string name="error_user_cancelled">로그인이 취소되었어요.</string>
+    <string name="error_login_failed">로그인에 실패했어요.</string>
+
 </resources>

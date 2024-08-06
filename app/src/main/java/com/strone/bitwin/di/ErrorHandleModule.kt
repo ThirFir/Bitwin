@@ -1,9 +1,9 @@
 package com.strone.bitwin.di
 
 import android.content.Context
+import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
 import com.strone.data.exception.manager.NetworkExceptionHandleManager
-import com.strone.domain.exception.ExceptionHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,14 @@ object ErrorHandleModule {
     fun provideTickerExceptionHandler(
         @ApplicationContext context: Context,
         networkExceptionHandleManager: NetworkExceptionHandleManager
-    ): ExceptionHandler = TickerExceptionHandler(context, networkExceptionHandleManager)
+    ): TickerExceptionHandler = TickerExceptionHandler(context, networkExceptionHandleManager)
+
+    @Singleton
+    @Provides
+    fun provideOrderbookExceptionHandler(
+        @ApplicationContext context: Context,
+        networkExceptionHandleManager: NetworkExceptionHandleManager
+    ): OrderbookExceptionHandler = OrderbookExceptionHandler(context, networkExceptionHandleManager)
 
     @Singleton
     @Provides

@@ -1,10 +1,6 @@
 package com.strone.presentation.ui.login.composable
 
-import android.app.Activity
 import android.content.Intent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,23 +14,32 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.strone.domain.usecase.LoginUseCase
 import com.strone.presentation.R
+import com.strone.presentation.model.LoginResultModel
+import com.strone.presentation.ui.login.viewmodel.LoginViewModel
 import com.strone.presentation.ui.main.MainActivity
-import com.strone.presentation.util.findActivity
+import com.strone.presentation.util.finishActivity
 
 @Composable
-fun LoginScreen(modifier: Modifier) {
+fun LoginScreen(
+    modifier: Modifier,
+    loginUseCase: LoginUseCase,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+
+    val loginResult by viewModel.login.collectAsStateWithLifecycle(LoginResultModel(false))
     Surface(
         modifier = modifier,
     ) {
@@ -45,31 +50,33 @@ fun LoginScreen(modifier: Modifier) {
             LoginContent(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 40.dp)
+                    .padding(all = 40.dp),
+                loginResult = loginResult,
+                onKakaoLoginClicked = {
+                    viewModel.kakaoLogin(loginUseCase)
+                }
             )
         }
     }
 }
 
 @Composable
-fun LoginContent(modifier: Modifier) {
+fun LoginContent(
+    modifier: Modifier,
+    loginResult: LoginResultModel,
+    onKakaoLoginClicked: () -> Unit
+) {
+    val context = LocalContext.current
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.coin)
+    )
+    val lottieAnimatable = rememberLottieAnimatable()
+
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val composition by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.coin)
-        )
-        val lottieAnimatable = rememberLottieAnimatable()
-
-        LaunchedEffect(composition) {
-            lottieAnimatable.animate(
-                composition = composition,
-                clipSpec = LottieClipSpec.Frame(0, 90),
-                initialProgress = 0f
-            )
-        }
-
         Text(
             modifier = Modifier.padding(top = 32.dp, start = 16.dp, end = 16.dp),
             text = stringResource(id = R.string.intro_bitwin),
@@ -85,20 +92,26 @@ fun LoginContent(modifier: Modifier) {
             },
         )
 
-        val context = LocalContext.current
         Spacer(modifier = Modifier.weight(1f))
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    // TODO("Add feature : Kakao login")
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                    context.findActivity().finish()
-                },
-            contentScale = ContentScale.FillWidth,
-            painter = painterResource(id = R.drawable.kakao_login_medium_wide),
-            contentDescription = stringResource(id = R.string.kakao_button)
+        KakaoLoginButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onKakaoLoginClicked
+        )
+    }
+
+    LaunchedEffect(key1 = loginResult) {
+        if (loginResult.isSuccess) {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+            context.finishActivity()
+        }
+    }
+
+    LaunchedEffect(composition) {
+        lottieAnimatable.animate(
+            composition = composition,
+            clipSpec = LottieClipSpec.Frame(0, 90),
+            initialProgress = 0f
         )
     }
 }
