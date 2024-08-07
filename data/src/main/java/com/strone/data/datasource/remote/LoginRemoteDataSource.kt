@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.channels.ProducerScope
 import javax.inject.Inject
 
-class UserRemoteDataSource @Inject constructor(
+class LoginRemoteDataSource @Inject constructor(
     @ActivityContext private val context: Context
 ) {
 

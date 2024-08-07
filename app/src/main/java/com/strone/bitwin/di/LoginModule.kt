@@ -1,11 +1,11 @@
 package com.strone.bitwin.di
 
 import android.content.Context
-import com.strone.data.datasource.remote.UserRemoteDataSource
-import com.strone.data.exception.handler.UserExceptionHandler
+import com.strone.data.datasource.remote.LoginRemoteDataSource
+import com.strone.data.exception.handler.LoginExceptionHandler
 import com.strone.data.exception.manager.NetworkExceptionHandleManager
-import com.strone.data.repository.UserRepositoryImpl
-import com.strone.domain.repository.UserRepository
+import com.strone.data.repository.LoginRepositoryImpl
+import com.strone.domain.repository.LoginRepository
 import com.strone.domain.usecase.LoginUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,35 +17,35 @@ import dagger.hilt.android.scopes.ActivityScoped
 
 @Module
 @InstallIn(ActivityComponent::class)
-object UserModule {
+object LoginModule {
 
     @Provides
     @ActivityScoped
     fun provideLoginUseCase(
-        userRepository: UserRepository,
-        exceptionHandler: UserExceptionHandler
-    ): LoginUseCase = LoginUseCase(userRepository, exceptionHandler)
+        loginRepository: LoginRepository,
+        exceptionHandler: LoginExceptionHandler
+    ): LoginUseCase = LoginUseCase(loginRepository, exceptionHandler)
 
     @Provides
     @ActivityScoped
-    fun provideUserExceptionHandler(
+    fun provideLoginExceptionHandler(
         @ApplicationContext context: Context,
         networkExceptionHandleManager: NetworkExceptionHandleManager
-    ): UserExceptionHandler = UserExceptionHandler(context, networkExceptionHandleManager)
+    ): LoginExceptionHandler = LoginExceptionHandler(context, networkExceptionHandleManager)
 
     @Provides
     @ActivityScoped
-    fun provideUserRepository(
-        userRemoteDataSource: UserRemoteDataSource
-    ) : UserRepository {
-        return UserRepositoryImpl(userRemoteDataSource)
+    fun provideLoginRepository(
+        loginRemoteDataSource: LoginRemoteDataSource
+    ) : LoginRepository {
+        return LoginRepositoryImpl(loginRemoteDataSource)
     }
 
     @Provides
     @ActivityScoped
     fun provideUserRemoteDataSource(
         @ActivityContext context: Context
-    ) : UserRemoteDataSource {
-        return UserRemoteDataSource(context)
+    ) : LoginRemoteDataSource {
+        return LoginRemoteDataSource(context)
     }
 }

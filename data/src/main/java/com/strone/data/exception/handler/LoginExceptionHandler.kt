@@ -9,7 +9,7 @@ import com.strone.domain.exception.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class UserExceptionHandler @Inject constructor(
+class LoginExceptionHandler @Inject constructor(
     @ApplicationContext private val context: Context,
     private val networkExceptionHandleManager: NetworkExceptionHandleManager
 ) : ExceptionHandler {
