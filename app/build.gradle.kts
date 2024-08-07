@@ -95,4 +95,8 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.kakao.login)
+
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
 }

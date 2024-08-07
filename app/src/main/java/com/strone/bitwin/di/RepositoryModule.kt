@@ -1,9 +1,11 @@
 package com.strone.bitwin.di
 
+import com.strone.data.datasource.local.UserLocalDataSource
 import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
 import com.strone.data.repository.OrderbookRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl
+import com.strone.data.repository.UserRepositoryImpl
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import dagger.Module
@@ -30,5 +32,13 @@ object RepositoryModule {
         orderbookRemoteDataSource: OrderbookRemoteDataSource
     ) : OrderbookRepository {
         return OrderbookRepositoryImpl(orderbookRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        userLocalDataSource: UserLocalDataSource
+    ) : UserRepositoryImpl {
+        return UserRepositoryImpl(userLocalDataSource)
     }
 }

@@ -1,13 +1,12 @@
 package com.strone.data.mapper
 
+import com.strone.data.entity.AssetEntity
+import com.strone.data.entity.HoldingCryptoEntity
 import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.OrderbookResponse
 import com.strone.data.response.websocket.TickerStreamingResponse
-import com.strone.domain.constants.CryptoConstants.BTC
-import com.strone.domain.constants.CryptoConstants.KRW
-import com.strone.domain.constants.CryptoConstants.USDT
-import com.strone.domain.model.KakaoAuthResult
+import com.strone.domain.model.Asset
 import com.strone.domain.model.Market
 import com.strone.domain.model.type.MarketType
 import com.strone.domain.model.type.OrderType
@@ -100,4 +99,30 @@ fun OrderbookResponse.OrderbookUnitResponse.toOrderbookUnit() = listOf(
         size = BigDecimal(this.bidSize.toString()),
         orderType = OrderType.BID
     )
+)
+
+fun AssetEntity.toAsset() = Asset(
+    id = this.id,
+    krw = this.krw,
+    totalBuyKrw = this.totalBuyKrw,
+    holdings = this.holdings.map { it.toHoldingCrypto() }
+)
+
+fun HoldingCryptoEntity.toHoldingCrypto() = Asset.HoldingCrypto(
+    code = this.code,
+    price = this.price,
+    volume = this.volume
+)
+
+fun Asset.toAssetEntity() = AssetEntity(
+    id = this.id,
+    krw = this.krw,
+    totalBuyKrw = this.totalBuyKrw,
+    holdings = this.holdings.map { it.toHoldingCryptoEntity() }
+)
+
+fun Asset.HoldingCrypto.toHoldingCryptoEntity() = HoldingCryptoEntity(
+    code = this.code,
+    price = this.price,
+    volume = this.volume
 )

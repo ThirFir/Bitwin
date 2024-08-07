@@ -2,11 +2,14 @@ package com.strone.bitwin.di
 
 import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
+import com.strone.data.exception.handler.UserExceptionHandler
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
+import com.strone.domain.repository.UserRepository
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
+import com.strone.domain.usecase.asset.GetAssetUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,4 +39,11 @@ object UseCaseModule {
     fun provideStopFetchingOrderbookUseCase(
         orderbookRepository: OrderbookRepository
     ): StopFetchingOrderbookUseCase = StopFetchingOrderbookUseCase(orderbookRepository)
+
+    @Singleton
+    @Provides
+    fun provideGetAssetUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler
+    ): GetAssetUseCase = GetAssetUseCase(userRepository, exceptionHandler)
 }

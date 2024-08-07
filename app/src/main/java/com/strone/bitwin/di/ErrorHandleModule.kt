@@ -3,6 +3,7 @@ package com.strone.bitwin.di
 import android.content.Context
 import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
+import com.strone.data.exception.handler.UserExceptionHandler
 import com.strone.data.exception.manager.NetworkExceptionHandleManager
 import dagger.Module
 import dagger.Provides
@@ -34,4 +35,10 @@ object ErrorHandleModule {
     fun provideNetworkExceptionHandleManager(
         @ApplicationContext context: Context
     ): NetworkExceptionHandleManager = NetworkExceptionHandleManager(context)
+
+    @Singleton
+    @Provides
+    fun provideUserExceptionHandler(
+        @ApplicationContext context: Context
+    ): UserExceptionHandler = UserExceptionHandler(context)
 }

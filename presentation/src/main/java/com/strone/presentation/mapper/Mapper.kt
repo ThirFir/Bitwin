@@ -1,8 +1,10 @@
 package com.strone.presentation.mapper
 
+import com.strone.domain.model.Asset
 import com.strone.domain.model.KakaoAuthResult
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
+import com.strone.presentation.model.AssetModel
 import com.strone.presentation.model.LoginResultModel
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
@@ -54,4 +56,34 @@ fun Orderbook.toOrderbookModel() = OrderbookModel(
 
 fun KakaoAuthResult.toLoginModel() = LoginResultModel(
     isSuccess = error == null,
+)
+
+fun Asset.toAssetModel() = AssetModel(
+    id = this.id,
+    krw = this.krw,
+    totalBuyKrw = this.totalBuyKrw,
+    holdings = this.holdings.map {
+        it.toHoldingsCryptoModel()
+    }
+)
+
+fun Asset.HoldingCrypto.toHoldingsCryptoModel() = AssetModel.HoldingCryptoModel(
+    code = this.code,
+    price = this.price,
+    volume = this.volume,
+)
+
+fun AssetModel.toAsset() = Asset(
+    id = this.id,
+    krw = this.krw,
+    totalBuyKrw = this.totalBuyKrw,
+    holdings = this.holdings.map {
+        it.toHoldingsCrypto()
+    }
+)
+
+fun AssetModel.HoldingCryptoModel.toHoldingsCrypto() = Asset.HoldingCrypto(
+    code = this.code,
+    price = this.price,
+    volume = this.volume,
 )
