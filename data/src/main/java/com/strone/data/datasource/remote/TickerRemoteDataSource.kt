@@ -1,6 +1,6 @@
 package com.strone.data.datasource.remote
 
-import com.strone.core.qualifier.WebSocket
+import com.strone.domain.qualifier.WebSocket
 import com.strone.data.api.rest.TickerApi
 import com.strone.data.api.websocket.TickerWebSocketListener
 import com.strone.data.response.rest.TickerSnapshotResponse

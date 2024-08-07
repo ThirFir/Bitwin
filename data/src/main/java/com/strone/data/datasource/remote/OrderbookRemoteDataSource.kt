@@ -1,6 +1,6 @@
 package com.strone.data.datasource.remote
 
-import com.strone.core.qualifier.WebSocket
+import com.strone.domain.qualifier.WebSocket
 import com.strone.data.api.websocket.OrderbookWebSocketListener
 import okhttp3.Request
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.strone.data.api
+package com.strone.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.Flow
 interface AssetDao {
 
     @Insert
-    suspend fun insertAsset(asset: AssetEntity)
+    fun insertAsset(asset: AssetEntity)
 
     @Update
-    suspend fun updateAsset(asset: AssetEntity)
+    fun updateAsset(asset: AssetEntity)
 
     @Delete
-    suspend fun deleteAsset(asset: AssetEntity)
+    fun deleteAsset(asset: AssetEntity)
 
     @Query("SELECT * FROM AssetEntity WHERE id = :id")
-    suspend fun getAsset(id: String): Flow<AssetEntity>
+    fun getAsset(id: String): Flow<AssetEntity>
 }

@@ -1,4 +1,4 @@
-package com.strone.core.qualifier
+package com.strone.domain.qualifier
 
 import javax.inject.Qualifier
 

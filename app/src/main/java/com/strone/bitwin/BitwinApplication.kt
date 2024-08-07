@@ -3,7 +3,7 @@ package com.strone.bitwin
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import com.strone.core.CryptoNamespace
-import com.strone.core.qualifier.IoDispatcher
+import com.strone.domain.qualifier.IoDispatcher
 import com.strone.data.api.rest.MarketApi
 import com.strone.data.mapper.toMarket
 import dagger.hilt.android.HiltAndroidApp

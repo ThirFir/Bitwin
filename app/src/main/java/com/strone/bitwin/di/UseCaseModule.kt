@@ -3,17 +3,21 @@ package com.strone.bitwin.di
 import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
 import com.strone.data.exception.handler.UserExceptionHandler
+import com.strone.domain.qualifier.IoDispatcher
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import com.strone.domain.repository.UserRepository
+import com.strone.domain.usecase.CollectUserResultUseCase
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
+import com.strone.domain.usecase.SaveUserResultUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
 import com.strone.domain.usecase.asset.GetAssetUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -46,4 +50,20 @@ object UseCaseModule {
         userRepository: UserRepository,
         exceptionHandler: UserExceptionHandler
     ): GetAssetUseCase = GetAssetUseCase(userRepository, exceptionHandler)
+
+    @Singleton
+    @Provides
+    fun provideCollectUserUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): CollectUserResultUseCase = CollectUserResultUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideSaveUserUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): SaveUserResultUseCase = SaveUserResultUseCase(userRepository, exceptionHandler, coroutineDispatcher)
 }

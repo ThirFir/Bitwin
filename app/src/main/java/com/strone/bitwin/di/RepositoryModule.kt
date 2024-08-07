@@ -3,6 +3,7 @@ package com.strone.bitwin.di
 import com.strone.data.datasource.local.UserLocalDataSource
 import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.datastore.UserPreferenceDataStore
 import com.strone.data.repository.OrderbookRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl
 import com.strone.data.repository.UserRepositoryImpl
@@ -37,8 +38,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideUserRepository(
-        userLocalDataSource: UserLocalDataSource
+        userLocalDataSource: UserLocalDataSource,
+        userPreferenceDataSource: UserPreferenceDataStore
     ) : UserRepositoryImpl {
-        return UserRepositoryImpl(userLocalDataSource)
+        return UserRepositoryImpl(userLocalDataSource, userPreferenceDataSource)
     }
 }

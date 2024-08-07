@@ -1,9 +1,9 @@
 package com.strone.bitwin.di
 
-import com.strone.core.qualifier.DefaultDispatcher
-import com.strone.core.qualifier.IoDispatcher
-import com.strone.core.qualifier.MainDispatcher
-import com.strone.core.qualifier.MainImmediateDispatcher
+import com.strone.domain.qualifier.DefaultDispatcher
+import com.strone.domain.qualifier.IoDispatcher
+import com.strone.domain.qualifier.MainDispatcher
+import com.strone.domain.qualifier.MainImmediateDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

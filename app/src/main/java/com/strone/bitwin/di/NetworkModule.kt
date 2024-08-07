@@ -3,8 +3,8 @@ package com.strone.bitwin.di
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.strone.bitwin.BuildConfig
-import com.strone.core.qualifier.RestApi
-import com.strone.core.qualifier.WebSocket
+import com.strone.domain.qualifier.RestApi
+import com.strone.domain.qualifier.WebSocket
 import com.strone.data.api.rest.MarketApi
 import com.strone.data.api.rest.TickerApi
 import com.strone.data.constant.URLConstant

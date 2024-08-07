@@ -3,6 +3,8 @@ package com.strone.bitwin.di
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.strone.data.database.UserDatabase
+import com.strone.data.datastore.UserPreferenceDataStoreImpl
+import com.strone.data.datastore.UserPreferenceDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +23,13 @@ object DatabaseModule {
         moshi: Moshi
     ): UserDatabase {
         return UserDatabase.getInstance(context, moshi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserPreferenceDataStore(
+        @ApplicationContext context: Context
+    ): UserPreferenceDataStore {
+        return UserPreferenceDataStoreImpl(context)
     }
 }

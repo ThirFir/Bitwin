@@ -1,6 +1,6 @@
 package com.strone.data.datasource.remote
 
-import com.strone.core.qualifier.WebSocket
+import com.strone.domain.qualifier.WebSocket
 import com.strone.data.api.websocket.UpbitWebSocketListener
 import com.strone.data.response.websocket.UpbitStreamingResponse
 import kotlinx.coroutines.channels.SendChannel

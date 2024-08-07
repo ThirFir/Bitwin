@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.squareup.moshi.Moshi
-import com.strone.data.api.AssetDao
+import com.strone.data.dao.AssetDao
 import com.strone.data.converter.AssetTypeConverter
 import com.strone.data.entity.AssetEntity
 

@@ -1,6 +1,6 @@
 package com.strone.bitwin.di
 
-import com.strone.core.qualifier.WebSocket
+import com.strone.domain.qualifier.WebSocket
 import com.strone.data.api.rest.TickerApi
 import com.strone.data.api.websocket.OrderbookWebSocketListener
 import com.strone.data.api.websocket.TickerWebSocketListener
