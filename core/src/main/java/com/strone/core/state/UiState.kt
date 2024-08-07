@@ -1,7 +1,7 @@
 package com.strone.core.state
 
 /**
- * @see com.strone.core.viewmodel.CryptoBaseViewModel
+ * @see com.strone.core.viewmodel.BaseViewModel
  * @param Initial 초기 상태
  * @param Success 성공
  * @param Error 에러. 여러 작업 중 하나만 실패하더라도 Error 상태임

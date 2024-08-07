@@ -3,7 +3,6 @@ package com.strone.core.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.strone.core.state.UiState
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -16,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class CryptoBaseViewModel: ViewModel() {
+abstract class BaseViewModel: ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState>

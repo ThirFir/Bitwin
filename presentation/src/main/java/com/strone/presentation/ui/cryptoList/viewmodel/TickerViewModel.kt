@@ -3,7 +3,7 @@ package com.strone.presentation.ui.cryptoList.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.strone.core.CryptoNamespace
-import com.strone.core.viewmodel.CryptoBaseViewModel
+import com.strone.core.viewmodel.BaseViewModel
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.FetchTickerUseCase
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TickerViewModel @Inject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
-) : CryptoBaseViewModel() {
+) : BaseViewModel() {
 
     private val _tickers = mutableStateListOf<TickerModel>()
     val tickers get() = _tickers

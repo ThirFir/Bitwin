@@ -2,7 +2,7 @@ package com.strone.presentation.ui.trade.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.strone.core.CryptoNamespace
-import com.strone.core.viewmodel.CryptoBaseViewModel
+import com.strone.core.viewmodel.BaseViewModel
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
@@ -23,7 +23,7 @@ class TradeViewModel @AssistedInject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
     private val fetchOrderbookUseCase: FetchOrderbookUseCase,
     private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase
-) : CryptoBaseViewModel() {
+) : BaseViewModel() {
 
     private val _ticker: MutableStateFlow<TickerModel> = MutableStateFlow(tickerSnapshot)
     val ticker: StateFlow<TickerModel>
