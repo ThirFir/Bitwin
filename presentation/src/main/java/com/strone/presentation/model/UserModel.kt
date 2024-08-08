@@ -9,4 +9,5 @@ import kotlinx.parcelize.Parcelize
 data class UserModel(
     val id: String,
     val nickname: String,
+    val isGuest: Boolean,
 ) : Parcelable

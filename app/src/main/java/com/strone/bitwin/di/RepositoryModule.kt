@@ -3,12 +3,14 @@ package com.strone.bitwin.di
 import com.strone.data.datasource.local.UserLocalDataSource
 import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.datasource.remote.UserRemoteDataSource
 import com.strone.data.datastore.UserPreferenceDataStore
 import com.strone.data.repository.OrderbookRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl
 import com.strone.data.repository.UserRepositoryImpl
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
+import com.strone.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,8 +41,8 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(
         userLocalDataSource: UserLocalDataSource,
-        userPreferenceDataSource: UserPreferenceDataStore
-    ) : UserRepositoryImpl {
-        return UserRepositoryImpl(userLocalDataSource, userPreferenceDataSource)
+        userRemoteDataSource: UserRemoteDataSource
+    ) : UserRepository {
+        return UserRepositoryImpl(userLocalDataSource, userRemoteDataSource)
     }
 }

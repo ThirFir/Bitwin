@@ -2,6 +2,7 @@ package com.strone.data.mapper
 
 import com.strone.data.entity.AssetEntity
 import com.strone.data.entity.HoldingCryptoEntity
+import com.strone.data.entity.UserEntity
 import com.strone.data.response.rest.MarketResponse
 import com.strone.data.response.rest.TickerSnapshotResponse
 import com.strone.data.response.websocket.OrderbookResponse
@@ -12,6 +13,7 @@ import com.strone.domain.model.type.MarketType
 import com.strone.domain.model.type.OrderType
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
+import com.strone.domain.model.User
 import java.math.BigDecimal
 
 fun TickerStreamingResponse.toTicker() = Ticker(
@@ -125,4 +127,16 @@ fun Asset.HoldingCrypto.toHoldingCryptoEntity() = HoldingCryptoEntity(
     code = this.code,
     price = this.price,
     volume = this.volume
+)
+
+fun User.toUserEntity() = UserEntity(
+    id = this.id,
+    nickname = this.nickname,
+    isGuest = this.isGuest
+)
+
+fun UserEntity.toUser() = User(
+    id = this.id,
+    nickname = this.nickname,
+    isGuest = this.isGuest
 )

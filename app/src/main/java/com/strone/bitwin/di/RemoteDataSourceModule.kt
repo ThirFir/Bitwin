@@ -6,6 +6,7 @@ import com.strone.data.api.websocket.OrderbookWebSocketListener
 import com.strone.data.api.websocket.TickerWebSocketListener
 import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
+import com.strone.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +38,12 @@ object RemoteDataSourceModule {
         orderbookWebSocketListener: OrderbookWebSocketListener,
     ) : OrderbookRemoteDataSource {
         return OrderbookRemoteDataSource(client, request, orderbookWebSocketListener)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRemoteDataSource(
+    ) : UserRemoteDataSource {
+        return UserRemoteDataSource()
     }
 }

@@ -28,7 +28,7 @@ class UserDelegateImpl @Inject constructor(
     override val user: StateFlow<Result<UserModel?>> = collectUserUseCase(Unit)
         .map {
             runCatching {
-                it.getOrNull()?.toUserModel()
+                it.getOrThrow().toUserModel()
             }
         }.stateIn(scope = coroutineScope, started = SharingStarted.Eagerly, initialValue = Result.success(null))
 

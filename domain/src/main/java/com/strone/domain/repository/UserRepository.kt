@@ -5,7 +5,7 @@ import com.strone.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    val user: Flow<User?>
+    val user: Flow<User>
     fun saveUser(user: User): Flow<Unit>
     fun getAsset(id: String): Flow<Asset>
     fun insertAsset(asset: Asset): Flow<Unit>

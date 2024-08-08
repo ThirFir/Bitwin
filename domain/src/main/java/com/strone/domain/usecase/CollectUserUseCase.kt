@@ -12,9 +12,9 @@ class CollectUserUseCase @Inject constructor(
     private val userRepository: UserRepository,
     exceptionHandler: ExceptionHandler,
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
-) : FlowResultUseCase<Unit, User?>(exceptionHandler, coroutineDispatcher) {
+) : FlowResultUseCase<Unit, User>(exceptionHandler, coroutineDispatcher) {
 
-    override fun execute(params: Unit): Flow<User?> {
+    override fun execute(params: Unit): Flow<User> {
         return userRepository.user
     }
 }

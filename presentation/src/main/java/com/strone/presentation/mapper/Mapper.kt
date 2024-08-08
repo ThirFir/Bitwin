@@ -93,9 +93,11 @@ fun AssetModel.HoldingCryptoModel.toHoldingsCrypto() = Asset.HoldingCrypto(
 fun User.toUserModel() = UserModel(
     id = this.id,
     nickname = this.nickname,
+    isGuest = this.isGuest,
 )
 
 fun UserModel.toUser() = User(
     id = this.id,
     nickname = this.nickname,
+    isGuest = this.isGuest,
 )
