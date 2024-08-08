@@ -1,11 +1,12 @@
 package com.strone.presentation.ui.trade.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.strone.core.CryptoNamespace
 import com.strone.core.viewmodel.BaseViewModel
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
+import com.strone.presentation.delegate.CryptoNamespaceDelegate
+import com.strone.presentation.mapper.toMarket
 import com.strone.presentation.mapper.toOrderbookModel
 import com.strone.presentation.mapper.toTickerModel
 import com.strone.presentation.model.OrderbookModel
@@ -22,8 +23,9 @@ class TradeViewModel @AssistedInject constructor(
     @Assisted private val tickerSnapshot: TickerModel,
     private val fetchTickerUseCase: FetchTickerUseCase,
     private val fetchOrderbookUseCase: FetchOrderbookUseCase,
-    private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase
-) : BaseViewModel() {
+    private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase,
+    cryptoNamespaceDelegate: CryptoNamespaceDelegate
+) : BaseViewModel(), CryptoNamespaceDelegate by cryptoNamespaceDelegate {
 
     private val _ticker: MutableStateFlow<TickerModel> = MutableStateFlow(tickerSnapshot)
     val ticker: StateFlow<TickerModel>
@@ -35,7 +37,7 @@ class TradeViewModel @AssistedInject constructor(
 
     suspend fun fetchTicker(code: String) {
         viewModelScope.launchWithUiState {
-            fetchTickerUseCase.fetchTickerStreaming(CryptoNamespace.markets[code]!!)
+            fetchTickerUseCase.fetchTickerStreaming(markets.value[code]?.toMarket()!!)
                 .collect {
                     it.onComplete { ticker ->
                         if (ticker.code == code)

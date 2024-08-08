@@ -12,11 +12,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.strone.core.CryptoNamespace
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.component.BitwinOutlinedCard
 import com.strone.presentation.ui.component.CryptoColoredText
+import com.strone.presentation.ui.main.composable.LocalMarketComposition
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.toDisplayChangeRate
 import com.strone.presentation.util.toDisplayedDoubleFormat
@@ -39,7 +39,7 @@ fun TopAccTradePriceItem(
             GlideImage(
                 modifier = Modifier
                     .size(40.dp),
-                model = CryptoNamespace.markets[hotTicker.code]?.imageUrl,
+                model = LocalMarketComposition.current[hotTicker.code]?.imageUrl,
                 contentDescription = stringResource(
                     id = R.string.crypto_image
                 )

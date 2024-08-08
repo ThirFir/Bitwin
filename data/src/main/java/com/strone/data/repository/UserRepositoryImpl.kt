@@ -6,6 +6,7 @@ import com.strone.data.entity.AssetEntity
 import com.strone.data.mapper.toAsset
 import com.strone.data.mapper.toAssetEntity
 import com.strone.data.datastore.UserPreferenceDataStore
+import com.strone.data.mapper.asFlow
 import com.strone.data.mapper.toUser
 import com.strone.data.mapper.toUserEntity
 import com.strone.domain.model.Asset
@@ -48,20 +49,17 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun insertAsset(asset: Asset): Flow<Unit> {
-        return flow {
-            userLocalDataSource.insertAsset(asset.toAssetEntity())
-        }
+        return userLocalDataSource.insertAsset(asset.toAssetEntity()).asFlow()
+
     }
 
     override fun updateAsset(asset: Asset): Flow<Unit> {
-        return flow {
-            userLocalDataSource.updateAsset(asset.toAssetEntity())
-        }
+        return userLocalDataSource.updateAsset(asset.toAssetEntity()).asFlow()
+
     }
 
     override fun deleteAsset(asset: Asset): Flow<Unit> {
-        return flow {
-            userLocalDataSource.deleteAsset(asset.toAssetEntity())
-        }
+        return userLocalDataSource.deleteAsset(asset.toAssetEntity()).asFlow()
+
     }
 }

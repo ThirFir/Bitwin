@@ -1,8 +1,8 @@
 package com.strone.presentation.ui.cryptoList.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
-import com.strone.core.CryptoNamespace
 import com.strone.core.viewmodel.BaseViewModel
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
@@ -33,16 +33,11 @@ class TickerViewModel @Inject constructor(
 
     init {
         viewModelScope.launchWithUiState {
-            CryptoNamespace.isFetched.collect { isFetched ->
-                if (isFetched) {
-                    fetchTicker(CryptoNamespace.markets.values.toList())
+            markets.collect { map ->
+                if (map.isNotEmpty()) {
+                    fetchTicker(map.values.toList().map { it.toMarket() })
                 }
             }
-//            cryptoNamespaceDelegate.markets.collect {
-//                if (it.isNotEmpty()) {
-//                    fetchTicker(it.values.toList().map { it.toMarket() })
-//                }
-//            }
         }
     }
 
@@ -68,8 +63,8 @@ class TickerViewModel @Inject constructor(
 
     fun sortTickers(state: CryptoSortState) {
         val sortedTickers = when (state) {
-            CryptoSortState.NAME_DESCENDING -> _tickers.sortedByDescending { CryptoNamespace.markets[it.code]?.koreanName }
-            CryptoSortState.NAME_ASCENDING -> _tickers.sortedBy { CryptoNamespace.markets[it.code]?.koreanName }
+            CryptoSortState.NAME_DESCENDING -> _tickers.sortedByDescending { markets.value[it.code]?.koreanName }
+            CryptoSortState.NAME_ASCENDING -> _tickers.sortedBy { markets.value[it.code]?.koreanName }
             CryptoSortState.PRICE_DESCENDING -> _tickers.sortedByDescending { it.tradePrice }
             CryptoSortState.PRICE_ASCENDING -> _tickers.sortedBy { it.tradePrice }
             CryptoSortState.CHANGE_RATE_DESCENDING -> _tickers.sortedByDescending { it.signedChangeRate }

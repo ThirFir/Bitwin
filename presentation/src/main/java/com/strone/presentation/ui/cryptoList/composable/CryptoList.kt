@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.strone.domain.constants.CryptoConstants.TICKER
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.trade.TradeActivity
-import com.strone.presentation.util.searched
 
 @Composable
 fun CryptoList(
@@ -31,7 +30,7 @@ fun CryptoList(
         modifier = modifier
     ) {
         items(
-            items = tickers.searched(searchInput),
+            items = tickers,
             key = { it.code }
         ) {
             CryptoListItem(

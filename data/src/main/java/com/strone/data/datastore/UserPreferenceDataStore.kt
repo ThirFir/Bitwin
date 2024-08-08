@@ -31,6 +31,7 @@ class UserPreferenceDataStoreImpl @Inject constructor(
                 it[USER_NICKNAME_PREFERENCE] = user.nickname
                 it[USER_IS_GUEST_PREFERENCE] = user.isGuest
             }
+            emit(Unit)
         }
     }
 

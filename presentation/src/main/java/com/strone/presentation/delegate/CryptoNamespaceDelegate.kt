@@ -19,8 +19,9 @@ class CryptoNamespaceDelegateImpl @Inject constructor(
     @ApplicationScope coroutineScope: CoroutineScope,
     fetchMarketUseCase: FetchMarketUseCase,
 ) : CryptoNamespaceDelegate {
+
     override val markets: StateFlow<Map<String, MarketModel>> =
         fetchMarketUseCase(Unit).map { result ->
-            result.getOrThrow().mapValues { it.value.toMarketModel() }
+            result.getOrThrow().associateBy { it.code }.mapValues { it.value.toMarketModel() }
         }.stateIn(scope = coroutineScope, started = SharingStarted.Eagerly, initialValue = mutableMapOf())
 }

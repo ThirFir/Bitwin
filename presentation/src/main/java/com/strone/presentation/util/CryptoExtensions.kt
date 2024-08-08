@@ -1,7 +1,5 @@
 package com.strone.presentation.util
 
-import com.strone.core.CryptoNamespace
-import com.strone.presentation.model.TickerModel
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -55,14 +53,6 @@ fun BigDecimal.toTradeVolume(): String {
     val formatter = NumberFormat.getNumberInstance()
     val formattedValue = formatter.format(dividedValue)
     return "${formattedValue}백만"
-}
-
-fun List<TickerModel>.searched(input: String): List<TickerModel> {
-    return this.filter {
-        it.signature.contains(input, ignoreCase = true) ||
-                CryptoNamespace.markets[it.code]?.koreanName?.contains(input, ignoreCase = true) == true ||
-                CryptoNamespace.markets[it.code]?.englishName?.contains(input, ignoreCase = true) == true
-    }
 }
 
 fun BigDecimal.getUnitPrice(): BigDecimal {

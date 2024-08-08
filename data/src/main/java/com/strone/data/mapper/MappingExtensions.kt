@@ -17,6 +17,7 @@ import com.strone.domain.model.Ticker
 import com.strone.domain.model.type.ChangeType
 import com.strone.domain.model.type.MarketType
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 internal fun String.toSignature(): String {
@@ -51,5 +52,11 @@ inline fun<reified R: StreamingModel> Flow<UpbitStreamingResponse>.mapStreamingR
             is ErrorStreamingResponse -> throw it.exception
             else -> throw IllegalStateException("Unknown response type")
         } as R
+    }
+}
+
+fun Unit.asFlow(): Flow<Unit> {
+    return flow {
+        emit(Unit)
     }
 }

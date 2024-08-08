@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.strone.core.CryptoNamespace
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.component.CryptoColoredText
+import com.strone.presentation.ui.main.composable.LocalMarketComposition
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate
@@ -38,7 +38,7 @@ fun CryptoListItem(
             modifier = Modifier
                 .size(40.dp)
                 .padding(end = 12.dp),
-            model = CryptoNamespace.markets[ticker.code]?.imageUrl ?: "",
+            model = LocalMarketComposition.current[ticker.code]?.imageUrl ?: "",
             contentDescription = stringResource(id = R.string.crypto_image),
         ) {
             it.diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -47,7 +47,7 @@ fun CryptoListItem(
             modifier = Modifier.fillMaxHeight()
         ) {
             Text(
-                text = CryptoNamespace.markets[ticker.code]?.koreanName ?: "",
+                text = LocalMarketComposition.current[ticker.code]?.koreanName ?: "",
                 style = Typography.titleSmall)
             Text(
                 text = ticker.signature,

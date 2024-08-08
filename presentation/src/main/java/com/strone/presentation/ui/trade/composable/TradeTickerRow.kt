@@ -12,10 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.strone.core.CryptoNamespace
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.component.CryptoColoredText
+import com.strone.presentation.ui.main.composable.LocalMarketComposition
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.toDisplayChangeRate
 import com.strone.presentation.util.toDisplayedDoubleFormat
@@ -56,7 +56,7 @@ fun TradeTickerRow(
         Spacer(modifier = Modifier.weight(1f))
         GlideImage(
             modifier = Modifier.size(40.dp).padding(end = 12.dp),
-            model = CryptoNamespace.markets[ticker.code]?.imageUrl,
+            model = LocalMarketComposition.current[ticker.code]?.imageUrl,
             contentDescription = stringResource(id = R.string.crypto_image),
         )
     }
