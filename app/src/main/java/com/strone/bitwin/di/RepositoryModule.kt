@@ -5,7 +5,6 @@ import com.strone.data.datasource.remote.MarketRemoteDataSource
 import com.strone.data.datasource.remote.OrderbookRemoteDataSource
 import com.strone.data.datasource.remote.TickerRemoteDataSource
 import com.strone.data.datasource.remote.UserRemoteDataSource
-import com.strone.data.datastore.UserPreferenceDataStore
 import com.strone.data.repository.MarketRepositoryImpl
 import com.strone.data.repository.OrderbookRepositoryImpl
 import com.strone.data.repository.TickerRepositoryImpl

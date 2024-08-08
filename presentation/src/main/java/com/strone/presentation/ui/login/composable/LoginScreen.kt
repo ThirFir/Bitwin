@@ -25,7 +25,8 @@ import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.strone.domain.usecase.LoginUseCase
+import com.strone.domain.usecase.login.LoginGuestUseCase
+import com.strone.domain.usecase.login.LoginKaKaoUseCase
 import com.strone.presentation.R
 import com.strone.presentation.model.LoginResultModel
 import com.strone.presentation.ui.login.viewmodel.LoginViewModel
@@ -36,7 +37,8 @@ import com.strone.presentation.util.finishActivity
 @Composable
 fun LoginScreen(
     modifier: Modifier,
-    loginUseCase: LoginUseCase,
+    loginKaKaoUseCase: LoginKaKaoUseCase,
+    loginGuestUseCase: LoginGuestUseCase,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
 
@@ -54,8 +56,11 @@ fun LoginScreen(
                     .padding(all = 40.dp),
                 loginResult = loginResult,
                 onKakaoLoginClicked = {
-                    viewModel.kakaoLogin(loginUseCase)
+                    viewModel.kakaoLogin(loginKaKaoUseCase)
+                }, onGuestLoginClicked = {
+                    viewModel.guestLogin(loginGuestUseCase)
                 }
+
             )
         }
     }
@@ -65,7 +70,8 @@ fun LoginScreen(
 fun LoginContent(
     modifier: Modifier,
     loginResult: LoginResultModel,
-    onKakaoLoginClicked: () -> Unit
+    onKakaoLoginClicked: () -> Unit,
+    onGuestLoginClicked: () -> Unit
 ) {
     val context = LocalContext.current
     val composition by rememberLottieComposition(
@@ -101,9 +107,7 @@ fun LoginContent(
         Text(
             text = stringResource(id = R.string.guest_login),
             modifier = Modifier.clickable {
-                val intent = Intent(context, MainActivity::class.java)
-                context.startActivity(intent)
-                context.finishActivity()
+                onGuestLoginClicked()
             }
         )
     }

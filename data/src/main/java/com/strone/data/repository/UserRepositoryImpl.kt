@@ -3,10 +3,9 @@ package com.strone.data.repository
 import com.strone.data.datasource.local.UserLocalDataSource
 import com.strone.data.datasource.remote.UserRemoteDataSource
 import com.strone.data.entity.AssetEntity
+import com.strone.data.mapper.asFlow
 import com.strone.data.mapper.toAsset
 import com.strone.data.mapper.toAssetEntity
-import com.strone.data.datastore.UserPreferenceDataStore
-import com.strone.data.mapper.asFlow
 import com.strone.data.mapper.toUser
 import com.strone.data.mapper.toUserEntity
 import com.strone.domain.model.Asset
@@ -14,13 +13,9 @@ import com.strone.domain.model.User
 import com.strone.domain.repository.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -50,16 +45,13 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun insertAsset(asset: Asset): Flow<Unit> {
         return userLocalDataSource.insertAsset(asset.toAssetEntity()).asFlow()
-
     }
 
     override fun updateAsset(asset: Asset): Flow<Unit> {
         return userLocalDataSource.updateAsset(asset.toAssetEntity()).asFlow()
-
     }
 
     override fun deleteAsset(asset: Asset): Flow<Unit> {
         return userLocalDataSource.deleteAsset(asset.toAssetEntity()).asFlow()
-
     }
 }

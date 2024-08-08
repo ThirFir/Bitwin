@@ -14,8 +14,7 @@ class UserLocalDataSource @Inject constructor(
     private val userPreferenceDataStore: UserPreferenceDataStore
 ) : AssetDataSource, UserDataSource {
 
-    override val user: Flow<UserEntity?>
-        get() = userPreferenceDataStore.user
+    override val user: Flow<UserEntity?> = userPreferenceDataStore.user
 
     override fun saveUser(userEntity: UserEntity): Flow<Unit> {
         return userPreferenceDataStore.saveUser(userEntity)

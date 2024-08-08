@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import com.strone.presentation.R
-import com.strone.presentation.ui.component.FilledCentralTextField
+import com.strone.presentation.ui.component.textfield.FilledCentralTextField
 import com.strone.presentation.ui.theme.ColorGraySemiDark
 import com.strone.presentation.ui.theme.ColorGraySemiLight
 import com.strone.presentation.util.clickable

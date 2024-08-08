@@ -36,6 +36,9 @@
     <string name="buy">매수</string>
     <string name="sell">매도</string>
     <string name="available_balance">주문가능</string>
+    <string name="market_order">시장가</string>
+    <string name="limit_order">지정가</string>
+    <string name="reservation_order">예약</string>
 
     <!-- Non-Display Descriptions -->
     <string name="kakao_login_button">카카오 로그인 버튼</string>

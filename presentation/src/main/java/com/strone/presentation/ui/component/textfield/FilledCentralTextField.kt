@@ -1,4 +1,4 @@
-package com.strone.presentation.ui.component
+package com.strone.presentation.ui.component.textfield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource

@@ -1,32 +1,53 @@
 package com.strone.presentation.ui.login.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.strone.domain.usecase.login.LoginGuestUseCase
 import com.strone.presentation.ui.BaseViewModel
-import com.strone.domain.usecase.LoginUseCase
+import com.strone.domain.usecase.login.LoginKaKaoUseCase
+import com.strone.presentation.delegate.UserDelegate
 import com.strone.presentation.model.LoginResultModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-
-) : BaseViewModel() {
+    userDelegate: UserDelegate
+) : BaseViewModel(), UserDelegate by userDelegate {
 
     private val _login: MutableSharedFlow<LoginResultModel> = MutableSharedFlow()
     val login: SharedFlow<LoginResultModel>
         get() = _login
 
-    fun kakaoLogin(useCase: LoginUseCase) {
+    init {
+        viewModelScope.launchWithUiState {
+            user.collect {
+                it.onComplete { userModel ->
+                    _login.emit(LoginResultModel(userModel != null))
+                }
+            }
+        }
+    }
+    fun kakaoLogin(loginKaKaoUseCase: LoginKaKaoUseCase) {
         viewModelScope.launch {
-            useCase.loginWithKakao().collect {
+            loginKaKaoUseCase(Unit).collect {
                 it.onComplete {
                     _login.emit(LoginResultModel(true))
                 }
             }
+        }
+    }
 
+    fun guestLogin(loginGuestUseCase: LoginGuestUseCase) {
+        viewModelScope.launch {
+            loginGuestUseCase(Unit).collect {
+                it.onComplete {
+                    _login.emit(LoginResultModel(true))
+                }
+            }
         }
     }
 }

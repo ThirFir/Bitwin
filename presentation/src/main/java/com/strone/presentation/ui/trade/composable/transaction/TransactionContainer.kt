@@ -10,17 +10,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.strone.domain.util.checkFloatRegex
+import com.strone.presentation.state.TransactionOrderTypeState
 import com.strone.presentation.state.TransactionTabState
 import com.strone.presentation.ui.LocalContainerCornerShapeComposition
 import com.strone.presentation.ui.LocalTickerComposition
+import com.strone.presentation.ui.component.chip.ChipRow
+import com.strone.presentation.ui.component.chip.ChipState
+import com.strone.presentation.ui.component.chip.FilledChipColors
 import com.strone.presentation.ui.theme.ColorBackgroundGray
+import com.strone.presentation.ui.theme.ColorFall
+import com.strone.presentation.ui.theme.ColorFallLight
+import com.strone.presentation.ui.theme.ColorRise
+import com.strone.presentation.ui.theme.ColorRiseLight
 import com.strone.presentation.util.removeComma
+import com.strone.presentation.util.toDisplayedDoubleFormat
 import java.math.BigDecimal
 
 @Composable
@@ -31,6 +42,9 @@ fun TransactionContainer(
     val ticker = LocalTickerComposition.current
     var selectedTab by remember {
         mutableStateOf(TransactionTabState.BUY)
+    }
+    var selectedTransactionOrderTypeIndex by remember {
+        mutableIntStateOf(0)
     }
     var transactionPrice by remember {
         mutableStateOf(ticker.tradePrice)
@@ -65,51 +79,78 @@ fun TransactionContainer(
                 }
             )
 
-            TransactionPriceInputRow(
+            ChipRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
-                    .background(
-                        color = ColorBackgroundGray,
-                        shape = LocalContainerCornerShapeComposition.current
+                    .padding(top = 16.dp),
+                chipStates = TransactionOrderTypeState.entries.mapIndexed { index, it ->
+                    ChipState(
+                        text = stringResource(it.title),
+                        selected = index == selectedTransactionOrderTypeIndex
                     )
-                    .padding(vertical = 8.dp, horizontal = 6.dp),
-                priceText = transactionPriceText,
-                onPriceChange = {
-                    val text = it.removeComma()
-                    try {
-                        if (text.checkFloatRegex(13, 6) || text.isEmpty())
-                            transactionPriceText = text
-                        else if (text.startsWith("0") && text.length > 1)
-                            transactionPriceText = text.substring(1)
-                    } catch (_: Exception) {
+                }, onChipClicked = {
+                    selectedTransactionOrderTypeIndex = it
+                }, chipColors = FilledChipColors(
+                    selectedContainerColor = if (selectedTab == TransactionTabState.BUY) {
+                        ColorRiseLight
+                    } else {
+                        ColorFallLight
+                    },
+                    selectedTextColor = if (selectedTab == TransactionTabState.BUY) {
+                        ColorRise
+                    } else {
+                        ColorFall
                     }
-                },
+                )
             )
 
-            TransactionAmountInputRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
-                    .background(
-                        color = ColorBackgroundGray,
-                        shape = LocalContainerCornerShapeComposition.current
-                    )
-                    .padding(vertical = 8.dp, horizontal = 6.dp),
-                amount = transactionAmountText,
-                onAmountChange = {
-                    val text = it.removeComma()
-                    try {
-                        if (text.checkFloatRegex(13, 8) || text.isEmpty())
-                            transactionAmountText = text
-                        else if (text.startsWith("0") && text.length > 1)
-                            transactionAmountText = text.substring(1)
-                    } catch (_: Exception) {
-                    }
-                },
-                transactionPrice = transactionPrice,
-                signature = ticker.signature
-            )
+            if (TransactionOrderTypeState.entries[selectedTransactionOrderTypeIndex] != TransactionOrderTypeState.MARKET_ORDER) {
+                TransactionPriceInputRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 6.dp)
+                        .background(
+                            color = ColorBackgroundGray,
+                            shape = LocalContainerCornerShapeComposition.current
+                        )
+                        .padding(vertical = 8.dp, horizontal = 6.dp),
+                    priceText = transactionPriceText,
+                    onPriceChange = {
+                        val text = it.removeComma()
+                        try {
+                            if (text.checkFloatRegex(13, 6) || text.isEmpty())
+                                transactionPriceText = text
+                            else if (text.startsWith("0") && text.length > 1)
+                                transactionPriceText = text.substring(1)
+                        } catch (_: Exception) {
+                        }
+                    },
+                )
+
+                TransactionAmountInputRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp)
+                        .background(
+                            color = ColorBackgroundGray,
+                            shape = LocalContainerCornerShapeComposition.current
+                        )
+                        .padding(vertical = 8.dp, horizontal = 6.dp),
+                    amount = transactionAmountText,
+                    onAmountChange = {
+                        val text = it.removeComma()
+                        try {
+                            if (text.checkFloatRegex(13, 8) || text.isEmpty())
+                                transactionAmountText = text
+                            else if (text.startsWith("0") && text.length > 1)
+                                transactionAmountText = text.substring(1)
+                        } catch (_: Exception) {
+                        }
+                    },
+                    transactionPrice = transactionPrice,
+                    signature = ticker.signature
+                )
+            }
 
             TransactionAmountPercentageRow(
                 modifier = Modifier
@@ -135,7 +176,17 @@ fun TransactionContainer(
                     )
                     .padding(vertical = 8.dp, horizontal = 6.dp)
                     .padding(top = 4.dp),
-                totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0" })
+                totalPriceText = BigDecimal(totalPriceText.ifEmpty { "0" }),
+                onTotalPriceChange = {
+                    val text = it.removeComma()
+                    try {
+                        if (text.checkFloatRegex(13, 6) || text.isEmpty())
+                            totalPriceText = text
+                        else if (text.startsWith("0") && text.length > 1)
+                            totalPriceText = text.substring(1)
+                    } catch (_: Exception) {
+                    }
+                }
             )
 
             TransactionAvailableRow(
@@ -153,6 +204,12 @@ fun TransactionContainer(
         }
     }
 
+    LaunchedEffect(key1 = selectedTransactionOrderTypeIndex) {
+        if (TransactionOrderTypeState.entries[selectedTransactionOrderTypeIndex] == TransactionOrderTypeState.MARKET_ORDER) {
+            transactionPriceText = ticker.tradePrice.toPlainString()
+        }
+    }
+
     LaunchedEffect(key1 = transactionAmountText) {
         transactionAmount = BigDecimal(transactionAmountText.removeComma().ifEmpty { "0" })
         totalPriceText = (transactionAmount * transactionPrice).toPlainString()
@@ -164,6 +221,6 @@ fun TransactionContainer(
     }
 
     LaunchedEffect(key1 = totalPriceText) {
-        totalPrice = BigDecimal(totalPriceText)
+        totalPrice = BigDecimal(totalPriceText.removeComma().ifEmpty { "0" })
     }
 }

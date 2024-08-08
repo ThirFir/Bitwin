@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.strone.domain.model.type.ChangeType
 import com.strone.domain.model.type.OrderType
 import com.strone.presentation.model.OrderbookModel
-import com.strone.presentation.ui.component.CryptoColoredText
+import com.strone.presentation.ui.component.textfield.CryptoColoredText
 import com.strone.presentation.ui.theme.ColorFallLight
 import com.strone.presentation.ui.theme.ColorRiseLight
 import com.strone.presentation.util.minus
