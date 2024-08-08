@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     val user: Flow<User?>
-    suspend fun saveUser(user: User): Flow<Unit>
-    suspend fun getAsset(id: String): Flow<Asset>
-    suspend fun insertAsset(asset: Asset): Flow<Unit>
-    suspend fun updateAsset(asset: Asset): Flow<Unit>
-    suspend fun deleteAsset(asset: Asset): Flow<Unit>
+    fun saveUser(user: User): Flow<Unit>
+    fun getAsset(id: String): Flow<Asset>
+    fun insertAsset(asset: Asset): Flow<Unit>
+    fun updateAsset(asset: Asset): Flow<Unit>
+    fun deleteAsset(asset: Asset): Flow<Unit>
 }

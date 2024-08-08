@@ -17,23 +17,23 @@ class UserRepositoryImpl @Inject constructor(
     private val userPreferenceDataStore: UserPreferenceDataStore
 ) : UserRepository, UserPreferenceDataStore by userPreferenceDataStore {
 
-    override suspend fun getAsset(id: String): Flow<Asset> {
+    override fun getAsset(id: String): Flow<Asset> {
         return userLocalDataSource.getAsset(id).map(AssetEntity::toAsset)
     }
 
-    override suspend fun insertAsset(asset: Asset): Flow<Unit> {
+    override fun insertAsset(asset: Asset): Flow<Unit> {
         return flow {
             userLocalDataSource.insertAsset(asset.toAssetEntity())
         }
     }
 
-    override suspend fun updateAsset(asset: Asset): Flow<Unit> {
+    override fun updateAsset(asset: Asset): Flow<Unit> {
         return flow {
             userLocalDataSource.updateAsset(asset.toAssetEntity())
         }
     }
 
-    override suspend fun deleteAsset(asset: Asset): Flow<Unit> {
+    override fun deleteAsset(asset: Asset): Flow<Unit> {
         return flow {
             userLocalDataSource.deleteAsset(asset.toAssetEntity())
         }

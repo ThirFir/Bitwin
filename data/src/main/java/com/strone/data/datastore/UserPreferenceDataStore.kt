@@ -16,14 +16,14 @@ import javax.inject.Inject
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
 
 interface UserPreferenceDataStore {
-    suspend fun saveUser(user: User): Flow<Unit>
+    fun saveUser(user: User): Flow<Unit>
     val user: Flow<User?>
 }
 
 class UserPreferenceDataStoreImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : UserPreferenceDataStore {
-    override suspend fun saveUser(user: User): Flow<Unit> {
+    override fun saveUser(user: User): Flow<Unit> {
         return flow {
             context.dataStore.edit {
                 it[USER_ID_PREFERENCE] = user.id

@@ -8,13 +8,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CollectUserResultUseCase @Inject constructor(
+class CollectUserUseCase @Inject constructor(
     private val userRepository: UserRepository,
     exceptionHandler: ExceptionHandler,
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
 ) : FlowResultUseCase<Unit, User?>(exceptionHandler, coroutineDispatcher) {
 
-    override suspend fun execute(params: Unit): Flow<User?> {
+    override fun execute(params: Unit): Flow<User?> {
         return userRepository.user
     }
 }

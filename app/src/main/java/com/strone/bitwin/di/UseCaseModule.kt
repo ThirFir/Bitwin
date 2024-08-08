@@ -7,10 +7,10 @@ import com.strone.domain.qualifier.IoDispatcher
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import com.strone.domain.repository.UserRepository
-import com.strone.domain.usecase.CollectUserResultUseCase
+import com.strone.domain.usecase.CollectUserUseCase
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
-import com.strone.domain.usecase.SaveUserResultUseCase
+import com.strone.domain.usecase.SaveUserUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
 import com.strone.domain.usecase.asset.GetAssetUseCase
 import dagger.Module
@@ -57,7 +57,7 @@ object UseCaseModule {
         userRepository: UserRepository,
         exceptionHandler: UserExceptionHandler,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
-    ): CollectUserResultUseCase = CollectUserResultUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+    ): CollectUserUseCase = CollectUserUseCase(userRepository, exceptionHandler, coroutineDispatcher)
 
     @Singleton
     @Provides
@@ -65,5 +65,5 @@ object UseCaseModule {
         userRepository: UserRepository,
         exceptionHandler: UserExceptionHandler,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
-    ): SaveUserResultUseCase = SaveUserResultUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+    ): SaveUserUseCase = SaveUserUseCase(userRepository, exceptionHandler, coroutineDispatcher)
 }

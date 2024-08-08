@@ -7,6 +7,7 @@ import com.strone.core.viewmodel.BaseViewModel
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.FetchTickerUseCase
+import com.strone.presentation.delegate.UserDelegate
 import com.strone.presentation.mapper.toTickerModel
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.state.CryptoSortState
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TickerViewModel @Inject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
-) : BaseViewModel() {
+    userDelegate: UserDelegate
+) : BaseViewModel(), UserDelegate by userDelegate {
 
     private val _tickers = mutableStateListOf<TickerModel>()
     val tickers get() = _tickers

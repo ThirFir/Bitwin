@@ -11,9 +11,9 @@ abstract class FlowResultUseCase<in Params, R>(
     private val coroutineDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(params: Params): Flow<Result<R>> {
+    operator fun invoke(params: Params): Flow<Result<R>> {
         return execute(params).flowOn(coroutineDispatcher).mapResultWith(exceptionHandler)
     }
 
-    abstract suspend fun execute(params: Params): Flow<R>
+    protected abstract fun execute(params: Params): Flow<R>
 }

@@ -4,10 +4,12 @@ import com.strone.domain.model.Asset
 import com.strone.domain.model.KakaoAuthResult
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
+import com.strone.domain.model.User
 import com.strone.presentation.model.AssetModel
 import com.strone.presentation.model.LoginResultModel
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
+import com.strone.presentation.model.UserModel
 
 fun Ticker.toTickerModel() = TickerModel(
     code = this.code,
@@ -86,4 +88,14 @@ fun AssetModel.HoldingCryptoModel.toHoldingsCrypto() = Asset.HoldingCrypto(
     code = this.code,
     price = this.price,
     volume = this.volume,
+)
+
+fun User.toUserModel() = UserModel(
+    id = this.id,
+    nickname = this.nickname,
+)
+
+fun UserModel.toUser() = User(
+    id = this.id,
+    nickname = this.nickname,
 )
