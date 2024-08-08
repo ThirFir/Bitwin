@@ -12,6 +12,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -27,8 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.strone.presentation.state.UiState
 import com.strone.presentation.model.TickerModel
+import com.strone.presentation.state.UiState
+import com.strone.presentation.ui.LocalMarketComposition
+import com.strone.presentation.ui.LocalTickerComposition
 import com.strone.presentation.ui.loading.LoadingScreen
 import com.strone.presentation.ui.navigation.composable.TradeNavHost
 import com.strone.presentation.ui.navigation.item.Routes
@@ -50,6 +53,7 @@ fun TradeScaffold(
 
     val ticker by viewModel.ticker.collectAsStateWithLifecycle()
     val orderbook by viewModel.orderbook.collectAsStateWithLifecycle()
+    val markets by viewModel.markets.collectAsStateWithLifecycle()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -65,61 +69,64 @@ fun TradeScaffold(
         LoadingScreen()
     } else {
         orderbook?.let { ob ->
-            Scaffold(
-                topBar = {
-                    TradeTopAppBar(modifier = Modifier.padding(horizontal = 24.dp), ticker = ticker, onNavigationIconClicked = {
-                        context.findActivity().finish()
-                    })
-                },
-            ) {
-                Surface(modifier = modifier.padding(horizontal = 24.dp)) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
-                    ) {
-                        TradeTickerRow(modifier = Modifier, ticker = ticker)
-                        TabRow(
-                            modifier = Modifier,
-                            selectedTabIndex = selectedTabIndex,
-                            indicator = { tabPositions ->
-                                if (selectedTabIndex < tabPositions.size) {
-                                    TabRowDefaults.SecondaryIndicator(
-                                        Modifier.tabIndicatorOffset(
-                                            tabPositions[selectedTabIndex]
-                                        ),
-                                        color = Color.Black
-                                    )
-                                }
-                            },
-                            divider = {
-                                HorizontalDivider(color = ColorGrayLight, thickness = 0.5.dp)
-                            },
-                            tabs = {
-                                TradeNavItem.entries.forEach {
-                                    Tab(
-                                        selected = currentRoute == it.route, onClick = {
-                                            currentRoute = it.route
-                                        }, selectedContentColor = Color.Black,
-                                        unselectedContentColor = ColorGray
-                                    ) {
-                                        Text(
-                                            text = stringResource(it.title),
-                                            fontSize = 13.sp,
-                                            letterSpacing = 0.2.sp,
-                                            modifier = Modifier.padding(vertical = 8.dp)
+            CompositionLocalProvider(LocalMarketComposition provides markets, LocalTickerComposition provides ticker) {
+                Scaffold(
+                    topBar = {
+                        TradeTopAppBar(
+                            modifier = Modifier.padding(horizontal = 24.dp),
+                            onNavigationIconClicked = {
+                                context.findActivity().finish()
+                            })
+                    },
+                ) {
+                    Surface(modifier = modifier.padding(horizontal = 24.dp)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(it)
+                        ) {
+                            TradeTickerRow(modifier = Modifier, ticker = ticker)
+                            TabRow(
+                                modifier = Modifier,
+                                selectedTabIndex = selectedTabIndex,
+                                indicator = { tabPositions ->
+                                    if (selectedTabIndex < tabPositions.size) {
+                                        TabRowDefaults.SecondaryIndicator(
+                                            Modifier.tabIndicatorOffset(
+                                                tabPositions[selectedTabIndex]
+                                            ),
+                                            color = Color.Black
                                         )
                                     }
+                                },
+                                divider = {
+                                    HorizontalDivider(color = ColorGrayLight, thickness = 0.5.dp)
+                                },
+                                tabs = {
+                                    TradeNavItem.entries.forEach {
+                                        Tab(
+                                            selected = currentRoute == it.route, onClick = {
+                                                currentRoute = it.route
+                                            }, selectedContentColor = Color.Black,
+                                            unselectedContentColor = ColorGray
+                                        ) {
+                                            Text(
+                                                text = stringResource(it.title),
+                                                fontSize = 13.sp,
+                                                letterSpacing = 0.2.sp,
+                                                modifier = Modifier.padding(vertical = 8.dp)
+                                            )
+                                        }
+                                    }
                                 }
-                            }
-                        )
-                        TradeNavHost(
-                            modifier = Modifier,
-                            navController = navController,
-                            startDestination = startDestination,
-                            ticker = ticker,
-                            orderbook = ob
-                        )
+                            )
+                            TradeNavHost(
+                                modifier = Modifier,
+                                navController = navController,
+                                startDestination = startDestination,
+                                orderbook = ob
+                            )
+                        }
                     }
                 }
             }

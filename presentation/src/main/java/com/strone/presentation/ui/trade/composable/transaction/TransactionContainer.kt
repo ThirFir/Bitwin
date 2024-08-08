@@ -13,26 +13,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.strone.domain.util.checkFloatRegex
-import com.strone.presentation.model.TickerModel
 import com.strone.presentation.state.TransactionTabState
+import com.strone.presentation.ui.LocalContainerCornerShapeComposition
+import com.strone.presentation.ui.LocalTickerComposition
 import com.strone.presentation.ui.theme.ColorBackgroundGray
 import com.strone.presentation.util.removeComma
 import java.math.BigDecimal
 
-val LocalContainerCornerShapeComposition = staticCompositionLocalOf {
-    RoundedCornerShape(10.dp)
-}
-
 @Composable
 fun TransactionContainer(
     modifier: Modifier,
-    ticker: TickerModel,
 ) {
 
+    val ticker = LocalTickerComposition.current
     var selectedTab by remember {
         mutableStateOf(TransactionTabState.BUY)
     }

@@ -14,18 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.strone.domain.constants.CryptoConstants.TICKER
-import com.strone.presentation.model.TickerModel
+import com.strone.presentation.ui.LocalTickersComposition
 import com.strone.presentation.ui.trade.TradeActivity
 
 @Composable
 fun CryptoList(
     modifier: Modifier = Modifier,
-    tickers: List<TickerModel>,
     searchInput: String,
     listState: LazyListState = rememberLazyListState()
 ) {
 
     val context = LocalContext.current
+    val tickers = LocalTickersComposition.current
     LazyColumn(
         modifier = modifier
     ) {

@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.strone.presentation.R
-import com.strone.presentation.model.TickerModel
-import com.strone.presentation.ui.main.composable.LocalMarketComposition
+import com.strone.presentation.ui.LocalMarketComposition
+import com.strone.presentation.ui.LocalTickerComposition
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.clickable
 
@@ -18,10 +18,10 @@ import com.strone.presentation.util.clickable
 @Composable
 fun TradeTopAppBar(
     modifier: Modifier,
-    ticker: TickerModel,
     onNavigationIconClicked: () -> Unit = {},
 ) {
 
+    val ticker = LocalTickerComposition.current
     TopAppBar(
         modifier = modifier,
         title = {

@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.strone.presentation.model.OrderbookModel
-import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.navigation.item.Routes
 import com.strone.presentation.ui.trade.composable.transaction.TransactionScreen
 
@@ -17,7 +16,6 @@ fun TradeNavHost(
     modifier: Modifier,
     navController: NavHostController,
     startDestination: String,
-    ticker: TickerModel,
     orderbook: OrderbookModel
 ) {
 
@@ -31,7 +29,7 @@ fun TradeNavHost(
         composable(Routes.TRANSACTION) {
             TransactionScreen(
                 modifier = Modifier.padding(top = 12.dp),
-                ticker = ticker, orderbookUnits = orderbookUnits
+                orderbookUnits = orderbookUnits
             )
         }
 

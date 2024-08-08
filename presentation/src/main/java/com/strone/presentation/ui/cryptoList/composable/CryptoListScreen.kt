@@ -13,14 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.strone.presentation.model.TickerModel
 import com.strone.presentation.state.CryptoTabState
 
 @Composable
 fun CryptoListScreen(
     modifier: Modifier = Modifier,
     searchInput: String = "",
-    tickers: List<TickerModel>
 ) {
     var selectedTab by remember {
         mutableStateOf(CryptoTabState.ALL)
@@ -49,7 +47,6 @@ fun CryptoListScreen(
                 CryptoList(
                     modifier = Modifier
                         .fillMaxSize(),
-                    tickers = tickers,
                     searchInput = searchInput,
                     listState = listScrollStates[i]
                 )

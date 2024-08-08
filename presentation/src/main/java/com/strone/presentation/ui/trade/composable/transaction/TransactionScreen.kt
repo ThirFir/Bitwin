@@ -6,13 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.strone.presentation.model.OrderbookModel
-import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.trade.composable.orderbook.OrderbookUnitListContainer
 
 @Composable
 fun TransactionScreen(
     modifier: Modifier,
-    ticker: TickerModel,
     orderbookUnits: List<OrderbookModel.OrderbookUnitModel>
 ) {
     Row(
@@ -25,7 +23,6 @@ fun TransactionScreen(
         TransactionContainer(modifier = Modifier
             .weight(0.65f)
             .padding(start = 18.dp),
-            ticker = ticker
         )
     }
 }

@@ -14,15 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.strone.presentation.state.UiState
-import com.strone.presentation.model.MarketModel
 import com.strone.presentation.state.CryptoSortState
+import com.strone.presentation.ui.LocalMarketComposition
+import com.strone.presentation.ui.LocalTickersComposition
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel
 import com.strone.presentation.ui.loading.LoadingScreen
 import com.strone.presentation.ui.navigation.composable.MainBottomNavigation
@@ -32,10 +32,6 @@ import com.strone.presentation.ui.theme.ColorPrimary
 import com.strone.presentation.ui.topbar.main.CryptoListTopAppBar
 import com.strone.presentation.ui.topbar.main.HomeTopAppBar
 import com.strone.presentation.util.navigateToOtherTab
-
-val LocalMarketComposition = staticCompositionLocalOf<Map<String, MarketModel>> {
-    mapOf()
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -59,7 +55,7 @@ fun MainScaffold(
     if (uiState is UiState.Loading) {
         LoadingScreen()
     } else {
-        CompositionLocalProvider(LocalMarketComposition provides markets) {
+        CompositionLocalProvider(LocalMarketComposition provides markets, LocalTickersComposition provides tickers) {
             Scaffold(
                 topBar = {
                     when (currentRoute) {
@@ -113,7 +109,6 @@ fun MainScaffold(
                             navController = navController,
                             startDestination = startDestination,
                             searchInput = searchInputState.text.toString(),
-                            tickers = tickers,
                             hotTickers = hotTickers,
                         )
                     }

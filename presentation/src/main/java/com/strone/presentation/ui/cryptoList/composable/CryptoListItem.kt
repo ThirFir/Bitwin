@@ -17,8 +17,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strone.presentation.R
 import com.strone.presentation.model.TickerModel
+import com.strone.presentation.ui.LocalMarketComposition
 import com.strone.presentation.ui.component.CryptoColoredText
-import com.strone.presentation.ui.main.composable.LocalMarketComposition
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.ui.util.getChangeMark
 import com.strone.presentation.util.toDisplayChangeRate

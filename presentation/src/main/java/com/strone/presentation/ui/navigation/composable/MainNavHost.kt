@@ -21,7 +21,6 @@ fun MainNavHost(
     navController: NavHostController,
     startDestination: String,
     searchInput: String,
-    tickers: List<TickerModel>,
     hotTickers: List<TickerModel>
 ) {
     NavHost(
@@ -39,7 +38,6 @@ fun MainNavHost(
             CryptoListScreen(
                 modifier = Modifier.fillMaxSize(),
                 searchInput = searchInput,
-                tickers = tickers
             )
         }
         composable(Routes.RANKING) {

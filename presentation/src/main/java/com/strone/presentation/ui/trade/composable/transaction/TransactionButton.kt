@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.strone.presentation.R
 import com.strone.presentation.state.TransactionTabState
+import com.strone.presentation.ui.LocalContainerCornerShapeComposition
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise
 
