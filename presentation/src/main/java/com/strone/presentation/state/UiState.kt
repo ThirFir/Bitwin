@@ -1,4 +1,4 @@
-package com.strone.core.state
+package com.strone.presentation.state
 
 /**
  * @see com.strone.core.viewmodel.BaseViewModel

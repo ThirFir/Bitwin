@@ -1,9 +1,8 @@
 package com.strone.presentation.ui.cryptoList.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
-import com.strone.core.viewmodel.BaseViewModel
+import com.strone.presentation.ui.BaseViewModel
 import com.strone.domain.model.Market
 import com.strone.domain.model.Ticker
 import com.strone.domain.usecase.FetchTickerUseCase

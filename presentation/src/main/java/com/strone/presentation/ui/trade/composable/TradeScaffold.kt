@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.strone.core.state.UiState
+import com.strone.presentation.state.UiState
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.loading.LoadingScreen
 import com.strone.presentation.ui.navigation.composable.TradeNavHost

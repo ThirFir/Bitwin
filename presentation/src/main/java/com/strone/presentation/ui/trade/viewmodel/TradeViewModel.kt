@@ -1,7 +1,7 @@
 package com.strone.presentation.ui.trade.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.strone.core.viewmodel.BaseViewModel
+import com.strone.presentation.ui.BaseViewModel
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase

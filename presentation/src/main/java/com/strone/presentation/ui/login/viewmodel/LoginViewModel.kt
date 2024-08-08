@@ -1,7 +1,7 @@
 package com.strone.presentation.ui.login.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.strone.core.viewmodel.BaseViewModel
+import com.strone.presentation.ui.BaseViewModel
 import com.strone.domain.usecase.LoginUseCase
 import com.strone.presentation.model.LoginResultModel
 import dagger.hilt.android.lifecycle.HiltViewModel
