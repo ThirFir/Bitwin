@@ -1,13 +1,16 @@
 package com.strone.bitwin.di
 
+import com.strone.data.exception.handler.MarketExceptionHandler
 import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
 import com.strone.data.exception.handler.UserExceptionHandler
 import com.strone.domain.qualifier.IoDispatcher
+import com.strone.domain.repository.MarketRepository
 import com.strone.domain.repository.OrderbookRepository
 import com.strone.domain.repository.TickerRepository
 import com.strone.domain.repository.UserRepository
 import com.strone.domain.usecase.CollectUserUseCase
+import com.strone.domain.usecase.FetchMarketUseCase
 import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.SaveUserUseCase
@@ -66,4 +69,12 @@ object UseCaseModule {
         exceptionHandler: UserExceptionHandler,
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher
     ): SaveUserUseCase = SaveUserUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideFetchMarketUseCase(
+        marketRepository: MarketRepository,
+        exceptionHandler: MarketExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): FetchMarketUseCase = FetchMarketUseCase(marketRepository, exceptionHandler, coroutineDispatcher)
 }

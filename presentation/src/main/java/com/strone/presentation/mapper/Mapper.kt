@@ -2,11 +2,13 @@ package com.strone.presentation.mapper
 
 import com.strone.domain.model.Asset
 import com.strone.domain.model.KakaoAuthResult
+import com.strone.domain.model.Market
 import com.strone.domain.model.Orderbook
 import com.strone.domain.model.Ticker
 import com.strone.domain.model.User
 import com.strone.presentation.model.AssetModel
 import com.strone.presentation.model.LoginResultModel
+import com.strone.presentation.model.MarketModel
 import com.strone.presentation.model.OrderbookModel
 import com.strone.presentation.model.TickerModel
 import com.strone.presentation.model.UserModel
@@ -100,4 +102,20 @@ fun UserModel.toUser() = User(
     id = this.id,
     nickname = this.nickname,
     isGuest = this.isGuest,
+)
+
+fun Market.toMarketModel() = MarketModel(
+    code = this.code,
+    koreanName = this.koreanName,
+    englishName = this.englishName,
+    marketWarning = this.marketWarning,
+    imageUrl = this.imageUrl,
+)
+
+fun MarketModel.toMarket() = Market(
+    code = this.code,
+    koreanName = this.koreanName,
+    englishName = this.englishName,
+    marketWarning = this.marketWarning,
+    imageUrl = this.imageUrl,
 )

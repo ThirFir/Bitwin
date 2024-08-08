@@ -1,6 +1,7 @@
 package com.strone.bitwin.di
 
 import android.content.Context
+import com.strone.data.exception.handler.MarketExceptionHandler
 import com.strone.data.exception.handler.OrderbookExceptionHandler
 import com.strone.data.exception.handler.TickerExceptionHandler
 import com.strone.data.exception.handler.UserExceptionHandler
@@ -41,4 +42,11 @@ object ErrorHandleModule {
     fun provideUserExceptionHandler(
         @ApplicationContext context: Context
     ): UserExceptionHandler = UserExceptionHandler(context)
+
+    @Singleton
+    @Provides
+    fun provideMarketExceptionHandler(
+        @ApplicationContext context: Context,
+        networkExceptionHandleManager: NetworkExceptionHandleManager
+    ): MarketExceptionHandler = MarketExceptionHandler(context, networkExceptionHandleManager)
 }

@@ -2,7 +2,10 @@ package com.strone.bitwin.di
 
 import com.strone.domain.qualifier.ApplicationScope
 import com.strone.domain.usecase.CollectUserUseCase
+import com.strone.domain.usecase.FetchMarketUseCase
 import com.strone.domain.usecase.SaveUserUseCase
+import com.strone.presentation.delegate.CryptoNamespaceDelegate
+import com.strone.presentation.delegate.CryptoNamespaceDelegateImpl
 import com.strone.presentation.delegate.UserDelegate
 import com.strone.presentation.delegate.UserDelegateImpl
 import dagger.Module
@@ -23,4 +26,11 @@ object DelegateModule {
         collectUserUseCase: CollectUserUseCase,
         saveUserUseCase: SaveUserUseCase
     ): UserDelegate = UserDelegateImpl(coroutineScope, collectUserUseCase, saveUserUseCase)
+
+    @Provides
+    @Singleton
+    fun provideCryptoNamespaceDelegate(
+        @ApplicationScope coroutineScope: CoroutineScope,
+        fetchMarketUseCase: FetchMarketUseCase
+    ): CryptoNamespaceDelegate = CryptoNamespaceDelegateImpl(coroutineScope, fetchMarketUseCase)
 }
