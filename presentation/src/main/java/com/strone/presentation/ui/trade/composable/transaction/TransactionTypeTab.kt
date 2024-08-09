@@ -20,7 +20,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.res.stringResource
-import com.strone.presentation.state.TransactionTabState
+import com.strone.presentation.state.compose.TransactionTabState
 import com.strone.presentation.ui.theme.ColorBackgroundGray
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise

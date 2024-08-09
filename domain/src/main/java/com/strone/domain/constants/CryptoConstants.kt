@@ -21,4 +21,5 @@ object CryptoConstants {
 
     const val ZERO = 0.0
     const val MAX_TRANSACTION_AMOUNT = 1_000_000_000_000_0.0 // 10조
+    const val MIN_TRANSACTION_PRICE = 5000
 }

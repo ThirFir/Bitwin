@@ -16,7 +16,8 @@ import com.strone.presentation.ui.theme.Typography
 
 @Composable
 fun TransactionAvailableRow(
-    modifier: Modifier
+    modifier: Modifier,
+    krw: String
 ) {
     Row(
         modifier = modifier
@@ -27,10 +28,9 @@ fun TransactionAvailableRow(
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "0 $KRW",
+            text = "$krw $KRW",
             style = Typography.bodyMedium,
             fontWeight = FontWeight.Bold
         )
-        // TODO : 보유 자산
     }
 }

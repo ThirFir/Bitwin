@@ -25,9 +25,7 @@ class LoginViewModel @Inject constructor(
     init {
         viewModelScope.launchWithUiState {
             user.collect {
-                it.onComplete { userModel ->
-                    _login.emit(LoginResultModel(userModel != null))
-                }
+                _login.emit(LoginResultModel(it.id.isNotEmpty()))
             }
         }
     }

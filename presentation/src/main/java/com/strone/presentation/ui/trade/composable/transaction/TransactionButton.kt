@@ -13,7 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.strone.presentation.R
-import com.strone.presentation.state.TransactionTabState
+import com.strone.presentation.model.CryptoTransactionModel
+import com.strone.presentation.state.compose.TransactionTabState
 import com.strone.presentation.ui.LocalContainerCornerShapeComposition
 import com.strone.presentation.ui.theme.ColorFall
 import com.strone.presentation.ui.theme.ColorRise
@@ -21,7 +22,10 @@ import com.strone.presentation.ui.theme.ColorRise
 @Composable
 fun TransactionButton(
     modifier: Modifier,
-    selectedTab: TransactionTabState
+    selectedTab: TransactionTabState,
+    onBuyClick: (CryptoTransactionModel) -> Unit,
+    onSellClick: (CryptoTransactionModel) -> Unit,
+    cryptoTransaction: CryptoTransactionModel
 ) {
     Card(modifier = modifier,
         shape = LocalContainerCornerShapeComposition.current,
@@ -29,7 +33,9 @@ fun TransactionButton(
             containerColor = if (selectedTab == TransactionTabState.BUY) ColorRise else ColorFall
         ),
         onClick = {
-            // TODO : 거래 요청
+            if (selectedTab == TransactionTabState.BUY)
+                onBuyClick(cryptoTransaction)
+            else onSellClick(cryptoTransaction)
         }
     ) {
         Box(

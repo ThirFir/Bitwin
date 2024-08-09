@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.strone.presentation.state.CryptoTabState
+import com.strone.presentation.state.compose.CryptoTabState
 import com.strone.presentation.ui.theme.ColorPrimary
 import com.strone.presentation.ui.theme.Typography
 import com.strone.presentation.util.clickable

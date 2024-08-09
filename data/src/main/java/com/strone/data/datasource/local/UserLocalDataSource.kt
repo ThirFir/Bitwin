@@ -32,7 +32,7 @@ class UserLocalDataSource @Inject constructor(
         userDatabase.assetDao().updateAsset(asset)
     }
 
-    override fun deleteAsset(asset: AssetEntity) {
-        userDatabase.assetDao().deleteAsset(asset)
+    override fun deleteAsset(id: String) {
+        userDatabase.assetDao().deleteAsset(id)
     }
 }

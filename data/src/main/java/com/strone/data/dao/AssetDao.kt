@@ -17,8 +17,8 @@ interface AssetDao {
     @Update
     fun updateAsset(asset: AssetEntity)
 
-    @Delete
-    fun deleteAsset(asset: AssetEntity)
+    @Query("DELETE FROM AssetEntity WHERE id = :id")
+    fun deleteAsset(id: String)
 
     @Query("SELECT * FROM AssetEntity WHERE id = :id")
     fun getAsset(id: String): Flow<AssetEntity>

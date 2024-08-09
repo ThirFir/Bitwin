@@ -15,7 +15,10 @@ import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.SaveUserUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
+import com.strone.domain.usecase.asset.DeleteAssetUseCase
 import com.strone.domain.usecase.asset.GetAssetUseCase
+import com.strone.domain.usecase.asset.InsertAssetUseCase
+import com.strone.domain.usecase.asset.UpdateAssetUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,8 +54,33 @@ object UseCaseModule {
     @Provides
     fun provideGetAssetUseCase(
         userRepository: UserRepository,
-        exceptionHandler: UserExceptionHandler
-    ): GetAssetUseCase = GetAssetUseCase(userRepository, exceptionHandler)
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): GetAssetUseCase = GetAssetUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideInsertAssetUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): InsertAssetUseCase = InsertAssetUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideUpdateAssetUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): UpdateAssetUseCase = UpdateAssetUseCase(userRepository, exceptionHandler, coroutineDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideDeleteAssetUseCase(
+        userRepository: UserRepository,
+        exceptionHandler: UserExceptionHandler,
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher
+    ): DeleteAssetUseCase = DeleteAssetUseCase(userRepository, exceptionHandler, coroutineDispatcher)
 
     @Singleton
     @Provides

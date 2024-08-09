@@ -112,8 +112,8 @@ fun AssetEntity.toAsset() = Asset(
 
 fun HoldingCryptoEntity.toHoldingCrypto() = Asset.HoldingCrypto(
     code = this.code,
-    price = this.price,
-    volume = this.volume
+    price = BigDecimal(this.price),
+    volume = BigDecimal(this.volume)
 )
 
 fun Asset.toAssetEntity() = AssetEntity(
@@ -125,8 +125,8 @@ fun Asset.toAssetEntity() = AssetEntity(
 
 fun Asset.HoldingCrypto.toHoldingCryptoEntity() = HoldingCryptoEntity(
     code = this.code,
-    price = this.price,
-    volume = this.volume
+    price = this.price.toPlainString(),
+    volume = this.volume.toPlainString()
 )
 
 fun User.toUserEntity() = UserEntity(

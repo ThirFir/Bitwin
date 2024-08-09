@@ -6,6 +6,7 @@ import com.strone.domain.usecase.FetchOrderbookUseCase
 import com.strone.domain.usecase.FetchTickerUseCase
 import com.strone.domain.usecase.StopFetchingOrderbookUseCase
 import com.strone.presentation.delegate.CryptoNamespaceDelegate
+import com.strone.presentation.delegate.UserDelegate
 import com.strone.presentation.mapper.toMarket
 import com.strone.presentation.mapper.toOrderbookModel
 import com.strone.presentation.mapper.toTickerModel
@@ -24,8 +25,9 @@ class TradeViewModel @AssistedInject constructor(
     private val fetchTickerUseCase: FetchTickerUseCase,
     private val fetchOrderbookUseCase: FetchOrderbookUseCase,
     private val stopFetchingOrderbookUseCase: StopFetchingOrderbookUseCase,
-    cryptoNamespaceDelegate: CryptoNamespaceDelegate
-) : BaseViewModel(), CryptoNamespaceDelegate by cryptoNamespaceDelegate {
+    cryptoNamespaceDelegate: CryptoNamespaceDelegate,
+    userDelegate: UserDelegate
+) : BaseViewModel(), CryptoNamespaceDelegate by cryptoNamespaceDelegate, UserDelegate by userDelegate {
 
     private val _ticker: MutableStateFlow<TickerModel> = MutableStateFlow(tickerSnapshot)
     val ticker: StateFlow<TickerModel>

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 interface UserDelegate {
-    val user: StateFlow<Result<UserModel?>>
+    val user: StateFlow<UserModel>
     fun saveUser(userModel: UserModel): Flow<Result<Unit>>
 }
 
@@ -25,14 +25,17 @@ class UserDelegateImpl @Inject constructor(
     private val saveUserUseCase: SaveUserUseCase
 ) : UserDelegate {
 
-    override val user: StateFlow<Result<UserModel?>> = collectUserUseCase(Unit)
+    override val user: StateFlow<UserModel> = collectUserUseCase(Unit)
         .map {
-            runCatching {
-                it.getOrThrow().toUserModel().also {
-                    println("UserDelegateImpl user: $it")
-                }
+            it.getOrThrow().toUserModel().also {
+                println("UserDelegateImpl user: $it")
+
             }
-        }.stateIn(scope = coroutineScope, started = SharingStarted.Eagerly, initialValue = Result.success(null))
+        }.stateIn(scope = coroutineScope, started = SharingStarted.Eagerly, initialValue = UserModel(
+            id = "",
+            nickname = "",
+            isGuest = true
+        ))
 
 
     override fun saveUser(userModel: UserModel): Flow<Result<Unit>> {

@@ -6,16 +6,13 @@ import com.strone.domain.qualifier.IoDispatcher
 import com.strone.domain.repository.UserRepository
 import com.strone.domain.usecase.FlowResultUseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAssetUseCase @Inject constructor(
+class InsertAssetUseCase @Inject constructor(
     private val userRepository: UserRepository,
     exceptionHandler: ExceptionHandler,
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher
-) : FlowResultUseCase<String, Asset>(exceptionHandler, coroutineDispatcher) {
+) : FlowResultUseCase<Asset, Unit>(exceptionHandler, coroutineDispatcher) {
 
-    override fun execute(params: String): Flow<Asset> {
-        return userRepository.getAsset(params)
-    }
+    override fun execute(params: Asset) = userRepository.insertAsset(params)
 }

@@ -1,4 +1,4 @@
-package com.strone.presentation.state
+package com.strone.presentation.state.compose
 
 import androidx.annotation.StringRes
 import com.strone.presentation.R

@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.strone.presentation.state.UiState
-import com.strone.presentation.state.CryptoSortState
+import com.strone.presentation.state.compose.CryptoSortState
 import com.strone.presentation.ui.LocalMarketComposition
 import com.strone.presentation.ui.LocalTickersComposition
 import com.strone.presentation.ui.cryptoList.viewmodel.TickerViewModel

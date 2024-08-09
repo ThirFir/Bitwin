@@ -14,6 +14,7 @@
     <string name="top_acc_trade_price">거래량 TOP</string>
     <string name="kakao_login">카카오 로그인</string>
     <string name="guest_login">게스트 로그인</string>
+    <string name="success_transaction">주문이 처리되었어요.</string>
 
     <!-- Titles -->
     <string name="app_name">Bitwin</string>
@@ -39,6 +40,7 @@
     <string name="market_order">시장가</string>
     <string name="limit_order">지정가</string>
     <string name="reservation_order">예약</string>
+    <string name="close">닫기</string>
 
     <!-- Non-Display Descriptions -->
     <string name="kakao_login_button">카카오 로그인 버튼</string>

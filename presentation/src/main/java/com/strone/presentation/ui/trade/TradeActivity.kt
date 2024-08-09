@@ -12,7 +12,6 @@ import com.strone.presentation.model.TickerModel
 import com.strone.presentation.ui.theme.BitwinTheme
 import com.strone.presentation.ui.trade.composable.TradeScaffold
 import com.strone.presentation.util.getParcelableExtraCompat
-import com.strone.presentation.util.getSerializableExtraCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

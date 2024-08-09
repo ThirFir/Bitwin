@@ -16,8 +16,6 @@ class LoginExceptionHandler @Inject constructor(
 
         override fun handleMessage(e: Throwable): String {
             return context.run {
-                println("ddddddddd" + e)
-
                 when (e) {
                     is ClientError -> {
                         when (e.reason) {

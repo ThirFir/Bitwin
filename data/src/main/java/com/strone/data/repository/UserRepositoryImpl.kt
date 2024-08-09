@@ -11,10 +11,13 @@ import com.strone.data.mapper.toUserEntity
 import com.strone.domain.model.Asset
 import com.strone.domain.model.User
 import com.strone.domain.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -44,14 +47,19 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun insertAsset(asset: Asset): Flow<Unit> {
-        return userLocalDataSource.insertAsset(asset.toAssetEntity()).asFlow()
+        return flow {
+            emit(userLocalDataSource.insertAsset(asset.toAssetEntity()))
+        }
     }
 
     override fun updateAsset(asset: Asset): Flow<Unit> {
+        return flow {
+            emit(userLocalDataSource.updateAsset(asset.toAssetEntity()))
+        }
         return userLocalDataSource.updateAsset(asset.toAssetEntity()).asFlow()
     }
 
-    override fun deleteAsset(asset: Asset): Flow<Unit> {
-        return userLocalDataSource.deleteAsset(asset.toAssetEntity()).asFlow()
+    override fun deleteAsset(id: String): Flow<Unit> {
+        return userLocalDataSource.deleteAsset(id).asFlow()
     }
 }

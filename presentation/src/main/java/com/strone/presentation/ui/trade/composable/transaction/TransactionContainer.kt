@@ -11,6 +11,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -18,9 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.strone.domain.util.checkFloatRegex
-import com.strone.presentation.state.TransactionOrderTypeState
-import com.strone.presentation.state.TransactionTabState
+import com.strone.presentation.model.CryptoTransactionModel
+import com.strone.presentation.state.compose.TransactionOrderTypeState
+import com.strone.presentation.state.compose.TransactionTabState
+import com.strone.presentation.ui.LocalAssetComposition
 import com.strone.presentation.ui.LocalContainerCornerShapeComposition
+import com.strone.presentation.ui.LocalOnBuyComposition
+import com.strone.presentation.ui.LocalOnSellComposition
 import com.strone.presentation.ui.LocalTickerComposition
 import com.strone.presentation.ui.component.chip.ChipRow
 import com.strone.presentation.ui.component.chip.ChipState
@@ -31,7 +36,7 @@ import com.strone.presentation.ui.theme.ColorFallLight
 import com.strone.presentation.ui.theme.ColorRise
 import com.strone.presentation.ui.theme.ColorRiseLight
 import com.strone.presentation.util.removeComma
-import com.strone.presentation.util.toDisplayedDoubleFormat
+import com.strone.presentation.util.toDisplayedKrwFormat
 import java.math.BigDecimal
 
 @Composable
@@ -40,23 +45,18 @@ fun TransactionContainer(
 ) {
 
     val ticker = LocalTickerComposition.current
+    val asset = LocalAssetComposition.current
     var selectedTab by remember {
         mutableStateOf(TransactionTabState.BUY)
     }
     var selectedTransactionOrderTypeIndex by remember {
         mutableIntStateOf(0)
     }
-    var transactionPrice by remember {
-        mutableStateOf(ticker.tradePrice)
-    }
-    var transactionAmount by remember {
-        mutableStateOf(BigDecimal.ZERO)
-    }
-    var totalPrice by remember {
-        mutableStateOf(BigDecimal.ZERO)
+    val cryptoTransaction by remember {
+        mutableStateOf(CryptoTransactionModel(ticker.code, BigDecimal.ZERO, BigDecimal.ZERO, 0))
     }
     var transactionPriceText by remember {
-        mutableStateOf(transactionPrice.stripTrailingZeros().toPlainString())
+        mutableStateOf(cryptoTransaction.price.stripTrailingZeros().toPlainString())
     }
     var transactionAmountText by remember {
         mutableStateOf("")
@@ -127,7 +127,7 @@ fun TransactionContainer(
                     },
                 )
 
-                TransactionAmountInputRow(
+                TransactionVolumeInputRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp)
@@ -147,7 +147,7 @@ fun TransactionContainer(
                         } catch (_: Exception) {
                         }
                     },
-                    transactionPrice = transactionPrice,
+                    transactionPrice = cryptoTransaction.price,
                     signature = ticker.signature
                 )
             }
@@ -192,14 +192,18 @@ fun TransactionContainer(
             TransactionAvailableRow(
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                krw = asset?.krw?.toDisplayedKrwFormat() ?: "",
             )
 
             TransactionButton(
                 modifier = Modifier
                     .padding(top = 2.dp)
                     .fillMaxWidth(),
-                selectedTab = selectedTab
+                selectedTab = selectedTab,
+                onBuyClick = LocalOnBuyComposition.current,
+                onSellClick = LocalOnSellComposition.current,
+                cryptoTransaction = cryptoTransaction
             )
         }
     }
@@ -211,16 +215,16 @@ fun TransactionContainer(
     }
 
     LaunchedEffect(key1 = transactionAmountText) {
-        transactionAmount = BigDecimal(transactionAmountText.removeComma().ifEmpty { "0" })
-        totalPriceText = (transactionAmount * transactionPrice).toPlainString()
+        cryptoTransaction.volume = BigDecimal(transactionAmountText.removeComma().ifEmpty { "0" })
+        totalPriceText = (cryptoTransaction.price * cryptoTransaction.volume).toDisplayedKrwFormat()
     }
 
     LaunchedEffect(key1 = transactionPriceText) {
-        transactionPrice = BigDecimal(transactionPriceText.removeComma().ifEmpty { "0" })
-        totalPriceText = (transactionAmount * transactionPrice).toPlainString()
+        cryptoTransaction.price = BigDecimal(transactionPriceText.removeComma().ifEmpty { "0" })
+        totalPriceText = (cryptoTransaction.price * cryptoTransaction.volume).toDisplayedKrwFormat()
     }
 
     LaunchedEffect(key1 = totalPriceText) {
-        totalPrice = BigDecimal(totalPriceText.removeComma().ifEmpty { "0" })
+        cryptoTransaction.totalPrice = totalPriceText.removeComma().toLong()
     }
 }

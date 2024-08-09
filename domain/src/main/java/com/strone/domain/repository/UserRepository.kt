@@ -10,5 +10,5 @@ interface UserRepository {
     fun getAsset(id: String): Flow<Asset>
     fun insertAsset(asset: Asset): Flow<Unit>
     fun updateAsset(asset: Asset): Flow<Unit>
-    fun deleteAsset(asset: Asset): Flow<Unit>
+    fun deleteAsset(id: String): Flow<Unit>
 }

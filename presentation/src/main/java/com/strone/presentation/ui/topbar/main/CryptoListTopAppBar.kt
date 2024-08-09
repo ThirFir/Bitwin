@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.strone.presentation.state.CryptoSortState
+import com.strone.presentation.state.compose.CryptoSortState
 import com.strone.presentation.R
 import com.strone.presentation.ui.component.textfield.FilledTextField
 

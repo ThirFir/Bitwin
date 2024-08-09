@@ -22,7 +22,7 @@ import com.strone.presentation.util.toBigDecimalRemoveComma
 import java.math.BigDecimal
 
 @Composable
-fun TransactionAmountInputRow(
+fun TransactionVolumeInputRow(
     modifier: Modifier,
     amount: String,
     signature: String,

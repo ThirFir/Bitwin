@@ -9,8 +9,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class AssetEntity(
     @field:Json(name = "id") @PrimaryKey val id: String,    // 유저 id
-    @field:Json(name = "krw") val krw: String,  // 보유 KRW
-    @field:Json(name = "total_buy_krw") val totalBuyKrw: String,    // 총 매수 KRW
+    @field:Json(name = "krw") val krw: Long,  // 보유 KRW
+    @field:Json(name = "total_buy_krw") val totalBuyKrw: Long,    // 총 매수 KRW
     @field:Json(name = "holding_crypto") val holdings: List<HoldingCryptoEntity> // 보유 중인 코인
     // 총 보유자산 = 보유 KRW + holding_crypto.sum(보유량 * 현재가)
     // 총 매수 = holding_crypto.sum(보유량 * 체결 가격)

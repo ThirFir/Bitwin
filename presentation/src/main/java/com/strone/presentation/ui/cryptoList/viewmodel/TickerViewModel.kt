@@ -11,7 +11,7 @@ import com.strone.presentation.delegate.UserDelegate
 import com.strone.presentation.mapper.toMarket
 import com.strone.presentation.mapper.toTickerModel
 import com.strone.presentation.model.TickerModel
-import com.strone.presentation.state.CryptoSortState
+import com.strone.presentation.state.compose.CryptoSortState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

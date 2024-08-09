@@ -2,6 +2,7 @@ package com.strone.presentation.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.strone.presentation.state.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -16,8 +17,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class BaseViewModel: ViewModel() {
 
-    private val _uiState = MutableStateFlow<com.strone.presentation.state.UiState>(com.strone.presentation.state.UiState.Initial)
-    val uiState: StateFlow<com.strone.presentation.state.UiState>
+    private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
+    val uiState: StateFlow<UiState>
         get() = _uiState
 
     private val inProgressTasks = AtomicInteger(0)
@@ -31,7 +32,7 @@ abstract class BaseViewModel: ViewModel() {
     ) = this.launch(
         context + job, start
     ) {
-        _uiState.value = com.strone.presentation.state.UiState.Loading
+        _uiState.value = UiState.Loading
         inProgressTasks.incrementAndGet()
 
         block()
@@ -47,12 +48,12 @@ abstract class BaseViewModel: ViewModel() {
             if (inProgressTasks.decrementAndGet() <= 0) {
                 inProgressTasks.set(0)
                 this.onSuccess {
-                    _uiState.value = com.strone.presentation.state.UiState.Success
+                    _uiState.value = UiState.Success
                 }
             } else {    // 다른 작업이 진행 중이면 Loading 상태 유지
                 this
             }.onFailure {
-                _uiState.value = com.strone.presentation.state.UiState.Error(it)
+                _uiState.value = UiState.Error(it)
                 Log.d("CryptoBaseViewModel", "Error: $it")
                 job.cancel()    // 에러 발생 시 모든 작업 취소
             }

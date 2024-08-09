@@ -1,8 +1,10 @@
 package com.strone.presentation.util
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.Locale
 
 fun BigDecimal.slicePriceDecimal(): String {
     return when {
@@ -41,6 +43,14 @@ fun String.toBigDecimalRemoveComma(): BigDecimal {
 
 fun String.removeComma(): String {
     return this.replace(",", "")
+}
+
+fun Long.toDisplayedKrwFormat(): String {
+    return NumberFormat.getNumberInstance(Locale.US).format(this)
+}
+
+fun BigDecimal.toDisplayedKrwFormat(): String {
+    return NumberFormat.getNumberInstance(Locale.US).format(this.setScale(0, RoundingMode.HALF_UP))
 }
 
 fun BigDecimal.toDisplayChangeRate(): String {

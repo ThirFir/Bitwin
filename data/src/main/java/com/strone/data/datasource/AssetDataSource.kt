@@ -7,5 +7,5 @@ interface AssetDataSource {
     fun getAsset(id: String): Flow<AssetEntity>
     fun insertAsset(asset: AssetEntity)
     fun updateAsset(asset: AssetEntity)
-    fun deleteAsset(asset: AssetEntity)
+    fun deleteAsset(id: String)
 }
